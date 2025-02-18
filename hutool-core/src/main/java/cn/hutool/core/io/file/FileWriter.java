@@ -237,13 +237,12 @@ public class FileWriter extends FileWrapper {
 						printNewLine(writer, lineSeparator);
 					}
 					writer.print(t);
-					if(appendLineSeparator){
-						printNewLine(writer, lineSeparator);
-					}
-
-					writer.flush();
 				}
 			}
+			if(appendLineSeparator){
+				printNewLine(writer, lineSeparator);
+			}
+			writer.flush();
 		}
 		return this.file;
 	}

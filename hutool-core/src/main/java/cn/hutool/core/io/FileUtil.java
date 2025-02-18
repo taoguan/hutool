@@ -629,10 +629,16 @@ public class FileUtil extends PathUtil {
 				readChars = is.read(chars);
 			}
 
-			// 最后一个字符为换行符，则单独计数行
-			// Linux下最后一行要求必须有换行符，不能单独计算一行，此处交给用户选择
-			if(lastLineSeparatorAsNewLine && c == CharUtil.CR){
-				++count;
+			if(lastLineSeparatorAsNewLine){
+				// 最后一个字符为\r，则单独计数行
+				if(c == CharUtil.CR){
+					++count;
+				}
+			}else{
+				// 最后一个字符为\n，则可选是否算作新行单独计数行
+				if(c == CharUtil.LF){
+					--count;
+				}
 			}
 
 			return count;

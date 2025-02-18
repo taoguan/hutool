@@ -6,6 +6,7 @@
 
 ### 🐣新特性
 * 【json   】      ObjectMapper删除重复trim（pr#3859@Github）
+* 【core   】      `FileWriter`增加方法，可选是否追加换行符（issue#3858@Github）
 
 ### 🐞Bug修复
 

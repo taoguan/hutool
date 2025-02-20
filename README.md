@@ -1,61 +1,56 @@
-<p align="center">
-	<a href="https://hutool.cn/"><img src="https://cdn.jsdelivr.net/gh/looly/hutool-site/images/logo.jpg" width="45%"></a>
+<p align   对齐="center"   “中心”>
+	<a href="https://hutool.cn/"><img src="https://cdn.jsdelivr.net/gh/looly/hutool-site/images/logo.jpg" width   宽度="45%"></a>
 </p>
-<p align="center">
-	<strong>🍬A set of tools that keep Java sweet.</strong>
+<p align   对齐="center"   “中心”>
+	<strong>🍬A set of tools that keep Java sweet.</strong>🍬一组让Java保持甜蜜的工具。
 </p>
-<p align="center">
-	👉 <a href="https://hutool.cn">https://hutool.cn/</a> 👈
+<p align   对齐="center"   “中心”>
+	👉 <a href="https://hutool.cn">https://hutool.cn/</a> 👈https://hutool.cn/👉< a href = " https://hutool.cn " > < / >👈
 </p>
 
-<p align="center">
-	<a target="_blank" href="https://search.maven.org/artifact/cn.hutool/hutool-all">
-		<img src="https://img.shields.io/maven-central/v/cn.hutool/hutool-all.svg?label=Maven%20Central" />
-	</a>
-	<a target="_blank" href="https://license.coscl.org.cn/MulanPSL2">
+<p align   对齐="center"   “中心”>
+	<a target   目标="_blank"   “平等” href="https://search.maven.org/artifact/cn.hutool/hutool-all">
+		<img src="https://img.shields.io/maven-central/v/cn.hutool/hutool-all.svg?label=Maven%20Central" />< img src = " https://img.shields.io/maven-central/v/cn.hutool/hutool-all.svg?标签= Maven % 20中央" / >
+	</a>   < / >
+	<a target   目标="_blank"   “平等” href="https://license.coscl.org.cn/MulanPSL2">
 		<img src="https://img.shields.io/:license-MulanPSL2-blue.svg" />
-	</a>
-	<a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
-		<img src="https://img.shields.io/badge/JDK-8+-green.svg" />
-	</a>
-	<a target="_blank" href="https://travis-ci.com/dromara/hutool">
+	</a>   < / >
+	<a target   目标="_blank"   “平等” href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
+		<img src="https://img.shields.io/badge/JDK-8+-green.svg""https://img.shields.io/badge/JDK-8 -green.svg" />< img src = " https://img.shields。“ /> . io/badge/JDK-8 -green.svg”Https://img.shields。/>。io /徽章/ JDK-8 -green.svg”
+	</a>   < / >
+	<a target="_blank   平等自愿" href="https://travis-ci.com/dromara/hutool">
 		<img src="https://travis-ci.com/dromara/hutool.svg?branch=v5-master" />
-	</a>
-	<a href="https://www.codacy.com/gh/dromara/hutool/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dromara/hutool&amp;utm_campaign=Badge_Grade">
+	</a>   < / >
+	<a href="https://www.codacy.com/gh/dromara/hutool/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dromara/hutool&amp;utm_campaign=Badge_Grade">< a href = " https://www.codacy.com/gh/dromara/hutool/dashboard?utm_source=github.com& utm_medium = referral   Utm_medium =引用& utm_content = dromara / hutoolUtm_content = dromara / hutool& utm_campaign = Badge_Grade " >
 		<img src="https://app.codacy.com/project/badge/Grade/8a6897d9de7440dd9de8804c28d2871d"/>
-	</a>
+	</a>   < / >
 	<a href="https://codecov.io/gh/dromara/hutool">
 		<img src="https://codecov.io/gh/dromara/hutool/branch/v5-master/graph/badge.svg" />
-	</a>
+	</a>   < / >
 	<a target="_blank" href="https://gitter.im/hutool/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
 		<img src="https://badges.gitter.im/hutool/Lobby.svg" />
-	</a>
+	</a>   < / >
 	<a target="_blank" href='https://gitee.com/dromara/hutool/stargazers'>
 		<img src='https://gitee.com/dromara/hutool/badge/star.svg?theme=gvp' alt='star'/>
-	</a>
+	</a>   < / >
 	<a target="_blank" href='https://github.com/dromara/hutool'>
-		<img src="https://img.shields.io/github/stars/dromara/hutool.svg?style=social" alt="github star"/>
-	</a>
+		<img src="https://img.shields.io/github/stars/dromara/hutool.svg?style=social" alt="github star"/>< img src = " https://img.shields.io/github/stars/dromara/hutool.svg?Style =social"“ https://img.shields.io/github/stars/dromara/hutool.svg?Style =社会” alt="github star"/>
+	</a>   < / >
 	<a target="_blank" href='https://gitcode.com/dromara/hutool'>
 		<img src="https://gitcode.com/dromara/hutool/star/badge.svg" alt="gitcode star"/>
-	</a>
+	</a>   < / >
 </p>
 
 <br/>
 <p align="center">
 	<a href="https://qm.qq.com/q/I7pPlTzCa4">
-	<img src="https://img.shields.io/badge/QQ%E7%BE%A4%E2%91%A6-715292493-orange"/></a>
+	<img src="https://img.shields.io/badge/QQ%E7%BE%A4%E2%91%A6-715292493-orange"/></a>< img src = " https://img.shields.io/badge/qq%e7%be%a4%e2%91%a6 - 715292493橙色" / > < / >< img src = " https://img.shields。/>< img src = "Https://img.shields。/>< img SRC = " https://img.shields.io/badge/qq%e7%be%a4%e2%91%a6 -715292493 "/> .io/badge/ QQ%E7%BE% a4% 91%a6 -715292493 "/>
 </p>
 
 -------------------------------------------------------------------------------
 
-<p align="center">
-	<a href="#"><img style="width: 45%" alt="" src="https://plus.hutool.cn/images/zanzhu.jpg"/></a>
-</p>
 
--------------------------------------------------------------------------------
-
-[**🌎English Documentation**](README-EN.md)
+[**🌎English Documentation**](README-EN.md)(* * * *🌎English文档)(README-EN.md)
 
 -------------------------------------------------------------------------------
 
@@ -119,40 +114,24 @@ Hutool = Hu + tool，是原公司项目底层代码剥离后的开源库，“Hu
 
 -------------------------------------------------------------------------------
 
-## 🪙支持Hutool
 
-### 💳捐赠
-
-如果你觉得Hutool不错，可以捐赠请维护者吃包辣条~，在此表示感谢^_^。
-
-[Gitee上捐赠](https://gitee.com/dromara/hutool)
-
-### 👕周边商店
-
-你也可以通过购买Hutool的周边商品来支持Hutool维护哦！
-
-我们提供了印有Hutool Logo的周边商品，欢迎点击购买支持：
-
-👉 [Hutool 周边商店](https://market.m.taobao.com/apps/market/content/index.html?wh_weex=true&contentId=331724720170) 👈
-
--------------------------------------------------------------------------------
 
 ## 📦安装
 
 ### 🍊Maven
 在项目的pom.xml的dependencies中加入以下内容:
 
-```xml
-<dependency>
+```xml   “的”xml
+<dependency>   <依赖>
     <groupId>cn.hutool</groupId>
     <artifactId>hutool-all</artifactId>
-    <version>5.8.37</version>
-</dependency>
+    <version>5.8.37</version><版本> 5.8.37 > < /版本
+</dependency>   < /依赖>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'cn.hutool:hutool-all:5.8.37'
+implementation 'cn.hutool:hutool-all:5.8.37'实现“cn.hutool: hutool-all: 5.8.37”
 ```
 
 ### 📥下载jar

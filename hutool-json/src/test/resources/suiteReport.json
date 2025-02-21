@@ -11,7 +11,7 @@
       "charset": "UTF-8",
       "debug": false,
       "auth": true,
-      "pass": "q1w2e3",
+      "pass": "123456",
       "socketFactoryFallback": false,
       "socketFactoryPort": 465,
       "startttlsEnable": false,

@@ -1,7 +1,6 @@
 package cn.hutool.extra.mail;
 
 import cn.hutool.core.io.FileUtil;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 邮件发送测试
@@ -42,7 +43,7 @@ public class MailTest {
 	@Disabled
 	public void sendHtmlWithImageTest() {
 		Map<String, InputStream> map = new HashMap<>();
-		InputStream in = getClass().getClassLoader().getResourceAsStream("image/Dromara.png");
+		InputStream in = getClass().getClassLoader().getResourceAsStream("image/hutool.png");
 		map.put("<image-1>", in);
 		MailUtil.sendHtml("hutool@foxmail.com;li7hai26@outlook.com", "测试", "<h1>邮件来自Hutool测试</h1><img src=\"cid:image-1\" />", map);
 	}
@@ -62,7 +63,7 @@ public class MailTest {
 		account.setSslEnable(true);
 		account.setFrom("hutool@yeah.net");
 		account.setUser("hutool");
-		account.setPass("q1w2e3");
+		account.setPass("123456");
 		MailUtil.send(account, "hutool@foxmail.com", "测试", "<h1>邮件来自Hutool测试</h1>", true);
 	}
 

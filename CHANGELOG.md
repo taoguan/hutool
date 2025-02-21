@@ -1090,4 +1090,4 @@
 * 【core   】     修复农历转公历在闰月时错误（issue#I4ZSGJ@Gitee）
 
 # 5.7.x 或更早版本
-* [https://gitee.com/dromara/hutool/blob/v5-master/CHANGELOG_5.0-5.7.md](https://gitee.com/dromara/hutool/blob/v5-master/CHANGELOG_5.0-5.7.md)
+* [https://gitee.com/chinabugotech/hutool/blob/v5-master/CHANGELOG_5.0-5.7.md](https://gitee.com/chinabugotech/hutool/blob/v5-master/CHANGELOG_5.0-5.7.md)

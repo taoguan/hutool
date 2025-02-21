@@ -117,7 +117,7 @@ public class ChineseDateTest {
 
 	@Test
 	public void getChineseMonthTest2(){
-		//https://github.com/dromara/hutool/issues/2112
+		//https://github.com/chinabugotech/hutool/issues/2112
 		ChineseDate springFestival = new ChineseDate(DateUtil.parseDate("2022-02-01"));
 		final String chineseMonth = springFestival.getChineseMonth();
 		assertEquals("一月", chineseMonth);
@@ -125,7 +125,7 @@ public class ChineseDateTest {
 
 	@Test
 	public void day19700101Test(){
-		// https://gitee.com/dromara/hutool/issues/I4UTPK
+		// https://gitee.com/chinabugotech/hutool/issues/I4UTPK
 		Date date = DateUtil.parse("1970-01-01");
 		//noinspection ConstantConditions
 		ChineseDate chineseDate = new ChineseDate(date);
@@ -153,7 +153,7 @@ public class ChineseDateTest {
 
 	@Test
 	public void getGregorianDateTest(){
-		// https://gitee.com/dromara/hutool/issues/I4ZSGJ
+		// https://gitee.com/chinabugotech/hutool/issues/I4ZSGJ
 		ChineseDate chineseDate = new ChineseDate(1998, 5, 1);
 		assertEquals("1998-06-24 00:00:00", chineseDate.getGregorianDate().toString());
 

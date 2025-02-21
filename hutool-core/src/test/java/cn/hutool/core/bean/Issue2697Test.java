@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * https://github.com/dromara/hutool/issues/2697
+ * https://github.com/chinabugotech/hutool/issues/2697
  */
 public class Issue2697Test {
 

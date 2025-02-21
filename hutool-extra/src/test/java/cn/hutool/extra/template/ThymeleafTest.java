@@ -3,7 +3,6 @@ package cn.hutool.extra.template;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.extra.template.engine.thymeleaf.ThymeleafEngine;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.thymeleaf.context.Context;
@@ -11,12 +10,9 @@ import org.thymeleaf.standard.StandardDialect;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Thymeleaf单元测试
@@ -27,7 +23,7 @@ import java.util.Map;
 public class ThymeleafTest {
 
 	/**
-	 * <a href="https://github.com/dromara/hutool/issues/2530">...</a>
+	 * <a href="https://github.com/chinabugotech/hutool/issues/2530">...</a>
 	 * 自定义操作原始引擎
 	 */
 	@Test

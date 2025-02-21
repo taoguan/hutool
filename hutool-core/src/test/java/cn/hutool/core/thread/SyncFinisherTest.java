@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SyncFinisherTest {
 	/**
-	 * https://gitee.com/dromara/hutool/issues/I716SX
+	 * https://gitee.com/chinabugotech/hutool/issues/I716SX
 	 * 设置ExceptionHandler捕获异常
 	 */
 	@Test
@@ -44,7 +44,7 @@ public class SyncFinisherTest {
 	}
 
 	/**
-	 * https://gitee.com/dromara/hutool/issues/I716SX
+	 * https://gitee.com/chinabugotech/hutool/issues/I716SX
 	 * 默认情况下吞掉异常
 	 */
 	@Test

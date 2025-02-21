@@ -52,7 +52,7 @@ public class FileCopierTest {
 	@Test
 	@Disabled
 	public void copyFileByRelativePath(){
-		// https://github.com/dromara/hutool/pull/2188
+		// https://github.com/chinabugotech/hutool/pull/2188
 		//  当复制的目标文件位置是相对路径的时候可以通过
 		FileCopier copier = FileCopier.create(new File("pom.xml"),new File("aaa.txt"));
 		copier.copy();

@@ -29,7 +29,7 @@ public class CglibProxyFactory extends ProxyFactory{
 
 	/**
 	 * 创建代理对象<br>
-	 * https://gitee.com/dromara/hutool/issues/I74EX7<br>
+	 * https://gitee.com/chinabugotech/hutool/issues/I74EX7<br>
 	 * 某些对象存在非空参数构造，则需遍历查找需要的构造完成代理对象构建。
 	 *
 	 * @param <T>         代理对象类型

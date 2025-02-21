@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.Serializable;
 
 /**
- * https://github.com/dromara/hutool/issues/1687
+ * https://github.com/chinabugotech/hutool/issues/1687
  */
 public class Issue1687Test {
 

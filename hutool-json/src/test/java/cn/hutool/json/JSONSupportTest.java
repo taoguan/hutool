@@ -2,13 +2,14 @@ package cn.hutool.json;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JSONSupportTest {
 
 	/**
-	 * https://github.com/dromara/hutool/issues/1779
+	 * https://github.com/chinabugotech/hutool/issues/1779
 	 * 在JSONSupport的JSONBeanParse中，如果使用json.toBean，会导致JSONBeanParse.parse方法反复递归调用，最终栈溢出<br>
 	 * 因此parse方法默认实现必须避开JSONBeanParse.parse调用。
 	 */

@@ -124,7 +124,7 @@ public class HttpConnection {
 					HttpGlobalConfig.allowPatch();
 				} catch (Exception ignore){
 					// ignore
-					// https://github.com/dromara/hutool/issues/2832
+					// https://github.com/chinabugotech/hutool/issues/2832
 				}
 			}
 		}
@@ -277,7 +277,7 @@ public class HttpConnection {
 			final HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
 			// 验证域
 			httpsConn.setHostnameVerifier(ObjectUtil.defaultIfNull(hostnameVerifier,
-				// CVE-2022-22885 https://github.com/dromara/hutool/issues/2042
+				// CVE-2022-22885 https://github.com/chinabugotech/hutool/issues/2042
 				// 增加全局变量可选是否不验证host
 				HttpGlobalConfig.isTrustAnyHost() ? DefaultSSLInfo.TRUST_ANY_HOSTNAME_VERIFIER : HttpsURLConnection.getDefaultHostnameVerifier()));
 			httpsConn.setSSLSocketFactory(ObjectUtil.defaultIfNull(ssf, DefaultSSLInfo.DEFAULT_SSF));

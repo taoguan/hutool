@@ -253,7 +253,7 @@ public class BeanUtilTest {
 		final SubPersonWithAlias subPersonWithAlias = BeanUtil.toBean(map, SubPersonWithAlias.class);
 		assertEquals("sub名字", subPersonWithAlias.getSubName());
 
-		//https://gitee.com/dromara/hutool/issues/I6H0XF
+		//https://gitee.com/chinabugotech/hutool/issues/I6H0XF
 		assertFalse(subPersonWithAlias.isBooleana());
 		assertNull(subPersonWithAlias.getBooleanb());
 	}
@@ -520,7 +520,7 @@ public class BeanUtilTest {
 	}
 
 	/**
-	 * <a href="https://github.com/dromara/hutool/issues/1173">#1173</a>
+	 * <a href="https://github.com/chinabugotech/hutool/issues/1173">#1173</a>
 	 */
 	@Test
 	public void beanToBeanOverlayFieldTest() {
@@ -597,7 +597,7 @@ public class BeanUtilTest {
 
 	@Test
 	public void copyBeanPropertiesFunctionFilterTest() {
-		//https://gitee.com/dromara/hutool/pulls/590
+		//https://gitee.com/chinabugotech/hutool/pulls/590
 		final Person o = new Person();
 		o.setName("asd");
 		o.setAge(123);
@@ -858,7 +858,7 @@ public class BeanUtilTest {
 
 	@Test
 	public void valueProviderToBeanTest() {
-		// https://gitee.com/dromara/hutool/issues/I5B4R7
+		// https://gitee.com/chinabugotech/hutool/issues/I5B4R7
 		final CopyOptions copyOptions = CopyOptions.create();
 		final Map<String, String> filedMap = new HashMap<>();
 		filedMap.put("name", "sourceId");
@@ -931,7 +931,7 @@ public class BeanUtilTest {
 
 	@Test
 	public void hasGetterTest() {
-		// https://gitee.com/dromara/hutool/issues/I6M7Z7
+		// https://gitee.com/chinabugotech/hutool/issues/I6M7Z7
 		final boolean b = BeanUtil.hasGetter(Object.class);
 		assertFalse(b);
 	}

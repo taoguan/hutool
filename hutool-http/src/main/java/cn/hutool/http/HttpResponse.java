@@ -327,7 +327,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * 将响应内容写出到文件-避免未完成的文件<br>
 	 * 异步模式下直接读取Http流写出，同步模式下将存储在内存中的响应内容写出<br>
 	 * 写出后会关闭Http流（异步模式）<br>
-	 * 来自：https://gitee.com/dromara/hutool/pulls/407<br>
+	 * 来自：https://gitee.com/chinabugotech/hutool/pulls/407<br>
 	 * 此方法原理是先在目标文件同级目录下创建临时文件，下载之，等下载完毕后重命名，避免因下载错误导致的文件不完整。
 	 *
 	 * @param targetFileOrDir 写出到的文件或目录

@@ -32,7 +32,7 @@ public class CalculatorTest {
 
 	@Test
 	public void conversationTest5(){
-		// https://github.com/dromara/hutool/issues/1984
+		// https://github.com/chinabugotech/hutool/issues/1984
 		final double conversion = Calculator.conversion("((1/1) / (1/1) -1) * 100");
 		assertEquals(0, conversion, 0);
 	}
@@ -45,14 +45,14 @@ public class CalculatorTest {
 
 	@Test
 	public void conversationTest7() {
-		//https://gitee.com/dromara/hutool/issues/I4KONB
+		//https://gitee.com/chinabugotech/hutool/issues/I4KONB
 		final double conversion = Calculator.conversion("((-2395+0) * 0.3+140.24+35+90)/30");
 		assertEquals(-15.11, conversion, 0.01);
 	}
 
 	@Test
 	public void issue2964Test() {
-		// https://github.com/dromara/hutool/issues/2964
+		// https://github.com/chinabugotech/hutool/issues/2964
 		final double calcValue = Calculator.conversion("(11+2)12");
 		assertEquals(156D, calcValue, 0.001);
 	}

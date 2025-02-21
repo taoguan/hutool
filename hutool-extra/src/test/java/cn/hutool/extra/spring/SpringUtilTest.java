@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(classes = {SpringUtil.class, SpringUtilTest.Demo2.class})
 // @ActiveProfiles("dev") // SpringUtil.getActiveProfile()效果与下面方式一致
 @TestPropertySource(properties = {"spring.profiles.active=dev"})
-//@Import(spring.org.dromara.hutool.extra.SpringUtil.class)
 public class SpringUtilTest {
 
 	/**

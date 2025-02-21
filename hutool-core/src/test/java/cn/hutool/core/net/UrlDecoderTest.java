@@ -22,7 +22,7 @@ public class UrlDecoderTest {
 
 	@Test
 	public void issue3063Test() throws UnsupportedEncodingException {
-		// https://github.com/dromara/hutool/issues/3063
+		// https://github.com/chinabugotech/hutool/issues/3063
 
 		final String s = "测试";
 		final String expectedDecode = "%FE%FF%6D%4B%8B%D5";

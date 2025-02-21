@@ -3,13 +3,14 @@ package cn.hutool.json;
 import cn.hutool.core.convert.Convert;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
- * https://gitee.com/dromara/hutool/issues/I49VZB
+ * https://gitee.com/chinabugotech/hutool/issues/I49VZB
  */
 public class IssueI49VZBTest {
 	public enum NBCloudKeyType {

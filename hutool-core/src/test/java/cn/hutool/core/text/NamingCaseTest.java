@@ -35,9 +35,9 @@ public class NamingCaseTest {
 				.set("H#case", "H#case")
 				.set("PNLabel", "PN_label")
 				.set("wPRunOZTime", "w_P_run_OZ_time")
-				// https://github.com/dromara/hutool/issues/2070
+				// https://github.com/chinabugotech/hutool/issues/2070
 				.set("customerNickV2", "customer_nick_v2")
-				// https://gitee.com/dromara/hutool/issues/I4X9TT
+				// https://gitee.com/chinabugotech/hutool/issues/I4X9TT
 				.set("DEPT_NAME","DEPT_NAME")
 				.forEach((key, value) -> assertEquals(value, NamingCase.toUnderlineCase(key)));
 	}

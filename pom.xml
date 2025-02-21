@@ -11,7 +11,7 @@
 	<version>5.8.37-SNAPSHOT</version>
 	<name>hutool</name>
 	<description>Hutool是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。</description>
-	<url>https://github.com/dromara/hutool</url>
+	<url>https://github.com/chinabugotech/hutool</url>
 
 	<modules>
 		<module>hutool-all</module>
@@ -67,7 +67,7 @@
 
 	<issueManagement>
 		<system>Github Issue</system>
-		<url>https://github.com/dromara/hutool/issues</url>
+		<url>https://github.com/chinabugotech/hutool/issues</url>
 	</issueManagement>
 
 	<licenses>
@@ -79,15 +79,19 @@
 
 	<developers>
 		<developer>
+			<name>bugo</name>
+			<email>bugo@bugotech.cn</email>
+		</developer>
+		<developer>
 			<name>Looly</name>
 			<email>loolly@gmail.com</email>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git@github.com:dromara/hutool.git</connection>
-		<developerConnection>scm:git@github.com:dromara/hutool.git</developerConnection>
-		<url>git@github.com:dromara/hutool.git</url>
+		<connection>scm:git@github.com:chinabugotech/hutool.git</connection>
+		<developerConnection>scm:git@github.com:chinabugotech/hutool.git</developerConnection>
+		<url>git@github.com:chinabugotech/hutool.git</url>
 	</scm>
 
 	<build>
@@ -207,14 +211,16 @@
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.7.0</version>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.6.0</version>
 						<extensions>true</extensions>
 						<configuration>
-							<serverId>oss</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+							<publishingServerId>central</publishingServerId>
+							<!-- 自动发布 -->
+							<autoPublish>true</autoPublish>
+							<!-- 等待发布 -->
+							<waitUntil>published</waitUntil>
 						</configuration>
 					</plugin>
 				</plugins>

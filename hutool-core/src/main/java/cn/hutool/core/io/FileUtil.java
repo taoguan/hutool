@@ -1055,7 +1055,7 @@ public class FileUtil extends PathUtil {
 		int exceptionsCount = 0;
 		while (true) {
 			try {
-				// https://github.com/dromara/hutool/issues/3103
+				// https://github.com/chinabugotech/hutool/issues/3103
 				//File file = File.createTempFile(prefix, suffix, mkdir(dir)).getCanonicalFile();
 				final File file = PathUtil.createTempFile(prefix, suffix, null == dir ? null : dir.toPath()).toFile().getCanonicalFile();
 				if (isReCreat) {

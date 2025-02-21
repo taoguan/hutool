@@ -148,7 +148,7 @@ public class ObjectMapper {
 			if (bytesSource.length > 1 && '[' == bytesSource[0] && ']' == bytesSource[bytesSource.length - 1]) {
 				mapFromTokener(new JSONTokener(IoUtil.toStream(bytesSource), jsonArray.getConfig()), jsonArray, filter);
 			}else{
-				// https://github.com/dromara/hutool/issues/2369
+				// https://github.com/chinabugotech/hutool/issues/2369
 				// 非标准的二进制流，则按照普通数组对待
 				for(final byte b : bytesSource){
 					jsonArray.add(b);

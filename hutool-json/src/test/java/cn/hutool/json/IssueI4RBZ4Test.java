@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 /**
- * https://gitee.com/dromara/hutool/issues/I4RBZ4
+ * https://gitee.com/chinabugotech/hutool/issues/I4RBZ4
  */
 public class IssueI4RBZ4Test {
 

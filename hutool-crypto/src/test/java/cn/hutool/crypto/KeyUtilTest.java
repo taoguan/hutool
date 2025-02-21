@@ -61,7 +61,7 @@ public class KeyUtilTest {
 
 	@Test
 	public void generateSm4KeyTest(){
-		// https://github.com/dromara/hutool/issues/2150
+		// https://github.com/chinabugotech/hutool/issues/2150
 		assertEquals(16, KeyUtil.generateKey("sm4").getEncoded().length);
 		assertEquals(32, KeyUtil.generateKey("sm4", 256).getEncoded().length);
 	}

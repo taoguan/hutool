@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.time.Month;
 
 /**
- * https://github.com/dromara/hutool/issues/2090
+ * https://github.com/chinabugotech/hutool/issues/2090
  */
 public class Issue2090Test {
 

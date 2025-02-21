@@ -122,7 +122,7 @@ public class DbTest {
 	@Test
 	@Disabled
 	public void queryFetchTest() throws SQLException {
-		// https://gitee.com/dromara/hutool/issues/I4JXWN
+		// https://gitee.com/chinabugotech/hutool/issues/I4JXWN
 		Db.use().query((conn->{
 			PreparedStatement ps = conn.prepareStatement("select * from table",
 					ResultSet.TYPE_FORWARD_ONLY,

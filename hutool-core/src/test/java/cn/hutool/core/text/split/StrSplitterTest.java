@@ -74,7 +74,7 @@ public class StrSplitterTest {
 	}
 
 	/**
-	 * https://github.com/dromara/hutool/issues/2099
+	 * https://github.com/chinabugotech/hutool/issues/2099
 	 */
 	@Test
 	public void splitByRegexTest(){

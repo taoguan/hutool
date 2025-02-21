@@ -11,7 +11,7 @@ public class ExecutorBuilderTest {
 	@Test
 	@Disabled
 	public void CallerRunsPolicyTest(){
-		// https://gitee.com/dromara/hutool/pulls/660
+		// https://gitee.com/chinabugotech/hutool/pulls/660
 		final ThreadPoolExecutor executor = ExecutorBuilder.create().setCorePoolSize(1).setMaxPoolSize(1).setHandler(RejectPolicy.BLOCK.getValue()).build();
 		executor.execute(()-> Console.log("### 1"));
 		executor.execute(()-> Console.log("### 2"));

@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * https://gitee.com/dromara/hutool/issues/I4EMST
+ * https://gitee.com/chinabugotech/hutool/issues/I4EMST
  */
 public class Sm4StreamTest {
 

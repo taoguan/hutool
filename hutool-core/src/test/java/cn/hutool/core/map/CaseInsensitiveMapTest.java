@@ -28,7 +28,7 @@ public class CaseInsensitiveMapTest {
 
 	@Test
 	public void mergeTest(){
-		//https://github.com/dromara/hutool/issues/2086
+		//https://github.com/chinabugotech/hutool/issues/2086
 		Pair<String, String> b = new Pair<>("a", "value");
 		Pair<String, String> a = new Pair<>("A", "value");
 		final CaseInsensitiveMap<Object, Object> map = new CaseInsensitiveMap<>();

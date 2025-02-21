@@ -149,7 +149,7 @@ public class ZipUtilTest {
 	@Test
 	@Disabled
 	public void zipStreamTest(){
-		//https://github.com/dromara/hutool/issues/944
+		//https://github.com/chinabugotech/hutool/issues/944
 		final String dir = "d:/test";
 		final String zip = "d:/test.zip";
 		//noinspection IOStreamConstructor
@@ -164,7 +164,7 @@ public class ZipUtilTest {
 	@Test
 	@Disabled
 	public void zipStreamTest2(){
-		// https://github.com/dromara/hutool/issues/944
+		// https://github.com/chinabugotech/hutool/issues/944
 		final String file1 = "d:/test/a.txt";
 		final String file2 = "d:/test/a.txt";
 		final String file3 = "d:/test/asn1.key";

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 /**
- * https://github.com/dromara/hutool/issues/3051
+ * https://github.com/chinabugotech/hutool/issues/3051
  */
 public class Issue3051Test {
 	@Test

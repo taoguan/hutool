@@ -1,11 +1,13 @@
 package cn.hutool.system;
 
 import cn.hutool.core.lang.Console;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SystemUtilTest {
 
@@ -49,7 +51,7 @@ public class SystemUtilTest {
 
 	@Test
 	public void getUserInfoTest(){
-		// https://gitee.com/dromara/hutool/issues/I3NM39
+		// https://gitee.com/chinabugotech/hutool/issues/I3NM39
 		final UserInfo userInfo = SystemUtil.getUserInfo();
 		assertTrue(userInfo.getTempDir().endsWith(File.separator));
 	}

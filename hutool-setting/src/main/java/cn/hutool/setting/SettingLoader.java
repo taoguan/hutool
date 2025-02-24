@@ -2,20 +2,13 @@ package cn.hutool.setting;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.resource.NoResourceException;
 import cn.hutool.core.io.resource.Resource;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.CharUtil;
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.ReUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.SystemPropsUtil;
+import cn.hutool.core.util.*;
 import cn.hutool.log.Log;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -73,19 +66,22 @@ public class SettingLoader {
 	 *
 	 * @param resource 配置文件URL
 	 * @return 加载是否成功
+	 * @throws NoResourceException 如果资源不存在，抛出此异常
 	 */
-	public boolean load(Resource resource) {
+	public boolean load(Resource resource) throws NoResourceException{
 		if (resource == null) {
 			throw new NullPointerException("Null setting url define!");
 		}
-		log.debug("Load setting file [{}]", resource);
 		InputStream settingStream = null;
 		try {
 			settingStream = resource.getStream();
 			load(settingStream);
+			log.debug("Load setting file [{}]", resource);
 		} catch (Exception e) {
-			log.error(e, "Load setting error!");
-			return false;
+			if(e instanceof NoResourceException){
+				throw (NoResourceException)e;
+			}
+			throw new NoResourceException(e);
 		} finally {
 			IoUtil.close(settingStream);
 		}

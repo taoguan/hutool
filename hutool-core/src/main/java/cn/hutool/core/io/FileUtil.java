@@ -1351,11 +1351,11 @@ public class FileUtil extends PathUtil {
 		if (null == classPath) {
 			// throw new NullPointerException("ClassPath is null !");
 			// 在jar运行模式中，ClassPath有可能获取不到，此时返回原始相对路径（此时获取的文件为相对工作目录）
-			return path;
+			return normalPath;
 		}
 
 		// 资源不存在的情况下使用标准化路径有问题，使用原始路径拼接后标准化路径
-		return normalize(classPath.concat(Objects.requireNonNull(path)));
+		return normalize(classPath.concat(Objects.requireNonNull(normalPath)));
 	}
 
 	/**

@@ -51,9 +51,19 @@ public class TinyPinyinEngine implements PinyinEngine {
 	}
 
 	@Override
+	public String getPinyin(char c, boolean tone) {
+		return getPinyin(c);
+	}
+
+	@Override
 	public String getPinyin(String str, String separator) {
 		final String pinyin = Pinyin.toPinyin(str, separator);
 		return StrUtil.isEmpty(pinyin) ? pinyin : pinyin.toLowerCase();
+	}
+
+	@Override
+	public String getPinyin(String str, String separator, boolean tone) {
+		return getPinyin(str, separator);
 	}
 
 }

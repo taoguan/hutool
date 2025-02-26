@@ -83,21 +83,6 @@ public class Pinyin4jEngine implements PinyinEngine {
 	}
 
 	@Override
-	public String getPinyin(char c, boolean tone) {
-		try {
-			if(tone){
-				//增加声调
-				format.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
-				format.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
-			}
-			return getPinyin(c);
-		}finally {
-			format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-			format.setVCharType(HanyuPinyinVCharType.WITH_V);
-		}
-	}
-
-	@Override
 	public String getPinyin(String str, String separator) {
 		final StrBuilder result = StrUtil.strBuilder();
 		boolean isFirst = true;
@@ -121,20 +106,5 @@ public class Pinyin4jEngine implements PinyinEngine {
 		}
 
 		return result.toString();
-	}
-
-	@Override
-	public String getPinyin(String str, String separator, boolean tone) {
-		try {
-			if(tone){
-				//增加声调
-				format.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
-				format.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
-			}
-			return getPinyin(str, separator);
-		}finally {
-			format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-			format.setVCharType(HanyuPinyinVCharType.WITH_V);
-		}
 	}
 }

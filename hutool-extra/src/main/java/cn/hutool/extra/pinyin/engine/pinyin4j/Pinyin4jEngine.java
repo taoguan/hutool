@@ -83,6 +83,32 @@ public class Pinyin4jEngine implements PinyinEngine {
 	}
 
 	@Override
+	public String getPinyin(char c, boolean tone) {
+		String result;
+		if(tone){
+			//增加声调
+			HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
+			// 小写
+			formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+			// 加声调
+			formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
+			//
+			formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
+
+			try {
+				String[] results = PinyinHelper.toHanyuPinyinStringArray(c, formatTemp);
+				result = ArrayUtil.isEmpty(results) ? String.valueOf(c) : results[0];
+			} catch (BadHanyuPinyinOutputFormatCombination e) {
+				result = String.valueOf(c);
+			}
+		}else {
+			result = getPinyin(c);
+		}
+		return result;
+
+	}
+
+	@Override
 	public String getPinyin(String str, String separator) {
 		final StrBuilder result = StrUtil.strBuilder();
 		boolean isFirst = true;
@@ -106,5 +132,44 @@ public class Pinyin4jEngine implements PinyinEngine {
 		}
 
 		return result.toString();
+	}
+
+	@Override
+	public String getPinyin(String str, String separator, boolean tone) {
+		final StrBuilder result = StrUtil.strBuilder();
+		if(tone){
+			//增加声调
+			HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
+			// 小写
+			formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+			// 加声调
+			formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
+			//
+			formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
+
+			boolean isFirst = true;
+			final int strLen = str.length();
+			try {
+				for(int i = 0; i < strLen; i++){
+					if(isFirst){
+						isFirst = false;
+					} else{
+						result.append(separator);
+					}
+					final String[] pinyinStringArray = PinyinHelper.toHanyuPinyinStringArray(str.charAt(i), formatTemp);
+					if(ArrayUtil.isEmpty(pinyinStringArray)){
+						result.append(str.charAt(i));
+					} else{
+						result.append(pinyinStringArray[0]);
+					}
+				}
+			} catch (BadHanyuPinyinOutputFormatCombination e) {
+				throw new PinyinException(e);
+			}
+		}else {
+			result.append(getPinyin(str, separator));
+		}
+		return result.toString();
+
 	}
 }

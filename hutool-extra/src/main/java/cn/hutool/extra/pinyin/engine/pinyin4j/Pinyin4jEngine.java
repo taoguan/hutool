@@ -86,16 +86,15 @@ public class Pinyin4jEngine implements PinyinEngine {
 	public String getPinyin(char c, boolean tone) {
 		String result;
 		if(tone){
-			//增加声调
-			HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
-			// 小写
-			formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-			// 加声调
-			formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
-			//
-			formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
-
 			try {
+				//增加声调
+				HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
+				// 小写
+				formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+				// 加声调
+				formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
+				//
+				formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
 				String[] results = PinyinHelper.toHanyuPinyinStringArray(c, formatTemp);
 				result = ArrayUtil.isEmpty(results) ? String.valueOf(c) : results[0];
 			} catch (BadHanyuPinyinOutputFormatCombination e) {
@@ -136,17 +135,8 @@ public class Pinyin4jEngine implements PinyinEngine {
 
 	@Override
 	public String getPinyin(String str, String separator, boolean tone) {
-		final StrBuilder result = StrUtil.strBuilder();
 		if(tone){
-			//增加声调
-			HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
-			// 小写
-			formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-			// 加声调
-			formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
-			//
-			formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
-
+			final StrBuilder result = StrUtil.strBuilder();
 			boolean isFirst = true;
 			final int strLen = str.length();
 			try {
@@ -156,6 +146,14 @@ public class Pinyin4jEngine implements PinyinEngine {
 					} else{
 						result.append(separator);
 					}
+					//增加声调
+					HanyuPinyinOutputFormat formatTemp = new HanyuPinyinOutputFormat();
+					// 小写
+					formatTemp.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+					// 加声调
+					formatTemp.setToneType(HanyuPinyinToneType.WITH_TONE_MARK);
+					//
+					formatTemp.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
 					final String[] pinyinStringArray = PinyinHelper.toHanyuPinyinStringArray(str.charAt(i), formatTemp);
 					if(ArrayUtil.isEmpty(pinyinStringArray)){
 						result.append(str.charAt(i));
@@ -166,10 +164,9 @@ public class Pinyin4jEngine implements PinyinEngine {
 			} catch (BadHanyuPinyinOutputFormatCombination e) {
 				throw new PinyinException(e);
 			}
+			return result.toString();
 		}else {
-			result.append(getPinyin(str, separator));
+			return getPinyin(str, separator);
 		}
-		return result.toString();
-
 	}
 }

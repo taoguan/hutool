@@ -2,8 +2,10 @@ package cn.hutool.core.lang.reflect;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.TypeUtil;
 
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -55,6 +57,22 @@ public class ActualTypeMapperPool {
 			result = typeTypeMap.get(result);
 		}
 		return result;
+	}
+
+	public static Type getActualType(Type type, GenericArrayType genericArrayType) {
+		final Map<Type, Type> typeTypeMap = get(type);
+		Type actualType = typeTypeMap.get(genericArrayType);
+
+		if (actualType == null) {
+			Type componentType = typeTypeMap.get(genericArrayType.getGenericComponentType());
+			if (!(componentType instanceof Class<?>)) {
+				return null;
+			}
+			actualType = ArrayUtil.getArrayType((Class<?>) componentType);
+			typeTypeMap.put(genericArrayType, actualType);
+		}
+
+		return actualType;
 	}
 
 	/**

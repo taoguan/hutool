@@ -3,12 +3,7 @@ package cn.hutool.core.util;
 import cn.hutool.core.lang.ParameterizedTypeImpl;
 import cn.hutool.core.lang.reflect.ActualTypeMapperPool;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -411,6 +406,9 @@ public class TypeUtil {
 
 		if (typeVariable instanceof TypeVariable) {
 			return ActualTypeMapperPool.getActualType(type, (TypeVariable<?>) typeVariable);
+		}
+		if (typeVariable instanceof GenericArrayType) {
+			return ActualTypeMapperPool.getActualType(type, (GenericArrayType) typeVariable);
 		}
 
 		// 没有需要替换的泛型变量，原样输出

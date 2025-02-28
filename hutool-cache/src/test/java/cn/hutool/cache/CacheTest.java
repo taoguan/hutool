@@ -4,13 +4,17 @@ import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RandomUtil;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 缓存测试用例
- * @author Looly
  *
+ * @author Looly
  */
 public class CacheTest {
 
@@ -120,5 +124,28 @@ public class CacheTest {
 
 		//取消定时清理
 		timedCache.cancelPruneSchedule();
+	}
+
+
+	/**
+	 * TimedCache的数据过期后不是每次都触发监听器onRemove，而是偶尔触发onRemove
+	 * https://gitee.com/chinabugotech/hutool/issues/IBP752
+	 */
+	@Test
+	public void whenContainsKeyTimeout_shouldCallOnRemove() {
+		int timeout = 50;
+		final TimedCache<Integer, String> ALARM_CACHE = new TimedCache<>(timeout);
+
+		AtomicInteger counter = new AtomicInteger(0);
+		ALARM_CACHE.setListener((key, value) -> {
+			counter.incrementAndGet();
+		});
+
+		ALARM_CACHE.put(1, "value1");
+
+		ThreadUtil.sleep(100);
+
+		assertFalse(ALARM_CACHE.containsKey(1));
+		assertEquals(1, counter.get());
 	}
 }

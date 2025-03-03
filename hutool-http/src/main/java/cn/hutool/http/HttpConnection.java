@@ -237,6 +237,7 @@ public class HttpConnection {
 	 * @param isOverride 是否覆盖
 	 * @param isHeaderAggregated 是否聚合
 	 * @return this
+	 * @since 5.8.37
 	 */
 	public HttpConnection header(Map<String, List<String>> headerMap, boolean isOverride, boolean isHeaderAggregated) {
 		if (!isHeaderAggregated){

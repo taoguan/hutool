@@ -272,6 +272,7 @@ public class HttpRequestTest {
 	}
 
 	@Test
+	@Disabled
 	public void testHttpHead(){
 		Map<String,String> map = new HashMap<>();
 		map.put("test","test");

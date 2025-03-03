@@ -8,6 +8,8 @@
 * 【json   】      ObjectMapper删除重复trim（pr#3859@Github）
 * 【core   】      `FileWriter`增加方法，可选是否追加换行符（issue#3858@Github）
 * 【core   】      `IdcardUtil`验证10位身份证兼容中英文括号（issue#IBP6T1@Gitee）
+* 【extra  】      `PinyinUtil`增加重载可选是否返回声调（pr#3875@Github）
+* 【http   】      `HttpBase`增加重载可选是否返回声调（pr#3883@Github）
 
 ### 🐞Bug修复
 * 【setting】      修复`SettingLoader`load未抛出异常导致配置文件无法正常遍历的问题（pr#3868@Github）

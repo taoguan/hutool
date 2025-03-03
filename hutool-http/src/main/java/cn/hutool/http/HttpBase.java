@@ -286,6 +286,7 @@ public abstract class HttpBase<T> {
 	 *
 	 * @param aggregate 是否需要聚合
 	 * @return this
+	 * @since 5.8.37
 	 */
 	public T headerAggregation(boolean aggregate) {
 		this.isHeaderAggregated = aggregate;
@@ -296,6 +297,7 @@ public abstract class HttpBase<T> {
 	 * 获取是否需要聚合请求头状态
 	 *
 	 * @return isHeaderAggregated 请求头聚合状态
+	 * @since 5.8.37
 	 */
 	public boolean isHeaderAggregated() {
 		return isHeaderAggregated;

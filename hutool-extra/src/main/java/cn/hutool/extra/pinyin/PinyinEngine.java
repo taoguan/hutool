@@ -27,6 +27,7 @@ public interface PinyinEngine {
 	 * @param c 任意字符，汉字返回拼音，非汉字原样返回
 	 * @param tone 是否返回声调
 	 * @return 汉字返回拼音，非汉字原样返回
+	 * @since 5.8.37
 	 */
 	default String getPinyin(char c, boolean tone){
 		return getPinyin(c);
@@ -48,6 +49,7 @@ public interface PinyinEngine {
 	 * @param separator 拼音之间的分隔符
 	 * @param tone 是否返回声调
 	 * @return 拼音
+	 * @since 5.8.37
 	 */
 	default String getPinyin(String str, String separator,boolean tone){
 		return getPinyin(str, separator);

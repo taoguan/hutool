@@ -40,7 +40,7 @@ class VersionUtilTest {
 		String currentVersion = "1.0.2";
 		assertTrue(VersionUtil.isLessThanOrEqual(currentVersion, "1.0.2"));
 		assertFalse(VersionUtil.isLessThanOrEqual(currentVersion, "1.0.1"));
-		assertFalse(VersionUtil.isLessThanOrEqual(currentVersion, "1.1"));
+		assertTrue(VersionUtil.isLessThanOrEqual(currentVersion, "1.1"));
 	}
 
 	@Test

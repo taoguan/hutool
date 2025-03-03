@@ -408,7 +408,11 @@ public class TypeUtil {
 			return ActualTypeMapperPool.getActualType(type, (TypeVariable<?>) typeVariable);
 		}
 		if (typeVariable instanceof GenericArrayType) {
-			return ActualTypeMapperPool.getActualType(type, (GenericArrayType) typeVariable);
+			//return ActualTypeMapperPool.getActualType(type, (GenericArrayType) typeVariable);
+			final Type actualType = ActualTypeMapperPool.getActualType(type, (GenericArrayType) typeVariable);
+			if(null != actualType){
+				return actualType;
+			}
 		}
 
 		// 没有需要替换的泛型变量，原样输出

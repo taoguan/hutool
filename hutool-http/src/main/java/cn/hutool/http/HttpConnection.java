@@ -230,6 +230,31 @@ public class HttpConnection {
 	}
 
 	/**
+	 * 设置请求头<br>
+	 * 不覆盖原有请求头并判断是否需要聚合请求头
+	 *
+	 * @param headerMap 请求头
+	 * @param isOverride 是否覆盖
+	 * @param isHeaderAggregated 是否聚合
+	 * @return this
+	 */
+	public HttpConnection header(Map<String, List<String>> headerMap, boolean isOverride, boolean isHeaderAggregated) {
+		if (!isHeaderAggregated){
+			return header(headerMap,isOverride);
+		}
+		if (MapUtil.isNotEmpty(headerMap)) {
+			String name;
+			for (Entry<String, List<String>> entry : headerMap.entrySet()) {
+				name = entry.getKey();
+				List<String> values = entry.getValue();
+				String headValues = StrUtil.join(",", values);
+				this.header(name, StrUtil.nullToEmpty(headValues), true);
+			}
+		}
+		return this;
+	}
+
+	/**
 	 * 获取Http请求头
 	 *
 	 * @param name Header名

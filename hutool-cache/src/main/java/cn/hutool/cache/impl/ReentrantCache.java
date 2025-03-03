@@ -112,6 +112,7 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 			if(null != co && co.isExpired()){
 				//过期移除
 				removeWithoutLock(key);
+				onRemove(co.key, co.obj);
 				co = null;
 			}
 		} finally {

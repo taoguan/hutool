@@ -54,6 +54,16 @@ public class JPinyinEngine implements PinyinEngine {
 	}
 
 	@Override
+	public String getPinyin(char c, boolean tone) {
+		if (tone) {
+			String[] results = PinyinHelper.convertToPinyinArray(c, PinyinFormat.WITH_TONE_MARK);
+			return ArrayUtil.isEmpty(results) ? String.valueOf(c) : results[0];
+		}else {
+			return getPinyin(c);
+		}
+	}
+
+	@Override
 	public String getPinyin(String str, String separator) {
 		try {
 			return PinyinHelper.convertToPinyinString(str, separator, format);
@@ -61,4 +71,19 @@ public class JPinyinEngine implements PinyinEngine {
 			throw new cn.hutool.extra.pinyin.PinyinException(e);
 		}
 	}
+
+	@Override
+	public String getPinyin(String str, String separator, boolean tone) {
+		if (tone) {
+			try {
+				return PinyinHelper.convertToPinyinString(str, separator, PinyinFormat.WITH_TONE_MARK);
+			} catch (PinyinException e) {
+				throw new cn.hutool.extra.pinyin.PinyinException(e);
+			}
+		}else {
+			return getPinyin(str, separator);
+		}
+
+	}
+
 }

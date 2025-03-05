@@ -45,7 +45,8 @@ public class DialectFactory implements DriverNamePool {
 	 */
 	private static Dialect internalNewDialect(String driverName) {
 		if (StrUtil.isNotBlank(driverName)) {
-			if (DRIVER_MYSQL.equalsIgnoreCase(driverName) || DRIVER_MYSQL_V6.equalsIgnoreCase(driverName)) {
+			if (DRIVER_MYSQL.equalsIgnoreCase(driverName) || DRIVER_MYSQL_V6.equalsIgnoreCase(driverName)
+				|| DRIVER_GOLDENDB.equalsIgnoreCase(driverName)) {
 				return new MysqlDialect();
 			} else if (DRIVER_ORACLE.equalsIgnoreCase(driverName) || DRIVER_ORACLE_OLD.equalsIgnoreCase(driverName)) {
 				return new OracleDialect();
@@ -164,6 +165,9 @@ public class DialectFactory implements DriverNamePool {
 		} else if (nameContainsProductInfo.contains("opengauss")) {
 			// OpenGauss
 			driver = DRIVER_OPENGAUSS;
+		} else if (nameContainsProductInfo.contains("goldendb")) {
+			// GoldenDB
+			driver = DRIVER_GOLDENDB;
 		}
 
 		return driver;

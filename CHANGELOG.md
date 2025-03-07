@@ -11,6 +11,7 @@
 * 【extra  】      `PinyinUtil`增加重载可选是否返回声调（pr#3875@Github）
 * 【http   】      `HttpBase`增加重载可选是否返回声调（pr#3883@Github）
 * 【core   】      增加`VersionUtil`版本比较工具（pr#3876@Github）
+* 【db     】      增加GoldenDB识别（pr#3886@Github）
 
 ### 🐞Bug修复
 * 【setting】      修复`SettingLoader`load未抛出异常导致配置文件无法正常遍历的问题（pr#3868@Github）

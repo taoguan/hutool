@@ -103,7 +103,7 @@ public class CombinationAnnotationElement implements AnnotatedElement, Serializa
 		parseDeclared(declaredAnnotations);
 
 		final Annotation[] annotations = element.getAnnotations();
-		if (declaredAnnotations.length == annotations.length) {
+		if (Arrays.equals(declaredAnnotations, annotations)) {
 			this.annotationMap = this.declaredAnnotationMap;
 		} else {
 			this.annotationMap = new TableMap<>();

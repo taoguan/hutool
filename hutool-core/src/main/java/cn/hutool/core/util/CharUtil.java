@@ -256,16 +256,18 @@ public class CharUtil implements CharPool {
 	 */
 	public static boolean isBlankChar(int c) {
 		return Character.isWhitespace(c)
-				|| Character.isSpaceChar(c)
-				|| c == '\ufeff'
-				|| c == '\u202a'
-				|| c == '\u0000'
-				// issue#I5UGSQ，Hangul Filler
-				|| c == '\u3164'
-				// Braille Pattern Blank
-				|| c == '\u2800'
-				// MONGOLIAN VOWEL SEPARATOR
-				|| c == '\u180e';
+			|| Character.isSpaceChar(c)
+			|| c == '\ufeff'
+			|| c == '\u202a'
+			|| c == '\u0000'
+			// issue#I5UGSQ，Hangul Filler
+			|| c == '\u3164'
+			// Braille Pattern Blank
+			|| c == '\u2800'
+			// Zero Width Non-Joiner, ZWNJ
+			|| c == '\u200c'
+			// MONGOLIAN VOWEL SEPARATOR
+			|| c == '\u180e';
 	}
 
 	/**
@@ -278,12 +280,12 @@ public class CharUtil implements CharPool {
 	public static boolean isEmoji(char c) {
 		//noinspection ConstantConditions
 		return false == ((c == 0x0) || //
-				(c == 0x9) || //
-				(c == 0xA) || //
-				(c == 0xD) || //
-				((c >= 0x20) && (c <= 0xD7FF)) || //
-				((c >= 0xE000) && (c <= 0xFFFD)) || //
-				((c >= 0x100000) && (c <= 0x10FFFF)));
+			(c == 0x9) || //
+			(c == 0xA) || //
+			(c == 0xD) || //
+			((c >= 0x20) && (c <= 0xD7FF)) || //
+			((c >= 0xE000) && (c <= 0xFFFD)) || //
+			((c >= 0x100000) && (c <= 0x10FFFF)));
 	}
 
 	/**

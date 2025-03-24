@@ -14,6 +14,7 @@
 * 【db     】      增加GoldenDB识别（pr#3886@Github）
 * 【http   】      改进`UrlQuery`对无参URL增加判断识别（issue#IBRVE4@Gitee）
 * 【core   】      改进`PropDesc`中去除Transient引用避免NoClassDefFoundError（issue#3901@Github）
+* 【core   】      `StrUtil.isBlank`增加`\u200c`判断（issue#3903@Github）
 
 ### 🐞Bug修复
 * 【setting】      修复`SettingLoader`load未抛出异常导致配置文件无法正常遍历的问题（pr#3868@Github）

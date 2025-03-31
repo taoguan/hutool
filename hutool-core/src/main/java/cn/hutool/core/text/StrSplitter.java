@@ -174,7 +174,8 @@ public class StrSplitter {
 
 	/**
 	 * 切分字符串<br>
-	 * 如果为空字符串或者null 则返回空集合
+	 * 如果提供的字符串为{@code null}，则返回一个空的{@link ArrayList}<br>
+	 * 如果提供的字符串为""，则当ignoreEmpty时返回空的{@link ArrayList}，否则返回只有一个""元素的{@link ArrayList}
 	 *
 	 * @param <R>         切分后的元素类型
 	 * @param text        被切分的字符串

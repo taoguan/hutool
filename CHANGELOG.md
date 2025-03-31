@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.37(2025-03-24)
+# 5.8.37(2025-03-31)
 
 ### 🐣新特性
 * 【json   】      ObjectMapper删除重复trim（pr#3859@Github）
@@ -16,6 +16,7 @@
 * 【core   】      改进`PropDesc`中去除Transient引用避免NoClassDefFoundError（issue#3901@Github）
 * 【core   】      `StrUtil.isBlank`增加`\u200c`判断（issue#3903@Github）
 * 【core   】      优化`CombinationAnnotationElement`注解数组性能（pr#1323@Gitee）
+* 【core   】      完善季度相关 API（pr#1324@Gitee）
 
 ### 🐞Bug修复
 * 【setting】      修复`SettingLoader`load未抛出异常导致配置文件无法正常遍历的问题（pr#3868@Github）

@@ -1,10 +1,10 @@
 package cn.hutool.core.date;
 
+import cn.hutool.core.lang.Assert;
+
 import java.time.DateTimeException;
 import java.time.MonthDay;
 import java.time.temporal.ChronoField;
-
-import cn.hutool.core.lang.Assert;
 
 /**
  * 季度枚举
@@ -41,6 +41,11 @@ public enum Quarter {
 		this.firstMonth = lastMonth - 2;
 	}
 
+	/**
+	 * 获取季度值
+	 *
+	 * @return 季度值
+	 */
 	public int getValue() {
 		return this.value;
 	}
@@ -54,7 +59,7 @@ public enum Quarter {
 	 * @see #Q4
 	 *
 	 * @param intValue 季度int表示
-	 * @return {@link Quarter}
+	 * @return {@code Quarter}
 	 */
 	public static Quarter of(int intValue) {
 		switch (intValue) {
@@ -116,18 +121,9 @@ public enum Quarter {
 	 * @param quarters 所添加的季度数量
 	 * @return 计算结果
 	 */
-	public Quarter plus(long quarters) {
-		final int amount = (int) ((quarters % 4) + 4);
+	public Quarter plus(int quarters) {
+		final int amount = (quarters % 4) + 4;
 		return Quarter.values()[(ordinal() + amount) % 4];
-	}
-
-	/**
-	 * 减去指定数量的季度
-	 * @param quarters 所减去的季度数量
-	 * @return 计算结果
-	 */
-	public Quarter minus(long quarters) {
-		return plus(-(quarters % 4));
 	}
 
 	// computes end

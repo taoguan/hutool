@@ -1,13 +1,10 @@
 package cn.hutool.core.date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 import java.time.MonthDay;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuarterTest {
 
@@ -207,62 +204,6 @@ public class QuarterTest {
 			assertEquals(Quarter.Q3, Quarter.Q2.plus(i));
 			assertEquals(Quarter.Q4, Quarter.Q3.plus(i));
 			assertEquals(Quarter.Q1, Quarter.Q4.plus(i));
-		}
-	}
-
-	@Test
-	void testMinusZeroAndNegativeNumber() {
-		for (int i = 0; i < 100; i += 4) {
-			assertEquals(Quarter.Q1, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q4.minus(i));
-		}
-		for (int i = 1; i < 100 + 1; i += 4) {
-			assertEquals(Quarter.Q4, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q4.minus(i));
-		}
-		for (int i = 2; i < 100 + 2; i += 4) {
-			assertEquals(Quarter.Q3, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q4.minus(i));
-		}
-		for (int i = 3; i < 100 + 3; i += 4) {
-			assertEquals(Quarter.Q2, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q4.minus(i));
-		}
-	}
-
-	@Test
-	void testMinusZeroAndPositiveRealNumbers() {
-		for (int i = 0; i > -100; i -= 4) {
-			assertEquals(Quarter.Q1, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q4.minus(i));
-		}
-		for (int i = -1; i > -(100 + 1); i -= 4) {
-			assertEquals(Quarter.Q2, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q4.minus(i));
-		}
-		for (int i = -2; i > -(100 + 2); i -= 4) {
-			assertEquals(Quarter.Q3, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q4, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q4.minus(i));
-		}
-		for (int i = -3; i > -(100 + 3); i -= 4) {
-			assertEquals(Quarter.Q4, Quarter.Q1.minus(i));
-			assertEquals(Quarter.Q1, Quarter.Q2.minus(i));
-			assertEquals(Quarter.Q2, Quarter.Q3.minus(i));
-			assertEquals(Quarter.Q3, Quarter.Q4.minus(i));
 		}
 	}
 }

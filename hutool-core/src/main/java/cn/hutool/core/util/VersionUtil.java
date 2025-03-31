@@ -40,6 +40,13 @@ public class VersionUtil {
 		return matchEl(currentVersion, CollUtil.join(compareVersions, defaultVersionsDelimiter));
 	}
 
+	/**
+	 * 是否匹配任意一个版本
+	 *
+	 * @param currentVersion  当前版本
+	 * @param compareVersions 待匹配的版本列表
+	 * @return true 包含待匹配的版本
+	 */
 	public static boolean anyMatch(String currentVersion, String... compareVersions) {
 		return matchEl(currentVersion, ArrayUtil.join(compareVersions, defaultVersionsDelimiter));
 	}
@@ -90,13 +97,13 @@ public class VersionUtil {
 
 	/**
 	 * 当前版本是否满足版本表达式
-	 * <pre>
+	 * <pre>{@code
 	 *     matchEl("1.0.2", ">=1.0.2") == true
 	 *     matchEl("1.0.2", "<1.0.1;1.0.2") == true
 	 *     matchEl("1.0.2", "<1.0.2") == false
 	 *     matchEl("1.0.2", "1.0.0-1.1.1") == true
 	 *     matchEl("1.0.2", "1.0.0-1.1.1") == true
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param currentVersion 当前本本
 	 * @param versionEl      版本表达式
@@ -108,13 +115,13 @@ public class VersionUtil {
 
 	/**
 	 * 当前版本是否满足版本表达式
-	 * <pre>
+	 * <pre>{@code
 	 *     matchEl("1.0.2", ">=1.0.2", ";") == true
 	 *     matchEl("1.0.2", "<1.0.1,1.0.2", ",") == true
 	 *     matchEl("1.0.2", "<1.0.2", ";") == false
 	 *     matchEl("1.0.2", "1.0.0-1.1.1", ",") == true
 	 *     matchEl("1.0.2", "1.0.1,1.0.2-1.1.1", ",") == true
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param currentVersion    当前本本
 	 * @param versionEl         版本表达式（可以匹配多个条件，使用指定的分隔符（默认;）分隔）,

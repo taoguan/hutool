@@ -219,14 +219,16 @@
 					<plugin>
 						<groupId>org.sonatype.central</groupId>
 						<artifactId>central-publishing-maven-plugin</artifactId>
-						<version>0.6.0</version>
+						<version>0.7.0</version>
 						<extensions>true</extensions>
 						<configuration>
 							<publishingServerId>central</publishingServerId>
 							<!-- 自动发布 -->
-							<autoPublish>true</autoPublish>
+							<autoPublish>false</autoPublish>
 							<!-- 等待发布 -->
+							<!--
 							<waitUntil>published</waitUntil>
+							-->
 						</configuration>
 					</plugin>
 				</plugins>

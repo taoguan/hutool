@@ -35,7 +35,7 @@ import java.util.function.Supplier;
  *     <li>弱引用：懒加载，首次使用时创建段，未使用时可被垃圾回收，适合大量段但使用较少的场景。</li>
  * </ul>
  *
- * @author dakuo
+ * @author Guava,dakuo
  * @since 5.8.37
  */
 public abstract class SegmentLock<L> {

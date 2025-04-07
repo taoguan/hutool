@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -92,5 +93,12 @@ public class PathUtilTest {
 	@Disabled
 	public void moveTest2(){
 		PathUtil.move(Paths.get("D:\\project\\test1.txt"), Paths.get("D:\\project\\test2.txt"), false);
+	}
+
+	@Test
+	@Disabled
+	public void delNullDirTest() {
+		Path path = null;
+		assertTrue(PathUtil.del(path));
 	}
 }

@@ -8,6 +8,6 @@ public class IssueIC00HGTest {
 	@Test
 	@Disabled
 	void dateToStringTest(){
-		Console.log(DateUtil.date().toSqlDate());
+		Console.log(DateUtil.date().toString());
 	}
 }

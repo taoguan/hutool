@@ -1,7 +1,6 @@
 package cn.hutool.db;
 
 import cn.hutool.core.lang.Console;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author daoyou.dev
  */
 public class HanaTest {
-	@BeforeAll
+	//@BeforeAll
 	public static void createTable() throws SQLException {
 		Db db = Db.use("hana");
 		long count = db.count("SELECT * FROM SYS.TABLES WHERE TABLE_NAME = ? AND SCHEMA_NAME = CURRENT_SCHEMA", "user");
@@ -77,6 +76,7 @@ public class HanaTest {
 	}
 
 	@Test
+	@Disabled
 	public void upsertTest() throws SQLException {
 		DbUtil.setReturnGeneratedKeyGlobal(false);
 		Db db = Db.use("hana");

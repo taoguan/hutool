@@ -21,7 +21,11 @@ import java.util.List;
  * @author daoyou.dev
  */
 public class HanaDialect extends AnsiSqlDialect {
+	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 构造
+	 */
 	public HanaDialect() {
 		wrapper = new Wrapper('"');
 	}

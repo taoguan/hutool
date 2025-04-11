@@ -4,7 +4,6 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ConcurrencyTester;
 import cn.hutool.core.thread.ThreadUtil;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +49,6 @@ public class SimpleCacheTest {
 	}
 
 	@Test
-	@Disabled
 	public void getConcurrencyTest(){
 		final SimpleCache<String, String> cache = new SimpleCache<>();
 		final ConcurrencyTester tester = new ConcurrencyTester(500);

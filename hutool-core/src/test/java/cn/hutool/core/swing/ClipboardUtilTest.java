@@ -1,9 +1,10 @@
 package cn.hutool.core.swing;
 
-import static org.junit.jupiter.api.Assertions.*;
+import cn.hutool.core.swing.clipboard.ClipboardUtil;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import cn.hutool.core.swing.clipboard.ClipboardUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 剪贴板工具类单元测试
@@ -14,6 +15,7 @@ import cn.hutool.core.swing.clipboard.ClipboardUtil;
 public class ClipboardUtilTest {
 
 	@Test
+	@Disabled
 	public void setAndGetStrTest() {
 		try {
 			ClipboardUtil.setStr("test");

@@ -63,6 +63,8 @@ public class FileUtilTest {
 		final String parseSmbPath = FileUtil.getAbsolutePath(smbPath);
 		assertEquals(smbPath, parseSmbPath);
 		assertTrue(FileUtil.isAbsolutePath(smbPath));
+		Console.log(Paths.get(smbPath));
+		Console.log(Paths.get(smbPath).isAbsolute());
 		assertTrue(Paths.get(smbPath).isAbsolute());
 	}
 

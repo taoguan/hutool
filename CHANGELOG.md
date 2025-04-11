@@ -7,6 +7,7 @@
 ### 🐣新特性
 * 【core   】      `PathUtil#del`增加null检查（pr#1331@Gitee）
 * 【db     】      增加SAP HANA识别及方言（pr#3914@Github）
+* 【crypto 】      增加`Argon2`类，实现Argon2算法（issue#3890@Github）
 
 ### 🐞Bug修复
 

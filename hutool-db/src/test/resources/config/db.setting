@@ -77,3 +77,9 @@ user = SYSDBA
 pass = 123456789
 remarks = true
 
+[hana]
+url = jdbc:sap://127.0.0.1:30015/HAP_CONN?autoReconnect=true
+user = DB
+pass = 123456
+remarks = true
+

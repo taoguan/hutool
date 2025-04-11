@@ -62,6 +62,8 @@ public class DialectFactory implements DriverNamePool {
 				return new PhoenixDialect();
 			} else if (DRIVER_DM7.equalsIgnoreCase(driverName)) {
 				return new DmDialect();
+			} else if (DRIVER_HANA.equalsIgnoreCase(driverName)) {
+				return new HanaDialect();
 			}
 		}
 		// 无法识别可支持的数据库类型默认使用ANSI方言，可兼容大部分SQL语句
@@ -168,6 +170,9 @@ public class DialectFactory implements DriverNamePool {
 		} else if (nameContainsProductInfo.contains("goldendb")) {
 			// GoldenDB
 			driver = DRIVER_GOLDENDB;
+		} else if (nameContainsProductInfo.contains("sap")) {
+			// sap hana
+			driver = DRIVER_HANA;
 		}
 
 		return driver;

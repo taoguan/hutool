@@ -481,24 +481,26 @@ public class FileUtilTest {
 		final List<String> list = ListUtil.of("text/javascript", "application/x-javascript");
 		assertTrue(list.contains(mimeType));
 
-		// office03
 		if(FileUtil.isWindows()){
 			// Linux下的OpenJDK无法正确识别
+
+			// office03
 			mimeType = FileUtil.getMimeType("test.doc");
 			assertEquals("application/msword", mimeType);
 			mimeType = FileUtil.getMimeType("test.xls");
 			assertEquals("application/vnd.ms-excel", mimeType);
 			mimeType = FileUtil.getMimeType("test.ppt");
 			assertEquals("application/vnd.ms-powerpoint", mimeType);
+
+			// office07+
+			mimeType = FileUtil.getMimeType("test.docx");
+			assertEquals("application/vnd.openxmlformats-officedocument.wordprocessingml.document", mimeType);
+			mimeType = FileUtil.getMimeType("test.xlsx");
+			assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", mimeType);
+			mimeType = FileUtil.getMimeType("test.pptx");
+			assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation", mimeType);
 		}
 
-		// office07+
-		mimeType = FileUtil.getMimeType("test.docx");
-		assertEquals("application/vnd.openxmlformats-officedocument.wordprocessingml.document", mimeType);
-		mimeType = FileUtil.getMimeType("test.xlsx");
-		assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", mimeType);
-		mimeType = FileUtil.getMimeType("test.pptx");
-		assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation", mimeType);
 
 		// pr#2617@Github
 		mimeType = FileUtil.getMimeType("test.wgt");

@@ -482,12 +482,15 @@ public class FileUtilTest {
 		assertTrue(list.contains(mimeType));
 
 		// office03
-		mimeType = FileUtil.getMimeType("test.doc");
-		assertEquals("application/msword", mimeType);
-		mimeType = FileUtil.getMimeType("test.xls");
-		assertEquals("application/vnd.ms-excel", mimeType);
-		mimeType = FileUtil.getMimeType("test.ppt");
-		assertEquals("application/vnd.ms-powerpoint", mimeType);
+		if(FileUtil.isWindows()){
+			// Linux下的OpenJDK无法正确识别
+			mimeType = FileUtil.getMimeType("test.doc");
+			assertEquals("application/msword", mimeType);
+			mimeType = FileUtil.getMimeType("test.xls");
+			assertEquals("application/vnd.ms-excel", mimeType);
+			mimeType = FileUtil.getMimeType("test.ppt");
+			assertEquals("application/vnd.ms-powerpoint", mimeType);
+		}
 
 		// office07+
 		mimeType = FileUtil.getMimeType("test.docx");

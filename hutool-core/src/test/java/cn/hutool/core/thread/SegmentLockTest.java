@@ -42,6 +42,7 @@ public class SegmentLockTest {
 		assertEquals(SEGMENT_COUNT, readWriteLock.size());
 	}
 
+	@SuppressWarnings("StringOperationCanBeSimplified")
 	@Test
 	public void testGetWithSameKey() {
 		// 相同 key 应返回相同锁
@@ -132,6 +133,7 @@ public class SegmentLockTest {
 		assertEquals(1, sem.availablePermits(), "释放一个许可后应为 1");
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test
 	public void testReadWriteLock() throws InterruptedException {
 		ReadWriteLock rwLock = readWriteLock.get("testKey");

@@ -35,8 +35,9 @@ import java.util.function.Supplier;
  *     <li>弱引用：懒加载，首次使用时创建段，未使用时可被垃圾回收，适合大量段但使用较少的场景。</li>
  * </ul>
  *
+ * @param <L> 锁类型
  * @author Guava,dakuo
- * @since 5.8.37
+ * @since 5.8.38
  */
 public abstract class SegmentLock<L> {
 
@@ -82,7 +83,7 @@ public abstract class SegmentLock<L> {
 	 * @param keys 非空 key 集合
 	 * @return 锁段列表（可能有重复）
 	 */
-	public Iterable<L> bulkGet(Iterable<? extends Object> keys) {
+	public Iterable<L> bulkGet(Iterable<?> keys) {
 		@SuppressWarnings("unchecked")
 		List<Object> result = (List<Object>) CollUtil.newArrayList(keys);
 		if (CollUtil.isEmpty(result)) {
@@ -268,6 +269,7 @@ public abstract class SegmentLock<L> {
 	/**
 	 * 弱引用安全的条件包装类。
 	 */
+	@SuppressWarnings("FieldCanBeLocal")
 	private static final class WeakSafeCondition implements Condition {
 		private final Condition delegate;
 
@@ -480,6 +482,8 @@ public abstract class SegmentLock<L> {
 	 * 填充锁，避免缓存行干扰。
 	 */
 	private static class PaddedLock extends ReentrantLock {
+		private static final long serialVersionUID = 1L;
+
 		long unused1;
 		long unused2;
 		long unused3;
@@ -493,6 +497,8 @@ public abstract class SegmentLock<L> {
 	 * 填充信号量，避免缓存行干扰。
 	 */
 	private static class PaddedSemaphore extends Semaphore {
+		private static final long serialVersionUID = 1L;
+
 		long unused1;
 		long unused2;
 		long unused3;

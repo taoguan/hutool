@@ -5,6 +5,8 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.bean.copier.ValueProvider;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.map.MapBuilder;
 import cn.hutool.core.map.MapUtil;
@@ -706,6 +708,37 @@ public class BeanUtilTest {
 		}
 
 	}
+
+	@Test
+	public void copyLargeListTest(){
+		final SubPerson person = new SubPerson();
+		person.setName("测试A11");
+		person.setAge(14);
+		person.setOpenid("11213232");
+
+		person.setId(UUID.randomUUID());
+		person.setSubName("sub名字");
+		person.setSlow(true);
+		person.setDate(LocalDateTime.now());
+		person.setDate2(LocalDate.now());
+
+		final List<SubPerson> list = new ArrayList<>();
+		CollUtil.padRight(list, 1000, person);
+
+		// 预先构建一次缓存，防止干扰
+		BeanUtil.copyProperties(person, new SubPerson2());
+		// org.springframework.beans.BeanUtils.copyProperties(new SubPerson(), new SubPerson2());
+
+		Console.log("copy bean size: {}\n", list.size());
+		final StopWatch stopWatch = new StopWatch();
+		stopWatch.start("BeanUtil#copyToList");
+		List<SubPerson2> copyList = BeanUtil.copyToList(list, SubPerson2.class);
+		// list.forEach(item -> org.springframework.beans.BeanUtils.copyProperties(item, new SubPerson2()));
+		stopWatch.stop();
+		Console.log(stopWatch.prettyPrint());
+		assertEquals(copyList.size(),list.size());
+	}
+
 
 	@Test
 	public void toMapTest() {

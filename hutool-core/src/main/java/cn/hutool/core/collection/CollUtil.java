@@ -395,22 +395,57 @@ public class CollUtil {
 	 * @since 5.3.5
 	 */
 	public static <T> List<T> subtractToList(Collection<T> coll1, Collection<T> coll2) {
+		return subtractToList(coll1, coll2, true);
+	}
 
+	/**
+	 * 计算集合的单差集，即只返回【集合1】中有，但是【集合2】中没有的元素
+	 * 只要【集合1】中的某个元素在【集合2】中存在（equals和hashcode），就会被排除
+	 *
+	 * <pre>
+	 * 示例：
+	 * 1. subtractToList([null, null, null, null], [null, null]) → []
+	 * 2. subtractToList([null, null, null, null], [null, null, "c"]) → []
+	 * 3. subtractToList(["a", "b", "c"], ["a", "b", "c"]) → []
+	 * 4. subtractToList([], ["a", "b", "c"]) → []
+	 * 5. subtractToList(["a", "b", "c"], []) → ["a", "b", "c"]
+	 * 6. subtractToList(["a", "a", "b", "b", "c", "c", "d"], ["b", "c"]) → ["a", "a", "d"]
+	 * 7. subtractToList(["a", null, "b"], ["a", "c"]) → [null, "b"]
+	 * 8. subtractToList(["a", "b", "c"], ["d", "e", "f"]) → ["a", "b", "c"]
+	 * 9. subtractToList(["a", "a", "b", "b", "c"], ["d", "e", "f"]) → ["a", "a", "b", "b", "c"]
+	 * </pre>
+	 *
+	 * @param coll1    集合1，需要计算差集的源集合
+	 * @param coll2    集合2，需要从集合1中排除的元素所在集合
+	 * @param isLinked 返回的集合类型是否是LinkedList，{@code true}返回{@link LinkedList}，{@code false}返回{@link ArrayList}
+	 * @param <T>      元素类型
+	 * @return 单差集结果。当【集合1】为空时返回空列表；当【集合2】为空时返回集合1的拷贝；否则返回【集合1】中排除【集合2】中所有元素后的结果
+	 */
+	public static <T> List<T> subtractToList(Collection<T> coll1, Collection<T> coll2, boolean isLinked) {
 		if (isEmpty(coll1)) {
 			return ListUtil.empty();
 		}
+
 		if (isEmpty(coll2)) {
-			return ListUtil.list(true, coll1);
+			return ListUtil.list(isLinked, coll1);
 		}
 
-		//将被交数用链表储存，防止因为频繁扩容影响性能
-		final List<T> result = new LinkedList<>();
+		/*
+			返回的集合最大不会超过 coll1.size
+		 	所以这里创建 ArrayList 时 initialCapacity 给的是 coll1.size
+		 	这样做可以避免频繁扩容
+		 */
+		final List<T> result = isLinked
+			? new LinkedList<>()
+			: new ArrayList<>(coll1.size());
+
 		Set<T> set = new HashSet<>(coll2);
 		for (T t : coll1) {
-			if (false == set.contains(t)) {
+			if (!set.contains(t)) {
 				result.add(t);
 			}
 		}
+
 		return result;
 	}
 

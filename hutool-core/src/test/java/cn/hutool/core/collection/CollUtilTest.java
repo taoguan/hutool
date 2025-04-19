@@ -846,6 +846,361 @@ public class CollUtilTest {
 	}
 
 	@Test
+	public void subtractToListAllNullTest() {
+		final List<String> list1 = new ArrayList<>();
+		list1.add(null);
+		list1.add(null);
+		list1.add(null);
+		list1.add(null);
+
+		final List<String> list2 = new ArrayList<>();
+		list2.add(null);
+		list2.add(null);
+
+		final List<String> result1 = CollUtil.subtractToList(list1, list2);
+		assertTrue(result1.isEmpty());
+		assertNotSame(result1, list1);
+
+		list2.add("c");
+		final List<String> result2 = CollUtil.subtractToList(list1, list2);
+		assertTrue(result2.isEmpty());
+		assertNotSame(result2, list1);
+	}
+
+	@Test
+	public void subtractToListEmptyTest() {
+		// 测试第一个集合为空的情况
+		final List<String> list1 = Collections.emptyList();
+		final List<String> list2 = Arrays.asList("a", "b", "c");
+
+		// 第一个集合为空时应返回空列表
+		final List<String> result1 = CollUtil.subtractToList(list1, list2);
+		assertTrue(result1.isEmpty());
+
+		// 测试第二个集合为空的情况
+		final List<String> list3 = Arrays.asList("a", "b", "c");
+		final List<String> list4 = Collections.emptyList();
+
+		// 第二个集合为空时应返回第一个集合的拷贝
+		final List<String> result2 = CollUtil.subtractToList(list3, list4);
+		assertEquals(3, result2.size());
+		assertEquals(list3, result2);
+		assertNotSame(list3, result2);
+	}
+
+	@Test
+	public void subtractToListDuplicateTest() {
+		// 测试第一个集合中有重复元素的情况
+		final List<String> list1 = Arrays.asList("a", "a", "b", "b", "c", "c", "d");
+		final List<String> list2 = Arrays.asList("b", "c");
+
+		// 应该返回所有不在第二个集合中的元素，包括重复的
+		final List<String> result = CollUtil.subtractToList(list1, list2);
+		assertEquals(3, result.size());
+		assertEquals("a", result.get(0));
+		assertEquals("a", result.get(1));
+		assertEquals("d", result.get(2));
+	}
+
+	@Test
+	public void subtractToListNoCommonElementsTest() {
+		// 测试集合1和集合2不包含相同元素的情况
+		final List<String> list1 = Arrays.asList("a", "b", "c");
+		final List<String> list2 = Arrays.asList("d", "e", "f");
+		
+		// 期望结果：返回集合1的完整拷贝
+		final List<String> result = CollUtil.subtractToList(list1, list2);
+		assertEquals(3, result.size());
+		assertEquals("a", result.get(0));
+		assertEquals("b", result.get(1));
+		assertEquals("c", result.get(2));
+		assertEquals(list1, result);
+		assertNotSame(list1, result); // 确保返回的是拷贝而不是原始引用
+		
+		// 测试集合1中有重复元素的情况
+		final List<String> list3 = Arrays.asList("a", "a", "b", "b", "c");
+		final List<String> list4 = Arrays.asList("d", "e", "f");
+		
+		// 期望结果：返回集合1的完整拷贝，包括重复元素
+		final List<String> result2 = CollUtil.subtractToList(list3, list4);
+		assertEquals(5, result2.size());
+		assertEquals("a", result2.get(0));
+		assertEquals("a", result2.get(1));
+		assertEquals("b", result2.get(2));
+		assertEquals("b", result2.get(3));
+		assertEquals("c", result2.get(4));
+		assertEquals(list3, result2);
+		assertNotSame(list3, result2);
+		
+		// 测试不同类型的元素但确保两个集合的泛型类型一致
+		final List<Integer> list5 = Arrays.asList(1, 2, 3);
+		final List<Integer> list6 = Arrays.asList(4, 5, 6);
+		
+		// 期望结果：返回集合1的完整拷贝
+		final List<Integer> result3 = CollUtil.subtractToList(list5, list6);
+		assertEquals(3, result3.size());
+		assertEquals(Integer.valueOf(1), result3.get(0));
+		assertEquals(Integer.valueOf(2), result3.get(1));
+		assertEquals(Integer.valueOf(3), result3.get(2));
+		assertEquals(list5, result3);
+		assertNotSame(list5, result3);
+	}
+
+	@Test
+	public void subtractToListWithLinkedTest() {
+		// 测试指定返回LinkedList的情况
+		final List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5);
+		final List<Integer> list2 = Arrays.asList(2, 4);
+
+		// 使用LinkedList
+		final List<Integer> result1 = CollUtil.subtractToList(list1, list2, true);
+		assertInstanceOf(LinkedList.class, result1);
+		assertEquals(3, result1.size());
+		assertEquals(Arrays.asList(1, 3, 5), result1);
+
+		// 使用ArrayList
+		final List<Integer> result2 = CollUtil.subtractToList(list1, list2, false);
+		assertInstanceOf(ArrayList.class, result2);
+		assertEquals(3, result2.size());
+		assertEquals(Arrays.asList(1, 3, 5), result2);
+	}
+
+	@Test
+	public void subtractToListWithNullElementsTest() {
+		// 测试包含null元素的情况
+		final List<String> list1 = new ArrayList<>();
+		list1.add("a");
+		list1.add(null);
+		list1.add("b");
+
+		final List<String> list2 = Arrays.asList("a", "c");
+
+		// null元素不在list2中，应该保留
+		final List<String> result = CollUtil.subtractToList(list1, list2);
+		assertEquals(2, result.size());
+		assertNull(result.get(0));
+		assertEquals("b", result.get(1));
+	}
+
+	@Test
+	public void subtractToListLargeCollectionTest() {
+		// 测试大集合性能
+		final int size = 10000;
+		final List<Integer> list1 = new ArrayList<>(size);
+		final List<Integer> list2 = new ArrayList<>(size / 2);
+
+		// 构建测试数据，list1 size为 10000，元素为 [0, 9999]
+		for (int i = 0; i < size; i++) {
+			list1.add(i);
+		}
+
+		// list2 size 为 5000，元素为 0, 2, 4, 6, 8, ..., 9996, 9998
+		for (int i = 0; i < size / 2; i++) {
+			list2.add(i * 2); // 偶数
+		}
+
+		// 记录开始时间
+		long startTime = System.currentTimeMillis();
+
+		// 执行操作
+		final List<Integer> result = CollUtil.subtractToList(list1, list2);
+
+		// 记录结束时间
+		long endTime = System.currentTimeMillis();
+
+		// 验证结果 - 应该只包含奇数
+		assertEquals(size / 2, result.size());
+		for (Integer num : result) {
+			assertEquals(1, num % 2);
+		}
+
+		// 输出性能指标
+		System.out.println("Large collection subtractToList took: " + (endTime - startTime) + "ms for " + size + " elements");
+	}
+
+	@Test
+	public void subtractToListPerformanceComparisonTest() {
+		// 比较不同实现方式的性能
+		final int list1Size = 100000, list2Size = 1000;
+		final List<Integer> list1 = new ArrayList<>(list1Size);
+		final List<Integer> list2 = new ArrayList<>(list2Size);
+
+		// 构建测试数据，list1 size 为 100000
+		// 元素为 [0, 99999]
+		for (int i = 0; i < list1Size; i++) {
+			list1.add(i);
+		}
+
+		// [0, 9999]
+		for (int i = 0; i < list2Size; i++) {
+			list2.add(i);
+		}
+
+		// 测试LinkedList性能
+		long startTime1 = System.currentTimeMillis();
+		final List<Integer> result1 = CollUtil.subtractToList(list1, list2, true);
+		long endTime1 = System.currentTimeMillis();
+		long linkedListTime = endTime1 - startTime1;
+
+		// 测试ArrayList性能
+		long startTime2 = System.currentTimeMillis();
+		final List<Integer> result2 = CollUtil.subtractToList(list1, list2, false);
+		long endTime2 = System.currentTimeMillis();
+		long arrayListTime = endTime2 - startTime2;
+
+		// 验证结果相同
+		assertEquals(result1.size(), result2.size());
+		assertEquals(list1Size - list2Size, result1.size());
+
+		// 输出性能比较
+		System.out.println("subtractToList performance comparison for " + list1Size + " elements:");
+		System.out.println("LinkedList implementation: " + linkedListTime + "ms");
+		System.out.println("ArrayList implementation: " + arrayListTime + "ms");
+	}
+
+	@Test
+	public void subtractToListPreservesOrderTest() {
+		// 测试确保保留原始集合的顺序
+		final List<String> list1 = Arrays.asList("c", "a", "d", "b", "e");
+		final List<String> list2 = Arrays.asList("a", "e");
+
+		// 减去后应该保持原顺序：c, d, b
+		final List<String> result = CollUtil.subtractToList(list1, list2);
+		assertEquals(3, result.size());
+		assertEquals("c", result.get(0));
+		assertEquals("d", result.get(1));
+		assertEquals("b", result.get(2));
+	}
+
+	@Test
+	public void subtractToListTypeTest() {
+		// 测试默认返回LinkedList的特性（旧版本特性）
+		final List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5);
+		final List<Integer> list2 = Arrays.asList(2, 4);
+
+		// 不指定类型时，旧版本默认使用LinkedList
+		final List<Integer> result = CollUtil.subtractToList(list1, list2);
+		assertInstanceOf(LinkedList.class, result);
+		assertEquals(3, result.size());
+		assertEquals(Arrays.asList(1, 3, 5), result);
+	}
+
+	@Test
+	public void subtractToListNullElementsComparisonTest() {
+		// 测试对null元素处理的一致性
+		final ArrayList<String> list1 = new ArrayList<>();
+		list1.add(null);
+		list1.add("a");
+		list1.add(null);
+		list1.add("b");
+
+		final ArrayList<String> list2 = new ArrayList<>();
+		list2.add("a");
+
+		// 默认调用（旧版行为）
+		final List<String> result1 = CollUtil.subtractToList(list1, list2);
+		// 指定LinkedList（模拟旧版）
+		final List<String> result2 = CollUtil.subtractToList(list1, list2, true);
+		// 指定ArrayList（新版特性）
+		final List<String> result3 = CollUtil.subtractToList(list1, list2, false);
+
+		// 验证三种结果一致, 都应该是 [null, null, "b"]
+		assertEquals(3, result1.size());
+		assertEquals(3, result2.size());
+		assertEquals(3, result3.size());
+
+		// 都应该包含null元素和 "b"
+		assertTrue(result1.contains(null));
+		assertTrue(result1.contains("b"));
+		assertFalse(result1.contains("a"));
+
+		// 旧版实现和新版保持空元素顺序一致性
+		assertNull(result1.get(0));
+		assertNull(result1.get(1));
+		assertEquals("b", result1.get(2));
+
+		// 结果应该相同
+		assertEquals(result1, result2);
+		assertEquals(result1, result3);
+		assertEquals(result1.toString(), result3.toString());
+	}
+
+	@Test
+	public void subtractToListWithCustomObjectsTest() {
+		// 测试自定义对象的情况
+		final Person p1 = new Person("张三", 20, "male", 1);
+		final Person p2 = new Person("李四", 21, "female", 2);
+		final Person p3 = new Person("王五", 22, "male", 3);
+		final Person p4 = new Person("赵六", 23, "female", 4);
+
+		final List<Person> list1 = Arrays.asList(p1, p2, p3, p4);
+		final List<Person> list2 = Arrays.asList(p2, p4);
+
+		// 减去后应该只剩下p1和p3
+		final List<Person> result = CollUtil.subtractToList(list1, list2);
+		assertEquals(2, result.size());
+		assertEquals("张三", result.get(0).getName());
+		assertEquals(20, result.get(0).getAge());
+		assertEquals("male", result.get(0).getGender());
+		assertEquals(1, result.get(0).getId());
+
+		assertEquals("王五", result.get(1).getName());
+		assertEquals(22, result.get(1).getAge());
+		assertEquals("male", result.get(1).getGender());
+		assertEquals(3, result.get(1).getId());
+	}
+
+	@Test
+	public void subtractToListSameObjectsTest() {
+		// 测试两个集合有完全相同对象的情况
+		final List<String> list1 = Arrays.asList("a", "b", "c");
+		final List<String> list2 = Arrays.asList("a", "b", "c");
+
+		// 减去后应该为空列表
+		final List<String> result = CollUtil.subtractToList(list1, list2);
+		assertTrue(result.isEmpty());
+
+		// 验证结果类型
+		assertInstanceOf(LinkedList.class, result);
+		assertNotSame(result, list1);
+	}
+
+	@Test
+	public void subtractToListCollectionImplementationTest() {
+		// 测试非List集合实现的情况
+		final Set<String> set1 = new HashSet<>(Arrays.asList("a", "b", "c", "d"));
+		final Set<String> set2 = new LinkedHashSet<>(Arrays.asList("b", "d"));
+
+		// 减去后应该只剩下a和c
+		final List<String> result = CollUtil.subtractToList(set1, set2);
+		assertEquals(2, result.size());
+		assertTrue(result.contains("a"));
+		assertTrue(result.contains("c"));
+
+		// 验证结果类型
+		assertInstanceOf(LinkedList.class, result);
+	}
+
+	@Test
+	public void subtractToListConsistencyTest() {
+		// 测试subtractToList与subtract方法的一致性
+		final List<String> list1 = Arrays.asList("a", "b", "c", "d", "e");
+		final List<String> list2 = Arrays.asList("b", "d");
+
+		// 使用subtract方法
+		final Collection<String> subtractResult = CollUtil.subtract(list1, list2);
+		// 使用subtractToList方法
+		final List<String> subtractToListResult = CollUtil.subtractToList(list1, list2);
+
+		// 虽然实现类型不同，但内容应该一致
+		assertEquals(new HashSet<>(subtractResult), new HashSet<>(subtractToListResult));
+		assertEquals(3, subtractToListResult.size());
+		assertTrue(subtractToListResult.contains("a"));
+		assertTrue(subtractToListResult.contains("c"));
+		assertTrue(subtractToListResult.contains("e"));
+	}
+
+	@Test
 	public void sortComparableTest() {
 		final List<String> of = ListUtil.toList("a", "c", "b");
 		final List<String> sort = CollUtil.sort(of, new ComparableComparator<>());

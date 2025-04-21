@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.38(2025-04-17)
+# 5.8.38(2025-04-21)
 
 ### 🐣新特性
 * 【core   】      `PathUtil#del`增加null检查（pr#1331@Gitee）
@@ -10,6 +10,7 @@
 * 【crypto 】      增加`Argon2`类，实现Argon2算法（issue#3890@Github）
 * 【core   】      `CharSequenceUtil`增加toLoweCase和toUpperCase方法（issue#IC0H2B@Gitee）
 * 【core   】      增加分段锁实现`SegmentLock`（pr#1330@Gitee）
+* 【core   】      重载subtractToList方法，提供isLinked选项（pr#3923@Github）
 
 ### 🐞Bug修复
 * 【setting】      修复`Setting`autoLoad可能的加载为空的问题（issue#3919@Github）

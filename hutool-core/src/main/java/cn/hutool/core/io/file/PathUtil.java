@@ -165,7 +165,7 @@ public class PathUtil {
 	 * @since 4.4.2
 	 */
 	public static boolean del(Path path) throws IORuntimeException {
-		if (Files.notExists(path)) {
+		if (null == path || Files.notExists(path)) {
 			return true;
 		}
 

@@ -4,14 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.io.resource.ClassPathResource;
-import cn.hutool.core.io.resource.FileResource;
-import cn.hutool.core.io.resource.Resource;
-import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.core.io.resource.UrlResource;
+import cn.hutool.core.io.resource.*;
 import cn.hutool.core.io.watch.SimpleWatcher;
 import cn.hutool.core.io.watch.WatchMonitor;
 import cn.hutool.core.io.watch.WatchUtil;
+import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.CharsetUtil;
@@ -24,12 +21,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -229,7 +221,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
 				// 先关闭之前的监听
 				this.watchMonitor.close();
 			}
-			this.watchMonitor = WatchUtil.createModify(resource.getUrl(), new SimpleWatcher() {
+			this.watchMonitor = WatchUtil.createModify(resource.getUrl(), new DelayWatcher(new SimpleWatcher() {
 				@Override
 				public void onModify(WatchEvent<?> event, Path currentPath) {
 					boolean success = load();
@@ -238,7 +230,8 @@ public class Setting extends AbsSetting implements Map<String, String> {
 						callback.accept(success);
 					}
 				}
-			});
+			}, 600));
+
 			this.watchMonitor.start();
 			StaticLog.debug("Auto load for [{}] listenning...", this.resource.getUrl());
 		} else {

@@ -1,6 +1,5 @@
 package cn.hutool.core.text.csv;
 
-import cn.hutool.core.util.CharUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +18,7 @@ public class Issue3705Test {
 			csvWriter.flush();
 		}
 
-		String lineSeparator = new String(new char[]{CharUtil.CR, CharUtil.LF});
-
-		Assertions.assertEquals(
-			"\"2024-08-20 14:24:35,\"" + lineSeparator + "最后一行",
-			stringWriter.toString());
+		// CsvWriteConfig中默认为`\r\n`
+		Assertions.assertEquals("\"2024-08-20 14:24:35,\"\r\n最后一行", stringWriter.toString());
 	}
 }

@@ -120,4 +120,8 @@ public interface DriverNamePool {
 	 * JDBC 驱动 GoldenDB
 	 */
 	String DRIVER_GOLDENDB = "com.goldendb.jdbc.Driver";
+	/**
+	 * JDBC 驱动 Sap Hana
+	 */
+	String DRIVER_HANA = "com.sap.db.jdbc.Driver";
 }

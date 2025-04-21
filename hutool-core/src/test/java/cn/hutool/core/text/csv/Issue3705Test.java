@@ -19,8 +19,6 @@ public class Issue3705Test {
 		}
 
 		// CsvWriteConfig中默认为`\r\n`
-		Assertions.assertEquals(
-			"\"2024-08-20 14:24:35,\"\r\n最后一行",
-			stringWriter.toString());
+		Assertions.assertEquals("\"2024-08-20 14:24:35,\"\r\n最后一行", stringWriter.toString());
 	}
 }

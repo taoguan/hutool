@@ -7,6 +7,8 @@ import cn.hutool.core.util.CharsetUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -58,6 +60,7 @@ public class FileUtilTest {
 	}
 
 	@Test
+	@EnabledOnOs(OS.WINDOWS)
 	public void smbPathTest() {
 		final String smbPath = "\\\\192.168.1.1\\share\\rc-source";
 		final String parseSmbPath = FileUtil.getAbsolutePath(smbPath);

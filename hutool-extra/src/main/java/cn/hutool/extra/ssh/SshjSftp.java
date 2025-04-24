@@ -88,7 +88,7 @@ public class SshjSftp extends AbstractFtp {
 	 * @param config FTP配置
 	 * @since 5.3.3
 	 */
-	protected SshjSftp(FtpConfig config) {
+	public SshjSftp(FtpConfig config) {
 		super(config);
 		init();
 	}
@@ -207,6 +207,23 @@ public class SshjSftp extends AbstractFtp {
 		List<String> files = ls(sourcePath);
 		if (files != null && !files.isEmpty()) {
 			files.forEach(path -> download(sourcePath + "/" + path, destDir));
+		}
+	}
+
+	/**
+	 * 重命名文件/目录
+	 *
+	 * @param from 原路径
+	 * @param to   目标路径
+	 *
+	 * @throws FtpException FTP异常
+	 */
+	@Override
+	public void rename(String from, String to) throws FtpException {
+		try {
+			sftp.rename(from, to);
+		} catch (IOException e) {
+			throw new FtpException(e);
 		}
 	}
 

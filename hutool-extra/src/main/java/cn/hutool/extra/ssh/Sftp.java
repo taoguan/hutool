@@ -648,6 +648,23 @@ public class Sftp extends AbstractFtp {
 	}
 
 	/**
+	 * 重命名文件/目录
+	 *
+	 * @param from 原路径
+	 * @param to   目标路径
+	 *
+	 * @throws JschRuntimeException Jsch异常
+	 */
+	@Override
+	public void rename(String from, String to) throws JschRuntimeException {
+		try {
+			getClient().rename(from, to);
+		} catch (SftpException e) {
+			throw new JschRuntimeException(e);
+		}
+	}
+
+	/**
 	 * 获取远程文件
 	 *
 	 * @param src  远程文件路径

@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 基于sshj 框架SFTP 封装测试.
@@ -16,19 +17,19 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author youyongkun
  * @since 5.7.18
  */
-class SftpTest {
+class SshjSftpTest {
 
-	private static Sftp sftp;
+	private static SshjSftp sshjSftp;
 
 	@BeforeAll
 	public static void init() {
-		sftp = new Sftp("localhost", 22, "test", "test", CharsetUtil.CHARSET_UTF_8);
+		sshjSftp = new SshjSftp("localhost", 22, "test", "test", CharsetUtil.CHARSET_UTF_8);
 	}
 
 	@Test
 	@Disabled
 	public void lsTest() {
-		List<String> files = sftp.ls("/");
+		List<String> files = sshjSftp.ls("/");
 		if (files != null && !files.isEmpty()) {
 			files.forEach(System.out::print);
 		}
@@ -37,19 +38,19 @@ class SftpTest {
 	@Test
 	@Disabled
 	public void downloadTest() {
-		sftp.recursiveDownloadFolder("/home/test/temp", new File("C:\\Users\\akwangl\\Downloads\\temp"));
+		sshjSftp.recursiveDownloadFolder("/home/test/temp", new File("C:\\Users\\akwangl\\Downloads\\temp"));
 	}
 
 	@Test
 	@Disabled
 	public void uploadTest() {
-		sftp.upload("/home/test/temp/", new File("C:\\Users\\akwangl\\Downloads\\temp\\辽宁_20190718_104324.CIME"));
+		sshjSftp.upload("/home/test/temp/", new File("C:\\Users\\akwangl\\Downloads\\temp\\辽宁_20190718_104324.CIME"));
 	}
 
 	@Test
 	@Disabled
 	public void mkDirTest() {
-		boolean flag = sftp.mkdir("/home/test/temp");
+		boolean flag = sshjSftp.mkdir("/home/test/temp");
 		System.out.println("是否创建成功: " + flag);
 	}
 
@@ -57,30 +58,29 @@ class SftpTest {
 	@Disabled
 	public void mkDirsTest() {
 		// 在当前目录下批量创建目录
-		sftp.mkDirs("/home/test/temp");
+		sshjSftp.mkDirs("/home/test/temp");
 	}
 
 	@Test
 	@Disabled
 	public void delDirTest() {
-		sftp.delDir("/home/test/temp");
+		sshjSftp.delDir("/home/test/temp");
 	}
 
 	@Test
 	public void pwdTest() {
 //		mkDirsTest();
-		sftp.mkdir("/ftp");
-		sftp.cd("/ftp");
-		String pwd = sftp.pwd();
+		sshjSftp.cd("/ftp");
+		String pwd = sshjSftp.pwd();
 		System.out.println("当前目录: " + pwd);
 		assertEquals("/ftp", pwd);
 	}
 
 	@Test
 	public void renameTest() {
-		sftp.mkdir("/ftp-1");
-		assertTrue(sftp.exist("/ftp-1"));
-		sftp.rename("/ftp-1", "/ftp-2");
-		assertTrue(sftp.exist("/ftp-2"));
+		sshjSftp.mkdir("/ftp-1");
+		assertTrue(sshjSftp.exist("/ftp-1"));
+		sshjSftp.rename("/ftp-1", "/ftp-2");
+		assertTrue(sshjSftp.exist("/ftp-2"));
 	}
 }

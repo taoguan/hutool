@@ -647,6 +647,15 @@ public class Sftp extends AbstractFtp {
 
 	}
 
+	@Override
+	public void rename(String from, String to) {
+		try {
+			getClient().rename(from, to);
+		} catch (SftpException e) {
+			throw new JschRuntimeException(e);
+		}
+	}
+
 	/**
 	 * 获取远程文件
 	 *

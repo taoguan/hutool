@@ -211,6 +211,15 @@ public class SshjSftp extends AbstractFtp {
 	}
 
 	@Override
+	public void rename(String from, String to) {
+		try {
+			sftp.rename(from, to);
+		} catch (IOException e) {
+			throw new FtpException(e);
+		}
+	}
+
+	@Override
 	public void close() {
 		IoUtil.close(this.session);
 		IoUtil.close(this.sftp);

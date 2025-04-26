@@ -726,6 +726,17 @@ public class Ftp extends AbstractFtp {
 		}
 	}
 
+	@Override
+	public void rename(String from, String to) {
+		try {
+			if (!client.rename(from, to)) {
+				throw new FtpException("rename [{}] to [{}] fail", from, to);
+			}
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
+	}
+
 	/**
 	 * 获取FTPClient客户端对象
 	 *

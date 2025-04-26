@@ -250,6 +250,15 @@ public abstract class AbstractFtp implements Closeable {
 	 */
 	public abstract void recursiveDownloadFolder(String sourcePath, File destDir);
 
+	/**
+	 * 重命名文件/目录
+	 *
+	 * @param from 原路径
+	 * @param to   目标路径
+	 * @since 5.8.38
+	 */
+	public abstract void rename(String from, String to);
+
 	// ---------------------------------------------------------------------------------------------------------------------------------------- Private method start
 
 	/**

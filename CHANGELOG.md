@@ -12,6 +12,7 @@
 * 【core   】      增加分段锁实现`SegmentLock`（pr#1330@Gitee）
 * 【core   】      重载subtractToList方法，提供isLinked选项（pr#3923@Github）
 * 【extra  】      `TemplateConfig`增加`setUseCache`方法（issue#IC3JRY@Gitee）
+* 【extra  】      `AbstractFtp`增加`rename`方法（issue#IC3PMI@Gitee）
 
 ### 🐞Bug修复
 * 【setting】      修复`Setting`autoLoad可能的加载为空的问题（issue#3919@Github）

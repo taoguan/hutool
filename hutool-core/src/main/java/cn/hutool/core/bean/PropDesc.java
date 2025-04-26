@@ -36,6 +36,22 @@ public class PropDesc {
 	 * Setter方法
 	 */
 	protected Method setter;
+	/**
+	 * get方法或字段上有无transient关键字和@Transient注解
+	 */
+	private boolean transientForGet;
+	/**
+	 * set方法或字段上有无transient关键字和@Transient注解
+	 */
+	private boolean transientForSet;
+	/**
+	 * 检查set方法和字段有无@PropIgnore注解
+	 */
+	private boolean ignoreGet;
+	/**
+	 * 检查set方法和字段有无@PropIgnore注解
+	 */
+	private boolean ignoreSet;
 
 	/**
 	 * 构造<br>
@@ -51,6 +67,17 @@ public class PropDesc {
 		this.setter = ClassUtil.setAccessible(setter);
 	}
 
+	/**
+	 * 在对象的所有属性设置完成后，执行初始化逻辑。
+	 * <p>
+	 * 预先计算transient关键字和@Transient注解、{@link PropIgnore}注解信息
+	 */
+	public void initialize() {
+		transientForGet = isTransientForGet();
+		transientForSet = isTransientForSet();
+		ignoreGet = isIgnoreGet();
+		ignoreSet = isIgnoreSet();
+	}
 	/**
 	 * 获取字段名，如果存在Alias注解，读取注解的值作为名称
 	 *
@@ -137,12 +164,12 @@ public class PropDesc {
 		}
 
 		// 检查transient关键字和@Transient注解
-		if (checkTransient && isTransientForGet()) {
+		if (checkTransient && transientForGet) {
 			return false;
 		}
 
 		// 检查@PropIgnore注解
-		return false == isIgnoreGet();
+		return false == ignoreGet;
 	}
 
 	/**
@@ -207,12 +234,12 @@ public class PropDesc {
 		}
 
 		// 检查transient关键字和@Transient注解
-		if (checkTransient && isTransientForSet()) {
+		if (checkTransient && transientForSet) {
 			return false;
 		}
 
 		// 检查@PropIgnore注解
-		return false == isIgnoreSet();
+		return false == ignoreSet;
 	}
 
 	/**

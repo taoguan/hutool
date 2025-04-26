@@ -181,7 +181,8 @@ public class BeanDesc implements Serializable {
 				prop.setter = propIgnoreCase.setter;
 			}
 		}
-
+		// 所有属性完成填充后的初始化逻辑
+		prop.initialize();
 		return prop;
 	}
 

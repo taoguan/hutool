@@ -9,6 +9,7 @@ import cn.hutool.core.lang.Editor;
 import cn.hutool.core.lang.func.Func1;
 import cn.hutool.core.lang.func.LambdaUtil;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 
@@ -89,6 +90,14 @@ public class CopyOptions implements Serializable {
 	protected TypeConverter converter = (type, value) -> {
 		if (null == value) {
 			return null;
+		}
+
+		// 快速处理简单值类型的转换
+		if (type instanceof Class){
+			Class<?> targetType = (Class<?>) type;
+			if (ClassUtil.isSimpleValueType(targetType) && targetType.isInstance(value)) {
+				return targetType.cast(value);
+			}
 		}
 
 		if (value instanceof IJSONTypeConverter) {

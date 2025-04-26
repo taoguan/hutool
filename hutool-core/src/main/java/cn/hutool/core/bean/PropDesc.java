@@ -70,7 +70,10 @@ public class PropDesc {
 	/**
 	 * 在对象的所有属性设置完成后，执行初始化逻辑。
 	 * <p>
-	 * 预先计算transient关键字和@Transient注解、{@link PropIgnore}注解信息
+	 * 预先计算transient关键字和@Transient注解、{@link PropIgnore}注解信息<br>
+	 * 见：https://gitee.com/chinabugotech/hutool/pulls/1335
+	 *
+	 * @since 5.8.38
 	 */
 	public void initialize() {
 		transientForGet = isTransientForGet();
@@ -78,6 +81,7 @@ public class PropDesc {
 		ignoreGet = isIgnoreGet();
 		ignoreSet = isIgnoreSet();
 	}
+
 	/**
 	 * 获取字段名，如果存在Alias注解，读取注解的值作为名称
 	 *
@@ -370,7 +374,7 @@ public class PropDesc {
 	 */
 	private boolean isIgnoreSet() {
 		return AnnotationUtil.hasAnnotation(this.field, PropIgnore.class)
-				|| AnnotationUtil.hasAnnotation(this.setter, PropIgnore.class);
+			|| AnnotationUtil.hasAnnotation(this.setter, PropIgnore.class);
 	}
 
 	/**
@@ -385,7 +389,7 @@ public class PropDesc {
 	 */
 	private boolean isIgnoreGet() {
 		return AnnotationUtil.hasAnnotation(this.field, PropIgnore.class)
-				|| AnnotationUtil.hasAnnotation(this.getter, PropIgnore.class);
+			|| AnnotationUtil.hasAnnotation(this.getter, PropIgnore.class);
 	}
 
 	/**

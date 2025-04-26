@@ -1,10 +1,10 @@
 package cn.hutool.extra.template;
 
+import cn.hutool.core.util.CharsetUtil;
+
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Objects;
-
-import cn.hutool.core.util.CharsetUtil;
 
 /**
  * 模板配置
@@ -33,6 +33,11 @@ public class TemplateConfig implements Serializable {
 	 * 自定义引擎，当多个jar包引入时，可以自定使用的默认引擎
 	 */
 	private Class<? extends TemplateEngine> customEngine;
+
+	/**
+	 * 是否使用缓存
+	 */
+	private boolean useCache = true;
 
 	/**
 	 * 默认构造，使用UTF8编码，默认从ClassPath获取模板
@@ -160,6 +165,28 @@ public class TemplateConfig implements Serializable {
 	 */
 	public TemplateConfig setCustomEngine(Class<? extends TemplateEngine> customEngine) {
 		this.customEngine = customEngine;
+		return this;
+	}
+
+	/**
+	 * 是否使用缓存
+	 *
+	 * @return 是否使用缓存
+	 * @since 5.8.38
+	 */
+	public boolean isUseCache() {
+		return useCache;
+	}
+
+	/**
+	 * 设置是否使用缓存
+	 *
+	 * @param useCache 是否使用缓存
+	 * @return this
+	 * @since 5.8.38
+	 */
+	public TemplateConfig setUseCache(boolean useCache) {
+		this.useCache = useCache;
 		return this;
 	}
 

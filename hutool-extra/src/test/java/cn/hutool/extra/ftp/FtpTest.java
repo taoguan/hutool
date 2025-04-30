@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class FtpTest {
 
 	@Test
@@ -170,5 +172,15 @@ public class FtpTest {
 			Console.log(ftp.exist("./2/3/4/.."));
 			Console.log(ftp.pwd());
 		}
+	}
+
+	@Test
+	public void renameTest() {
+		final Ftp ftp = new Ftp("localhost", 21, "test", "test");
+
+		ftp.mkdir("/ftp-1");
+		assertTrue(ftp.exist("/ftp-1"));
+		ftp.rename("/ftp-1", "/ftp-2");
+		assertTrue(ftp.exist("/ftp-2"));
 	}
 }

@@ -16,18 +16,18 @@ import java.util.List;
  */
 public class SftpTest {
 
-	private SshjSftp sshjSftp;
+	private Sftp sftp;
 
 	@Before
 	@Disabled
 	public void init() {
-		sshjSftp = new SshjSftp("127.0.0.1", 8022, "test", "test", CharsetUtil.CHARSET_UTF_8);
+		sftp = new Sftp("127.0.0.1", 8022, "test", "test", CharsetUtil.CHARSET_UTF_8);
 	}
 
 	@Test
 	@Disabled
 	public void lsTest() {
-		List<String> files = sshjSftp.ls("/");
+		List<String> files = sftp.ls("/");
 		if (files != null && !files.isEmpty()) {
 			files.forEach(System.out::println);
 		}
@@ -36,26 +36,26 @@ public class SftpTest {
 	@Test
 	@Disabled
 	public void downloadTest() {
-		sshjSftp.recursiveDownloadFolder("/temp/20250427/", new File("D:\\temp\\20250430\\20250427\\"));
+		sftp.recursiveDownloadFolder("/temp/20250427/", new File("D:\\temp\\20250430\\20250427\\"));
 	}
 
 	@Test
 	@Disabled
 	public void uploadTest() {
-		sshjSftp.upload("/ftp-2/20250430/", new File("D:\\temp\\20250430\\test.txt"));
+		sftp.upload("/ftp-2/20250430/", new File("D:\\temp\\20250430\\test.txt"));
 	}
 
 	@Test
 	@Disabled
 	public void mkDirTest() {
-		boolean flag = sshjSftp.mkdir("/ftp-2/20250430-1");
+		boolean flag = sftp.mkdir("/ftp-2/20250430-1");
 		System.out.println("是否创建成功: " + flag);
 	}
 
 	@Test
 	@Disabled
 	public void pwdTest() {
-		String pwd = sshjSftp.pwd();
+		String pwd = sftp.pwd();
 		System.out.println("PWD: " + pwd);
 	}
 
@@ -63,19 +63,19 @@ public class SftpTest {
 	@Disabled
 	public void mkDirsTest() {
 		// 在当前目录下批量创建目录
-		sshjSftp.mkDirs("/ftp-2/20250430-2/t1/t2/");
+		sftp.mkDirs("/ftp-2/20250430-2/t1/t2/");
 	}
 
 	@Test
 	@Disabled
 	public void delDirTest() {
-		sshjSftp.delDir("/ftp-2/20250430-2/t1/t2");
+		sftp.delDir("/ftp-2/20250430-2/t1/t2");
 	}
 
 	@Test
 	@Disabled
 	public void cdTest() {
-		System.out.println(sshjSftp.cd("/ftp-2"));
-		System.out.println(sshjSftp.cd("/ftp-4"));
+		System.out.println(sftp.cd("/ftp-2"));
+		System.out.println(sftp.cd("/ftp-4"));
 	}
 }

@@ -23,7 +23,7 @@ class SshjSftpTest {
 
 	@BeforeAll
 	public static void init() {
-		sshjSftp = new SshjSftp("localhost", 22, "test", "test", CharsetUtil.CHARSET_UTF_8);
+		sshjSftp = new SshjSftp("localhost", 8022, "test", "test", CharsetUtil.CHARSET_UTF_8);
 	}
 
 	@Test
@@ -31,7 +31,7 @@ class SshjSftpTest {
 	public void lsTest() {
 		List<String> files = sshjSftp.ls("/");
 		if (files != null && !files.isEmpty()) {
-			files.forEach(System.out::print);
+			files.forEach(System.out::println);
 		}
 	}
 
@@ -78,7 +78,7 @@ class SshjSftpTest {
 
 	@Test
 	public void renameTest() {
-		sshjSftp.mkdir("/ftp-1");
+//		sshjSftp.mkdir("/ftp-1");
 		assertTrue(sshjSftp.exist("/ftp-1"));
 		sshjSftp.rename("/ftp-1", "/ftp-2");
 		assertTrue(sshjSftp.exist("/ftp-2"));

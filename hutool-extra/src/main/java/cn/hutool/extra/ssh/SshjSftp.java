@@ -261,23 +261,6 @@ public class SshjSftp extends AbstractFtp {
 		}
 	}
 
-	/**
-	 * 重命名文件/目录
-	 *
-	 * @param from 原路径
-	 * @param to   目标路径
-	 *
-	 * @throws FtpException FTP异常
-	 */
-	@Override
-	public void rename(String from, String to) throws FtpException {
-		try {
-			sftp.rename(from, to);
-		} catch (IOException e) {
-			throw new FtpException(e);
-		}
-	}
-
 	@Override
 	public void close() {
 		IoUtil.close(this.session);

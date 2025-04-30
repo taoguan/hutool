@@ -738,25 +738,6 @@ public class Ftp extends AbstractFtp {
 	}
 
 	/**
-	 * 重命名文件/目录
-	 *
-	 * @param from 原路径
-	 * @param to   目标路径
-	 *
-	 * @throws FtpException FTP异常
-	 */
-	@Override
-	public void rename(String from, String to) throws FtpException {
-		try {
-			if (!client.rename(from, to)) {
-				throw new FtpException("rename [{}] to [{}] fail", from, to);
-			}
-		} catch (IOException e) {
-			throw new FtpException(e);
-		}
-	}
-
-	/**
 	 * 获取FTPClient客户端对象
 	 *
 	 * @return {@link FTPClient}

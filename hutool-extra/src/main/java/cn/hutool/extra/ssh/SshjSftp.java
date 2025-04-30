@@ -1,6 +1,7 @@
 package cn.hutool.extra.ssh;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
@@ -36,6 +37,7 @@ public class SshjSftp extends AbstractFtp {
 	private SSHClient ssh;
 	private SFTPClient sftp;
 	private Session session;
+	private String workingDir;
 
 	/**
 	 * 构造，使用默认端口
@@ -126,34 +128,65 @@ public class SshjSftp extends AbstractFtp {
 		return this;
 	}
 
+	private String getPath(String path) {
+		if (StrUtil.isBlank(this.workingDir)) {
+			try {
+				this.workingDir = sftp.canonicalize("");
+			} catch (IOException e) {
+				throw new FtpException(e);
+			}
+		}
+
+		if (StrUtil.isBlank(path)) {
+			return this.workingDir;
+		}
+
+		// 如果是绝对路径，则返回
+		if (StrUtil.startWith(path, StrUtil.SLASH)) {
+			return path;
+		} else {
+			String tmp = StrUtil.removeSuffix(this.workingDir, StrUtil.SLASH);
+			return StrUtil.format("{}/{}", tmp, path);
+		}
+	}
+
+	/**
+	 * 改变目录，注意目前不支持..
+	 * @param directory directory
+	 * @return true:成功
+	 */
 	@Override
 	public boolean cd(String directory) {
-		String exec = String.format("cd %s", directory);
-		command(exec);
-		String pwd = pwd();
-		return pwd.equals(directory);
+		String newPath = getPath(directory);
+		try {
+			sftp.ls(newPath);
+			this.workingDir = newPath;
+			return true;
+		} catch (IOException e) {
+			throw new FtpException(e);
+		}
 	}
 
 	@Override
 	public String pwd() {
-		return command("pwd");
+		return getPath(null);
 	}
 
 	@Override
 	public boolean mkdir(String dir) {
 		try {
-			sftp.mkdir(dir);
+			sftp.mkdir(getPath(dir));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
-		return containsFile(dir);
+		return containsFile(getPath(dir));
 	}
 
 	@Override
 	public List<String> ls(String path) {
 		List<RemoteResourceInfo> infoList;
 		try {
-			infoList = sftp.ls(path);
+			infoList = sftp.ls(getPath(path));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
@@ -166,8 +199,8 @@ public class SshjSftp extends AbstractFtp {
 	@Override
 	public boolean delFile(String path) {
 		try {
-			sftp.rm(path);
-			return !containsFile(path);
+			sftp.rm(getPath(path));
+			return !containsFile(getPath(path));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
@@ -176,8 +209,8 @@ public class SshjSftp extends AbstractFtp {
 	@Override
 	public boolean delDir(String dirPath) {
 		try {
-			sftp.rmdir(dirPath);
-			return !containsFile(dirPath);
+			sftp.rmdir(getPath(dirPath));
+			return !containsFile(getPath(dirPath));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
@@ -186,8 +219,11 @@ public class SshjSftp extends AbstractFtp {
 	@Override
 	public boolean upload(String destPath, File file) {
 		try {
-			sftp.put(new FileSystemFile(file), destPath);
-			return containsFile(destPath);
+			if (StrUtil.endWith(destPath, StrUtil.SLASH)) {
+				destPath += file.getName();
+			}
+			sftp.put(new FileSystemFile(file), getPath(destPath));
+			return containsFile(getPath(destPath));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
@@ -196,7 +232,7 @@ public class SshjSftp extends AbstractFtp {
 	@Override
 	public void download(String path, File outFile) {
 		try {
-			sftp.get(path, new FileSystemFile(outFile));
+			sftp.get(getPath(path), new FileSystemFile(outFile));
 		} catch (IOException e) {
 			throw new FtpException(e);
 		}
@@ -204,9 +240,15 @@ public class SshjSftp extends AbstractFtp {
 
 	@Override
 	public void recursiveDownloadFolder(String sourcePath, File destDir) {
-		List<String> files = ls(sourcePath);
+		if (!destDir.exists() || !destDir.isDirectory()) {
+			if (!destDir.mkdirs()) {
+				throw new FtpException("创建目录" + destDir.getAbsolutePath() + "失败");
+			}
+		}
+
+		List<String> files = ls(getPath(sourcePath));
 		if (files != null && !files.isEmpty()) {
-			files.forEach(path -> download(sourcePath + "/" + path, destDir));
+			files.forEach(file -> download(sourcePath + "/" + file, FileUtil.file(destDir, file)));
 		}
 	}
 
@@ -236,7 +278,7 @@ public class SshjSftp extends AbstractFtp {
 	 */
 	public boolean containsFile(String fileDir) {
 		try {
-			sftp.lstat(fileDir);
+			sftp.lstat(getPath(fileDir));
 			return true;
 		} catch (IOException e) {
 			return false;

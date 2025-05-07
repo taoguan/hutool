@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.38(2025-04-26)
+# 5.8.38(2025-05-07)
 
 ### 🐣新特性
 * 【core   】      `PathUtil#del`增加null检查（pr#1331@Gitee）
@@ -14,6 +14,7 @@
 * 【extra  】      `TemplateConfig`增加`setUseCache`方法（issue#IC3JRY@Gitee）
 * 【extra  】      `AbstractFtp`增加`rename`方法（issue#IC3PMI@Gitee）
 * 【core   】      优化`PropDesc`缓存注解判断，提升性能（pr#1335@Gitee）
+* 【core   】      添加`RecordUtil`支持record类（issue#3931@Github）
 
 ### 🐞Bug修复
 * 【setting】      修复`Setting`autoLoad可能的加载为空的问题（issue#3919@Github）

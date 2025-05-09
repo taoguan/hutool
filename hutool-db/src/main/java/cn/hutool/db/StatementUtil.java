@@ -301,6 +301,9 @@ public class StatementUtil {
 		final ParameterMetaData pmd;
 		try {
 			pmd = ps.getParameterMetaData();
+			if (pmd == null) {
+				return sqlType;
+			}
 			sqlType = pmd.getParameterType(paramIndex);
 		} catch (SQLException ignore) {
 			// ignore

@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author youyongkun
  * @since 5.7.18
  */
+@Disabled
 class SshjSftpTest {
 
 	private static SshjSftp sshjSftp;
@@ -68,6 +69,7 @@ class SshjSftpTest {
 	}
 
 	@Test
+	@Disabled
 	public void pwdTest() {
 //		mkDirsTest();
 		sshjSftp.cd("/ftp");
@@ -77,6 +79,7 @@ class SshjSftpTest {
 	}
 
 	@Test
+	@Disabled
 	public void renameTest() {
 //		sshjSftp.mkdir("/ftp-1");
 		assertTrue(sshjSftp.exist("/ftp-1"));

@@ -175,6 +175,7 @@ public class FtpTest {
 	}
 
 	@Test
+	@Disabled
 	public void renameTest() {
 		final Ftp ftp = new Ftp("localhost", 21, "test", "test");
 

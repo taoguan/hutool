@@ -128,28 +128,6 @@ public class SshjSftp extends AbstractFtp {
 		return this;
 	}
 
-	private String getPath(String path) {
-		if (StrUtil.isBlank(this.workingDir)) {
-			try {
-				this.workingDir = sftp.canonicalize("");
-			} catch (IOException e) {
-				throw new FtpException(e);
-			}
-		}
-
-		if (StrUtil.isBlank(path)) {
-			return this.workingDir;
-		}
-
-		// 如果是绝对路径，则返回
-		if (StrUtil.startWith(path, StrUtil.SLASH)) {
-			return path;
-		} else {
-			String tmp = StrUtil.removeSuffix(this.workingDir, StrUtil.SLASH);
-			return StrUtil.format("{}/{}", tmp, path);
-		}
-	}
-
 	/**
 	 * 改变目录，注意目前不支持..
 	 * @param directory directory
@@ -326,5 +304,27 @@ public class SshjSftp extends AbstractFtp {
 			this.session = session;
 		}
 		return session;
+	}
+
+	private String getPath(String path) {
+		if (StrUtil.isBlank(this.workingDir)) {
+			try {
+				this.workingDir = sftp.canonicalize("");
+			} catch (IOException e) {
+				throw new FtpException(e);
+			}
+		}
+
+		if (StrUtil.isBlank(path)) {
+			return this.workingDir;
+		}
+
+		// 如果是绝对路径，则返回
+		if (StrUtil.startWith(path, StrUtil.SLASH)) {
+			return path;
+		} else {
+			String tmp = StrUtil.removeSuffix(this.workingDir, StrUtil.SLASH);
+			return StrUtil.format("{}/{}", tmp, path);
+		}
 	}
 }

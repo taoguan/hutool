@@ -653,7 +653,7 @@ public class Dict extends LinkedHashMap<String, Object> implements BasicTypeGett
 	 * @param key KEY
 	 * @return 小写KEY
 	 */
-	private String customKey(String key) {
+	protected String customKey(String key) {
 		if (this.caseInsensitive && null != key) {
 			key = key.toLowerCase();
 		}

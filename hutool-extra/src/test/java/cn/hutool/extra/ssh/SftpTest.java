@@ -2,8 +2,8 @@ package cn.hutool.extra.ssh;
 
 import cn.hutool.core.util.CharsetUtil;
 import org.junit.Before;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.io.File;
 import java.util.List;
@@ -16,52 +16,66 @@ import java.util.List;
  */
 public class SftpTest {
 
-	private SshjSftp sshjSftp;
+	private Sftp sftp;
 
 	@Before
 	@Disabled
 	public void init() {
-		sshjSftp = new SshjSftp("ip", 22, "test", "test", CharsetUtil.CHARSET_UTF_8);
+		sftp = new Sftp("127.0.0.1", 8022, "test", "test", CharsetUtil.CHARSET_UTF_8);
 	}
 
 	@Test
 	@Disabled
 	public void lsTest() {
-		List<String> files = sshjSftp.ls("/");
+		List<String> files = sftp.ls("/");
 		if (files != null && !files.isEmpty()) {
-			files.forEach(System.out::print);
+			files.forEach(System.out::println);
 		}
 	}
 
 	@Test
 	@Disabled
 	public void downloadTest() {
-		sshjSftp.recursiveDownloadFolder("/home/test/temp", new File("C:\\Users\\akwangl\\Downloads\\temp"));
+		sftp.recursiveDownloadFolder("/temp/20250427/", new File("D:\\temp\\20250430\\20250427\\"));
 	}
 
 	@Test
 	@Disabled
 	public void uploadTest() {
-		sshjSftp.upload("/home/test/temp/", new File("C:\\Users\\akwangl\\Downloads\\temp\\辽宁_20190718_104324.CIME"));
+		sftp.upload("/ftp-2/20250430/", new File("D:\\temp\\20250430\\test.txt"));
 	}
 
 	@Test
 	@Disabled
 	public void mkDirTest() {
-		boolean flag = sshjSftp.mkdir("/home/test/temp");
+		boolean flag = sftp.mkdir("/ftp-2/20250430-1");
 		System.out.println("是否创建成功: " + flag);
+	}
+
+	@Test
+	@Disabled
+	public void pwdTest() {
+		String pwd = sftp.pwd();
+		System.out.println("PWD: " + pwd);
 	}
 
 	@Test
 	@Disabled
 	public void mkDirsTest() {
 		// 在当前目录下批量创建目录
-		sshjSftp.mkDirs("/home/test/temp");
+		sftp.mkDirs("/ftp-2/20250430-2/t1/t2/");
 	}
 
 	@Test
 	@Disabled
 	public void delDirTest() {
-		sshjSftp.delDir("/home/test/temp");
+		sftp.delDir("/ftp-2/20250430-2/t1/t2");
+	}
+
+	@Test
+	@Disabled
+	public void cdTest() {
+		System.out.println(sftp.cd("/ftp-2"));
+		System.out.println(sftp.cd("/ftp-4"));
 	}
 }

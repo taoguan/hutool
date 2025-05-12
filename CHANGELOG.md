@@ -15,6 +15,7 @@
 * 【extra  】      `AbstractFtp`增加`rename`方法（issue#IC3PMI@Gitee）
 * 【core   】      优化`PropDesc`缓存注解判断，提升性能（pr#1335@Gitee）
 * 【core   】      添加`RecordUtil`支持record类（issue#3931@Github）
+* 【core   】      `Dict`的customKey方法访问权限修改为protected（pr#1340@Gitee）
 
 ### 🐞Bug修复
 * 【setting】      修复`Setting`autoLoad可能的加载为空的问题（issue#3919@Github）

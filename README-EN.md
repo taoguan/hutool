@@ -86,8 +86,8 @@ Hutool exists to reduce code search costs and avoid bugs caused by imperfect cod
 ## 🛠️Module
 A Java-based tool class for files, streams, encryption and decryption, transcoding, regular, thread, XML and other JDK methods for encapsulation，composing various Util tool classes, as well as providing the following modules：
 
-| module          |     description                                                                                                            |
-| -------------------|-------------------------------------------------------------------------------------------------------------------------|
+| module             |     description                                                                                                            |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------|
 | hutool-aop         |     JDK dynamic proxy encapsulation to provide non-IOC faceting support                                                 |
 | hutool-bloomFilter |     Bloom filtering to provide some Hash algorithm Bloom filtering                                                      |
 | hutool-cache       |     Simple cache                                                                                                        |
@@ -107,6 +107,7 @@ A Java-based tool class for files, streams, encryption and decryption, transcodi
 | hutool-poi         |     Tools for working with Excel and Word in POI                                                                        |
 | hutool-socket      |     Java-based tool classes for NIO and AIO sockets                                                                     |
 | hutool-jwt         |     JSON Web Token (JWT) implement                                                                                      |
+| hutool-ai          |     AI implement                                                                                      |
 
 Each module can be introduced individually, or all modules can be introduced by introducing `hutool-all` as required.
 

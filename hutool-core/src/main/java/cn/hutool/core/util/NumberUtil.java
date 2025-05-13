@@ -1266,7 +1266,7 @@ public class NumberUtil {
 			}
 			if (chars[i] == 'l' || chars[i] == 'L') {
 				// not allowing L with an exponent
-				return foundDigit && !hasExp;
+				return foundDigit && !hasExp && !hasDecPoint;
 			}
 			// last character is illegal
 			return false;

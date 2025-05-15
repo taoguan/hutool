@@ -4244,8 +4244,22 @@ public class CharSequenceUtil {
 	 * @return 转换后的字符串
 	 * @see String#toLowerCase()
 	 * @since 5.8.38
+	 * @deprecated 拼写错误，请使用 {@link #toLowerCase(CharSequence)}
 	 */
+	@Deprecated
 	public static String toLoweCase(final CharSequence str) {
+		return toLowerCase(str);
+	}
+
+	/**
+	 * 将字符串转为小写
+	 *
+	 * @param str 被转的字符串
+	 * @return 转换后的字符串
+	 * @see String#toLowerCase()
+	 * @since 5.8.39
+	 */
+	public static String toLowerCase(final CharSequence str) {
 		if (null == str) {
 			return null;
 		}

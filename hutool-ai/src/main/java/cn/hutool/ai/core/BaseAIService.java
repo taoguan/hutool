@@ -18,8 +18,15 @@ package cn.hutool.ai.core;
 
 import cn.hutool.ai.AIException;
 import cn.hutool.http.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * 基础AIService，包含基公共参数和公共方法
@@ -101,5 +108,51 @@ public class BaseAIService {
 		} catch (final AIException e) {
 			throw new AIException("Failed to send POST request：" + e.getMessage(), e);
 		}
+	}
+
+	/**
+	 * 支持流式返回的 POST 请求
+	 *
+	 * @param endpoint 请求地址
+	 * @param paramMap 请求参数
+	 * @param callback 流式数据回调函数
+	 */
+	protected void sendPostStream(final String endpoint, final Map<String, Object> paramMap, Consumer<String> callback) {
+			HttpURLConnection connection = null;
+			try {
+				// 创建连接
+				URL apiUrl = new URL(config.getApiUrl() + endpoint);
+				connection = (HttpURLConnection) apiUrl.openConnection();
+				connection.setRequestMethod(Method.POST.name());
+				connection.setRequestProperty(Header.CONTENT_TYPE.getValue(), "application/json");
+				connection.setRequestProperty(Header.AUTHORIZATION.getValue(), "Bearer " + config.getApiKey());
+				connection.setDoOutput(true);
+				//5分钟
+				connection.setReadTimeout(300000);
+				//3分钟
+				connection.setConnectTimeout(180000);
+				// 发送请求体
+				try (OutputStream os = connection.getOutputStream()) {
+					String jsonInputString = new ObjectMapper().writeValueAsString(paramMap);
+					os.write(jsonInputString.getBytes());
+					os.flush();
+				}
+
+				// 读取流式响应
+				try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+					String line;
+					while ((line = reader.readLine()) != null) {
+						// 调用回调函数处理每一行数据
+						callback.accept(line);
+					}
+				}
+			} catch (Exception e) {
+				callback.accept("{\"error\": \"" + e.getMessage() + "\"}");
+			} finally {
+				// 关闭连接
+				if (connection != null) {
+					connection.disconnect();
+				}
+			}
 	}
 }

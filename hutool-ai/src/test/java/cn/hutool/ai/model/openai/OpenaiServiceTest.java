@@ -22,6 +22,7 @@ import cn.hutool.ai.Models;
 import cn.hutool.ai.core.AIConfigBuilder;
 import cn.hutool.ai.core.Message;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -49,6 +51,29 @@ class OpenaiServiceTest {
 	void chat(){
 		final String chat = openaiService.chat("写一个疯狂星期四广告词");
 		assertNotNull(chat);
+	}
+
+	@Test
+	@Disabled
+	void chatStream() {
+		String prompt = "写一个疯狂星期四广告词";
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+
+		openaiService.chat(prompt, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 
 	@Test
@@ -68,6 +93,32 @@ class OpenaiServiceTest {
 			.setApiKey(key).setModel(Models.Openai.GPT_4O_MINI.getModel()).build(), OpenaiService.class);
 		final String chatVision = openaiService.chatVision("图片上有些什么？", Arrays.asList("https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544","https://img2.baidu.com/it/u=1682510685,1244554634&fm=253&fmt=auto&app=138&f=JPEG?w=803&h=800"));
 		assertNotNull(chatVision);
+	}
+
+	@Test
+	@Disabled
+	void testChatVisionStream() {
+		final OpenaiService openaiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.OPENAI.getValue())
+			.setApiKey(key).setModel(Models.Openai.GPT_4O_MINI.getModel()).build(), OpenaiService.class);
+		String prompt = "图片上有些什么？";
+		List<String> images = Arrays.asList("https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544\",\"https://img2.baidu.com/it/u=1682510685,1244554634&fm=253&fmt=auto&app=138&f=JPEG?w=803&h=800");
+
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+		openaiService.chatVision(prompt,images, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 
 	@Test
@@ -132,7 +183,6 @@ class OpenaiServiceTest {
 			.setApiKey(key).setModel(Models.Openai.WHISPER_1.getModel()).build(), OpenaiService.class);
 		final File file = FileUtil.file("your filePath");
 		final String speechToText = openaiService.speechToText(file);
-		System.out.println(speechToText);
 		assertNotNull(speechToText);
 	}
 
@@ -164,5 +214,32 @@ class OpenaiServiceTest {
 		messages.add(new Message("user","给我一个KFC疯狂星期四的文案"));
 		final String chatReasoning = openaiService.chatReasoning(messages, OpenaiCommon.OpenaiReasoning.HIGH.getEffort());
 		assertNotNull(chatReasoning);
+	}
+
+	@Test
+	@Disabled
+	void chatReasoningStream() {
+		final OpenaiService openaiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.OPENAI.getValue())
+			.setApiKey(key).setModel(Models.Openai.O3_MINI.getModel()).build(), OpenaiService.class);
+		final List<Message> messages = new ArrayList<>();
+		messages.add(new Message("system","你是现代抽象家"));
+		messages.add(new Message("user","给我一个KFC疯狂星期四的文案"));
+
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+		openaiService.chatReasoning(messages,OpenaiCommon.OpenaiReasoning.HIGH.getEffort(), data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 }

@@ -22,6 +22,7 @@ import cn.hutool.ai.Models;
 import cn.hutool.ai.core.AIConfigBuilder;
 import cn.hutool.ai.core.Message;
 import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -43,6 +45,29 @@ class GrokServiceTest {
 	void chat(){
 		final String chat = grokService.chat("写一个疯狂星期四广告词");
 		assertNotNull(chat);
+	}
+
+	@Test
+	@Disabled
+	void chatStream() {
+		String prompt = "写一个疯狂星期四广告词";
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+
+		grokService.chat(prompt, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 
 	@Test
@@ -64,11 +89,59 @@ class GrokServiceTest {
 
 	@Test
 	@Disabled
+	void messageStream() {
+		String prompt = "给我一个KFC的广告词";
+
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+		grokService.message(prompt, 4096, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
+	}
+
+	@Test
+	@Disabled
 	void chatVision() {
 		final GrokService grokService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.GROK.getValue()).setModel(Models.Grok.GROK_2_VISION_1212.getModel()).setApiKey(key).build(), GrokService.class);
 		final String base64 = ImgUtil.toBase64DataUri(Toolkit.getDefaultToolkit().createImage("your imageUrl"), "png");
 		final String chatVision = grokService.chatVision("图片上有些什么？", Arrays.asList(base64));
 		assertNotNull(chatVision);
+	}
+
+	@Test
+	@Disabled
+	void testChatVisionStream() {
+		final GrokService grokService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.GROK.getValue()).setModel(Models.Grok.GROK_2_VISION_1212.getModel()).setApiKey(key).build(), GrokService.class);
+		String prompt = "图片上有些什么？";
+		List<String> images = Arrays.asList("https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544");
+
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+		grokService.chatVision(prompt,images, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 
 	@Test
@@ -119,5 +192,14 @@ class GrokServiceTest {
 	void deferredCompletion() {
 		final String deferred = grokService.deferredCompletion(key);
 		assertNotNull(deferred);
+	}
+
+	@Test
+	@Disabled
+	void imagesGenerations() {
+		final GrokService grokService  = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.GROK.getValue())
+			.setApiKey(key).setModel(Models.Grok.GROK_2_IMAGE.getModel()).build(), GrokService.class);
+		final String imagesGenerations = grokService.imagesGenerations("一位年轻的宇航员站在未来感十足的太空站内，透过巨大的弧形落地窗凝望浩瀚宇宙。窗外，璀璨的星河与五彩斑斓的星云交织，远处隐约可见未知星球的轮廓，仿佛在召唤着探索的脚步。宇航服上的呼吸灯与透明显示屏上的星图交相辉映，象征着人类科技与宇宙奥秘的碰撞。画面深邃而神秘，充满对未知的渴望与无限可能的想象。");
+		assertNotNull(imagesGenerations);
 	}
 }

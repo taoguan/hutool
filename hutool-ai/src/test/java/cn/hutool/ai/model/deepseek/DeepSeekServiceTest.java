@@ -20,11 +20,13 @@ import cn.hutool.ai.AIServiceFactory;
 import cn.hutool.ai.ModelName;
 import cn.hutool.ai.core.AIConfigBuilder;
 import cn.hutool.ai.core.Message;
+import cn.hutool.core.thread.ThreadUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -42,6 +44,29 @@ class DeepSeekServiceTest {
 
 	@Test
 	@Disabled
+	void chatStream() {
+		String prompt = "写一个疯狂星期四广告词";
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+
+		deepSeekService.chat(prompt, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
+	}
+
+	@Test
+	@Disabled
 	void testChat(){
 		final List<Message> messages = new ArrayList<>();
 		messages.add(new Message("system","你是个抽象大师，会说很抽象的话，最擅长说抽象的笑话"));
@@ -54,7 +79,31 @@ class DeepSeekServiceTest {
 	@Disabled
 	void beta() {
 		final String beta = deepSeekService.beta("写一个疯狂星期四广告词");
-		System.out.println(beta);
+		assertNotNull(beta);
+
+	}
+
+	@Test
+	@Disabled
+	void betaStream() {
+		String beta = "写一个疯狂星期四广告词";
+		// 使用AtomicBoolean作为结束标志
+		AtomicBoolean isDone = new AtomicBoolean(false);
+
+		deepSeekService.beta(beta, data -> {
+			assertNotNull(data);
+			if (data.equals("data: [DONE]")) {
+				// 设置结束标志
+				isDone.set(true);
+			} else if (data.contains("\"error\"")) {
+				isDone.set(true);
+			}
+
+		});
+		// 轮询检查结束标志
+		while (!isDone.get()) {
+			ThreadUtil.sleep(100);
+		}
 	}
 
 	@Test

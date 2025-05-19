@@ -19,6 +19,7 @@ package cn.hutool.ai.model.openai;
 import cn.hutool.ai.core.AIConfig;
 import cn.hutool.ai.core.BaseAIService;
 import cn.hutool.ai.core.Message;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * openai服务，AI具体功能的实现
@@ -61,15 +63,6 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 	}
 
 	@Override
-	public String chat(String prompt) {
-		// 定义消息结构
-		final List<Message> messages = new ArrayList<>();
-		messages.add(new Message("system", "You are a helpful assistant"));
-		messages.add(new Message("user", prompt));
-		return chat(messages);
-	}
-
-	@Override
 	public String chat(final List<Message> messages) {
 		String paramJson = buildChatRequestBody(messages);
 		final HttpResponse response = sendPost(CHAT_ENDPOINT, paramJson);
@@ -77,10 +70,22 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 	}
 
 	@Override
+	public void chat(List<Message> messages,Consumer<String> callback) {
+		Map<String, Object> paramMap = buildChatStreamRequestBody(messages);
+		ThreadUtil.newThread(() -> sendPostStream(CHAT_ENDPOINT, paramMap, callback::accept), "openai-chat-sse").start();
+	}
+
+	@Override
 	public String chatVision(String prompt, final List<String> images, String detail) {
 		String paramJson = buildChatVisionRequestBody(prompt, images, detail);
 		final HttpResponse response = sendPost(CHAT_ENDPOINT, paramJson);
 		return response.body();
+	}
+
+	@Override
+	public void chatVision(String prompt, List<String> images, String detail, Consumer<String> callback) {
+		Map<String, Object> paramMap = buildChatVisionStreamRequestBody(prompt, images, detail);
+		ThreadUtil.newThread(() -> sendPostStream(CHAT_ENDPOINT, paramMap, callback::accept), "openai-chatVision-sse").start();
 	}
 
 	@Override
@@ -133,19 +138,16 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 	}
 
 	@Override
-	public String chatReasoning(String prompt, String reasoningEffort) {
-		// 定义消息结构
-		final List<Message> messages = new ArrayList<>();
-		messages.add(new Message("system", "You are a helpful assistant"));
-		messages.add(new Message("user", prompt));
-		return chat(messages);
-	}
-
-	@Override
 	public String chatReasoning(final List<Message> messages, String reasoningEffort) {
 		String paramJson = buildChatReasoningRequestBody(messages, reasoningEffort);
 		final HttpResponse response = sendPost(CHAT_ENDPOINT, paramJson);
 		return response.body();
+	}
+
+	@Override
+	public void chatReasoning(List<Message> messages, String reasoningEffort, Consumer<String> callback) {
+		Map<String, Object> paramMap = buildChatReasoningStreamRequestBody(messages, reasoningEffort);
+		ThreadUtil.newThread(() -> sendPostStream(CHAT_ENDPOINT, paramMap, callback::accept), "openai-chatReasoning-sse").start();
 	}
 
 	// 构建chat请求体
@@ -158,6 +160,18 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 		paramMap.putAll(config.getAdditionalConfigMap());
 
 		return JSONUtil.toJsonStr(paramMap);
+	}
+
+	private Map<String, Object> buildChatStreamRequestBody(final List<Message> messages) {
+		//使用JSON工具
+		final Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("stream", true);
+		paramMap.put("model", config.getModel());
+		paramMap.put("messages", messages);
+		//合并其他参数
+		paramMap.putAll(config.getAdditionalConfigMap());
+
+		return paramMap;
 	}
 
 	//构建chatVision请求体
@@ -189,6 +203,37 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 		//合并其他参数
 		paramMap.putAll(config.getAdditionalConfigMap());
 		return JSONUtil.toJsonStr(paramMap);
+	}
+
+	private Map<String, Object> buildChatVisionStreamRequestBody(String prompt, final List<String> images, String detail) {
+		// 定义消息结构
+		final List<Message> messages = new ArrayList<>();
+		final List<Object> content = new ArrayList<>();
+
+		final Map<String, String> contentMap = new HashMap<>();
+		contentMap.put("type", "text");
+		contentMap.put("text", prompt);
+		content.add(contentMap);
+		for (String img : images) {
+			HashMap<String, Object> imgUrlMap = new HashMap<>();
+			imgUrlMap.put("type", "image_url");
+			HashMap<String, String> urlMap = new HashMap<>();
+			urlMap.put("url", img);
+			urlMap.put("detail", detail);
+			imgUrlMap.put("image_url", urlMap);
+			content.add(imgUrlMap);
+		}
+
+		messages.add(new Message("user", content));
+
+		//使用JSON工具
+		final Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("stream", true);
+		paramMap.put("model", config.getModel());
+		paramMap.put("messages", messages);
+		//合并其他参数
+		paramMap.putAll(config.getAdditionalConfigMap());
+		return paramMap;
 	}
 
 	//构建文生图请求体
@@ -303,6 +348,18 @@ public class OpenaiServiceImpl extends BaseAIService implements OpenaiService {
 		paramMap.putAll(config.getAdditionalConfigMap());
 
 		return JSONUtil.toJsonStr(paramMap);
+	}
+
+	private Map<String, Object> buildChatReasoningStreamRequestBody(final List<Message> messages, String reasoningEffort) {
+		final Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("stream", true);
+		paramMap.put("model", config.getModel());
+		paramMap.put("messages", messages);
+		paramMap.put("reasoning_effort", reasoningEffort);
+		//合并其他参数
+		paramMap.putAll(config.getAdditionalConfigMap());
+
+		return paramMap;
 	}
 
 }

@@ -1,11 +1,9 @@
 package cn.hutool.core.thread;
 
+import cn.hutool.core.thread.RecyclableBatchThreadPoolExecutor.Warp;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,12 +15,35 @@ import java.util.function.Function;
  */
 public class RecyclableBatchThreadPoolExecutorTest {
 
+
+	/**
+	 * 批量处理数据
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void test() throws InterruptedException {
 		int corePoolSize = 10;// 线程池大小
 		int batchSize = 100;// 每批次数据量
 		int clientCount = 30;// 调用者数量
 		test(corePoolSize,batchSize,clientCount);
+	}
+
+	/**
+	 * 普通查询接口加速
+	 */
+	@Test
+	public void test2() {
+		RecyclableBatchThreadPoolExecutor executor = new RecyclableBatchThreadPoolExecutor(10);
+		long s = System.nanoTime();
+		Warp<String> warp1 = Warp.of(this::select1);
+		Warp<List<String>> warp2 = Warp.of(this::select2);
+		executor.processByWarp(warp1, warp2);
+		Map<String, Object> map = new HashMap<>();
+		map.put("key1",warp1.get());
+		map.put("key2",warp2.get());
+		long d = System.nanoTime() - s;
+		System.out.printf("总耗时：%.2f秒%n",d/1e9);
+		System.out.println(map);
 	}
 
 	public void test(int corePoolSize,int batchSize,int clientCount ) throws InterruptedException{
@@ -71,6 +92,24 @@ public class RecyclableBatchThreadPoolExecutorTest {
 			list.add(i);
 		}
 		return list;
+	}
+
+	private String select1()  {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		return "1";
+	}
+
+	private List<String> select2() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		return Arrays.asList("1","2","3");
 	}
 
 }

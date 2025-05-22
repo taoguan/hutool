@@ -231,7 +231,7 @@ public class RecyclableBatchThreadPoolExecutor {
 	}
 
 	/**
-	 * 处理Warp集合
+	 * 处理Warp数组
 	 *
 	 * <pre>{@code
 	 * Warp<String> warp1 = Warp.of(this::select1);
@@ -241,11 +241,20 @@ public class RecyclableBatchThreadPoolExecutor {
 	 * List<String> r2 = warp2.get();
 	 * }</pre>
 	 *
-	 * @param warps Warp集合
+	 * @param warps Warp数组
 	 * @return Warp集合,此方法返回结果为空的不会被过滤
 	 */
 	public List<Warp<?>> processByWarp(Warp<?>... warps) {
-		return process(Arrays.asList(warps), 1, Warp::execute);
+		return processByWarp(Arrays.asList(warps));
+	}
+
+	/**
+	 * 处理Warp集合
+	 * @param warps Warp集合
+	 * @return Warp集合,此方法返回结果为空的不会被过滤
+	 */
+	public List<Warp<?>> processByWarp(List<Warp<?>> warps) {
+		return process(warps, 1, Warp::execute);
 	}
 
 	/**

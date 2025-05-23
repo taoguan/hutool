@@ -13,10 +13,8 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class MapToMapCopier extends AbsCopier<Map, Map> {
 
-	/**
-	 * 目标的类型（用于泛型类注入）
-	 */
-	private final Type targetType;
+	// 提前获取目标值真实类型
+	private final Type[] targetTypeArguments;
 
 	/**
 	 * 构造
@@ -28,15 +26,11 @@ public class MapToMapCopier extends AbsCopier<Map, Map> {
 	 */
 	public MapToMapCopier(Map source, Map target, Type targetType, CopyOptions copyOptions) {
 		super(source, target, copyOptions);
-		this.targetType = targetType;
+		targetTypeArguments = TypeUtil.getTypeArguments(targetType);
 	}
 
 	@Override
 	public Map copy() {
-
-		// 提前获取目标值真实类型
-		final Type[] earlyDetectTypeArguments = TypeUtil.getTypeArguments(this.targetType);
-
 		this.source.forEach((sKey, sValue) -> {
 			if (null == sKey) {
 				return;
@@ -62,9 +56,9 @@ public class MapToMapCopier extends AbsCopier<Map, Map> {
 			}
 
 			// 尝试转换源值
-			if (null != earlyDetectTypeArguments) {
+			if (null != targetTypeArguments) {
 				//sValue = Convert.convertWithCheck(typeArguments[1], sValue, null, this.copyOptions.ignoreError);
-				sValue = this.copyOptions.convertField(earlyDetectTypeArguments[1], sValue);
+				sValue = this.copyOptions.convertField(targetTypeArguments[1], sValue);
 			}
 
 			// 自定义值

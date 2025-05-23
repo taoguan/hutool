@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * JDK8+中的{@link LocalDateTime} 工具类封装
+ * JDK8+中的{@link LocalDateTime}工具类封装
  *
  * @author looly
  * @see DatePattern 常用格式工具类

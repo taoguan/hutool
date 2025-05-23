@@ -1,7 +1,9 @@
 package cn.hutool.core.util;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * 脱敏工具类 DesensitizedUtils 安全测试
@@ -102,4 +104,19 @@ public class DesensitizedUtilTest {
 		assertEquals("1234 **** **** **** 678", DesensitizedUtil.bankCard("1234 2222 3333 4444 678"));
 
 	}
+
+    @Test
+    public void passportTest(){
+        assertEquals(null, DesensitizedUtil.passport(null));
+        assertEquals("", DesensitizedUtil.passport(""));
+        assertEquals("EM*****67", DesensitizedUtil.passport("EM1234567"));
+        assertEquals("*", DesensitizedUtil.passport("3"));
+    }
+
+    @Test
+    public void creditCodeTest(){
+        assertEquals(null, DesensitizedUtil.creditCode(null));
+        assertEquals("", DesensitizedUtil.creditCode(""));
+        assertEquals("9111**********CDE7", DesensitizedUtil.creditCode("91110108MA01ABCDE7"));
+    }
 }

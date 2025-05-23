@@ -12,6 +12,7 @@
 * 【core   】      修复`NumberUtil`isNumber方法以L结尾没有小数点判断问题（issue#3938@Github）
 * 【core   】      修复`CharsequenceUtil`toLowerCase方法拼写错误（issue#3941@Github）
 * 【core   】      修复`UUID`equals的问题，改为final类（issue#3948@Github）
+* 【core   】      修复`Money`中金额分配的问题bug（issue#IC9Y35@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.38(2025-05-13)

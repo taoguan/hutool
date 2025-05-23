@@ -7,6 +7,7 @@
 ### 🐣新特性
 * 【ai     】      增加SSE流式返回函数参数callback，豆包、grok新增文生图接口，豆包生成视频支持使用model
 * 【core   】      DesensitizedUtil新增护照号码脱敏功能（pr#1347@Gitee）
+* 【core   】      优化XXXToMapCopier的部分性能（pr#1345@Gitee）
 * 
 ### 🐞Bug修复
 * 【core   】      修复`NumberUtil`isNumber方法以L结尾没有小数点判断问题（issue#3938@Github）

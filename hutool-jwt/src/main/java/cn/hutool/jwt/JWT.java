@@ -31,7 +31,7 @@ import java.util.Map;
  * </ul>
  *
  * <p>
- * 详细介绍见；https://www.jianshu.com/p/576dbf44b2ae
+ * 详细介绍见：https://www.jianshu.com/p/576dbf44b2ae
  * </p>
  *
  * @author looly

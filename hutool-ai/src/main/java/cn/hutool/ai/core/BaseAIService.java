@@ -18,7 +18,7 @@ package cn.hutool.ai.core;
 
 import cn.hutool.ai.AIException;
 import cn.hutool.http.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.hutool.json.JSONUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -133,7 +133,7 @@ public class BaseAIService {
 				connection.setConnectTimeout(180000);
 				// 发送请求体
 				try (OutputStream os = connection.getOutputStream()) {
-					String jsonInputString = new ObjectMapper().writeValueAsString(paramMap);
+					String jsonInputString = JSONUtil.toJsonStr(paramMap);
 					os.write(jsonInputString.getBytes());
 					os.flush();
 				}

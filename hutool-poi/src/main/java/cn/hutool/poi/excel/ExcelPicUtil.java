@@ -99,7 +99,12 @@ public class ExcelPicUtil {
 				for (XSSFShape shape : shapes) {
 					if(shape instanceof XSSFPicture){
 						pic = (XSSFPicture) shape;
-						ctMarker = pic.getPreferredSize().getFrom();
+						try{
+							ctMarker = pic.getPreferredSize().getFrom();
+						}catch (Exception e){
+							// 此处可能有空指针异常，跳过之
+							continue;
+						}
 						sheetIndexPicMap.put(StrUtil.format("{}_{}", ctMarker.getRow(), ctMarker.getCol()), pic.getPictureData());
 					}
 					// 其他类似于图表等忽略，see: https://gitee.com/chinabugotech/hutool/issues/I38857

@@ -540,6 +540,68 @@ public class Assert {
 	}
 
 	/**
+	 * 断言给定集合为空
+	 * 并使用指定的函数获取错误信息返回
+	 * <pre class="code">
+	 * Assert.empty(collection, ()-&gt;{
+	 *      // to query relation message
+	 *      return new IllegalArgumentException("relation message to return");
+	 *  });
+	 * </pre>
+	 *
+	 * @param <E>           集合元素类型
+	 * @param <T>           集合类型
+	 * @param <X>           异常类型
+	 * @param collection    被检查的集合
+	 * @param errorSupplier 错误抛出异常附带的消息生产接口
+	 * @throws X if the collection is not {@code null} or has elements
+	 * @see CollUtil#isEmpty(Iterable)
+	 * @since 5.8.39
+	 */
+	public static <E, T extends Iterable<E>, X extends Throwable> void empty(T collection, Supplier<X> errorSupplier) throws X {
+		if (CollUtil.isNotEmpty(collection)) {
+			throw errorSupplier.get();
+		}
+	}
+
+
+	/**
+	 * 断言给定集合为空
+	 *
+	 * <pre class="code">
+	 * Assert.empty(collection, "Collection must have no elements");
+	 * </pre>
+	 *
+	 * @param <E>              集合元素类型
+	 * @param <T>              集合类型
+	 * @param collection       被检查的集合
+	 * @param errorMsgTemplate 异常时的消息模板
+	 * @param params           参数列表
+	 * @throws IllegalArgumentException if the collection is not {@code null} or has elements
+	 * @since 5.8.39
+	 */
+	public static <E, T extends Iterable<E>> void empty(T collection, String errorMsgTemplate, Object... params) throws IllegalArgumentException {
+		empty(collection, () -> new IllegalArgumentException(StrUtil.format(errorMsgTemplate, params)));
+	}
+
+	/**
+	 * 断言给定集合为空
+	 *
+	 * <pre class="code">
+	 * Assert.empty(collection);
+	 * </pre>
+	 *
+	 * @param <E>        集合元素类型
+	 * @param <T>        集合类型
+	 * @param collection 被检查的集合
+	 * @throws IllegalArgumentException if the collection is not {@code null} or has elements
+	 * @since 5.8.39
+	 */
+	public static <E, T extends Iterable<E>> void empty(T collection) throws IllegalArgumentException {
+		empty(collection, "[Assertion failed] - this collection must be empty");
+	}
+
+	/**
 	 * 断言给定集合非空
 	 * 并使用指定的函数获取错误信息返回
 	 * <pre class="code">

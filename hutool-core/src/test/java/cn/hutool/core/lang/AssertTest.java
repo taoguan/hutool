@@ -4,6 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AssertTest {
 
 	@Test
@@ -66,6 +69,15 @@ public class AssertTest {
 		//Assert.notEquals(c,d,"{}等于{}",c,d);
 		Assert.notEquals(c, d, () -> new RuntimeException(StrUtil.format("{}和{}相等", c, d)));
 
+	}
+
+	@Test
+	public void emptyCollectionTest() {
+		List<Object> testList = new ArrayList<>();
+		Assertions.assertDoesNotThrow(() -> Assert.empty(null));
+		Assertions.assertDoesNotThrow(() -> Assert.empty(testList));
+		testList.add(new Object());
+		Assertions.assertThrows(IllegalArgumentException.class, () -> Assert.empty(testList));
 	}
 
 }

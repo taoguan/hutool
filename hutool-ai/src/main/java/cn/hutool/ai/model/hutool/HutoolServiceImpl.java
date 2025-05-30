@@ -57,7 +57,7 @@ public class HutoolServiceImpl extends BaseAIService implements HutoolService {
 	private final String CREATE_VIDEO = "/video/generations";
 
 	public HutoolServiceImpl(final AIConfig config) {
-		//初始化grok客户端
+		//初始化hutool客户端
 		super(config);
 	}
 

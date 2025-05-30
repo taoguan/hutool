@@ -141,7 +141,6 @@ class HutoolServiceTest {
 	@Disabled
 	void embeddingVision() {
 		final String embeddingVision = hutoolService.embeddingVision("天空好难", "https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544");
-		System.out.println(embeddingVision);
 		assertNotNull(embeddingVision);
 	}
 
@@ -186,7 +185,6 @@ class HutoolServiceTest {
 	@Disabled
 	void getVideoTasksInfo() {
 		final String videoTasksInfo = hutoolService.getVideoTasksInfo("cgt-20250529154621-d7dq9");
-		System.out.println(videoTasksInfo);
 		assertNotNull(videoTasksInfo);
 	}
 

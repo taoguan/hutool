@@ -24,6 +24,22 @@ package cn.hutool.ai;
  */
 public class Models {
 
+
+	// Hutool的模型
+	public enum Hutool {
+		HUTOOL("hutool");
+
+		private final String model;
+
+		Hutool(String model) {
+			this.model = model;
+		}
+
+		public String getModel() {
+			return model;
+		}
+	}
+
 	// DeepSeek的模型
 	public enum DeepSeek {
 		DEEPSEEK_CHAT("deepseek-chat"),

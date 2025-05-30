@@ -14,49 +14,36 @@
  * limitations under the License.
  */
 
-package cn.hutool.ai;
+package cn.hutool.ai.model.hutool;
+
+import cn.hutool.ai.Models;
+import cn.hutool.ai.core.BaseConfig;
 
 /**
- * 模型厂商的名称（不指具体的模型）
+ * Hutool配置类，初始化API接口地址，设置默认的模型
  *
  * @author elichow
- * @since 5.8.38
+ * @since 5.8.39
  */
-public enum ModelName {
+public class HutoolConfig extends BaseConfig {
 
-	/**
-	 * hutool
-	 */
-	HUTOOL("hutool"),
-	/**
-	 * deepSeek
-	 */
-	DEEPSEEK("deepSeek"),
-	/**
-	 * openai
-	 */
-	OPENAI("openai"),
-	/**
-	 * doubao
-	 */
-	DOUBAO("doubao"),
-	/**
-	 * grok
-	 */
-	GROK("grok");
+	private final String API_URL = "https://api.hutool.cn/blade-ai/api";
 
-	private final String value;
+	private final String DEFAULT_MODEL = Models.Hutool.HUTOOL.getModel();
 
-	ModelName(final String value) {
-		this.value = value;
+	public HutoolConfig() {
+		setApiUrl(API_URL);
+		setModel(DEFAULT_MODEL);
 	}
 
-	/**
-	 * 获取值
-	 *
-	 * @return 值
-	 */
-	public String getValue() {
-		return value;
+	public HutoolConfig(String apiKey) {
+		this();
+		setApiKey(apiKey);
 	}
+
+	@Override
+	public String getModelName() {
+		return "hutool";
+	}
+
 }

@@ -27,7 +27,7 @@ import cn.hutool.ai.core.BaseConfig;
  */
 public class HutoolConfig extends BaseConfig {
 
-	private final String API_URL = "https://api.hutool.cn/blade-ai/api";
+	private final String API_URL = "https://api.hutool.cn/ai/api";
 
 	private final String DEFAULT_MODEL = Models.Hutool.HUTOOL.getModel();
 

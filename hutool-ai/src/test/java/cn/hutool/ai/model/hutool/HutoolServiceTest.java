@@ -59,7 +59,7 @@ class HutoolServiceTest {
 
 		hutoolService.chat(prompt, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -102,7 +102,7 @@ class HutoolServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		hutoolService.chatVision(prompt,images, data -> {
 			assertNotNull(data);
-			if (data.equals("data:[DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {

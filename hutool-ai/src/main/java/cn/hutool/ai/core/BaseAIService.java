@@ -59,7 +59,7 @@ public class BaseAIService {
 			return HttpRequest.get(config.getApiUrl() + endpoint)
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
-				.timeout(180000)
+				.timeout(config.getTimeout())
 				.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send GET request: " + e.getMessage(), e);
@@ -80,7 +80,7 @@ public class BaseAIService {
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
 				.body(paramJson)
-				.timeout(180000)
+				.timeout(config.getTimeout())
 				.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send POST request：" + e.getMessage(), e);
@@ -103,7 +103,7 @@ public class BaseAIService {
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
 				.form(paramMap)
-				.timeout(180000)
+				.timeout(config.getTimeout())
 				.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send POST request：" + e.getMessage(), e);
@@ -128,9 +128,9 @@ public class BaseAIService {
 				connection.setRequestProperty(Header.AUTHORIZATION.getValue(), "Bearer " + config.getApiKey());
 				connection.setDoOutput(true);
 				//5分钟
-				connection.setReadTimeout(300000);
+				connection.setReadTimeout(config.getReadTimeout());
 				//3分钟
-				connection.setConnectTimeout(180000);
+				connection.setConnectTimeout(config.getTimeout());
 				// 发送请求体
 				try (OutputStream os = connection.getOutputStream()) {
 					String jsonInputString = JSONUtil.toJsonStr(paramMap);

@@ -55,7 +55,7 @@ class DoubaoServiceTest {
 
 		doubaoService.chat(prompt, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -111,7 +111,7 @@ class DoubaoServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		doubaoService.chatVision(prompt,images, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -188,7 +188,7 @@ class DoubaoServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		doubaoService.botsChat(messages, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -286,7 +286,7 @@ class DoubaoServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		doubaoService.chatContext(messages,contextId, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {

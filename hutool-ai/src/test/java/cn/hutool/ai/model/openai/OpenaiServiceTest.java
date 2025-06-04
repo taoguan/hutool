@@ -62,7 +62,7 @@ class OpenaiServiceTest {
 
 		openaiService.chat(prompt, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -107,7 +107,7 @@ class OpenaiServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		openaiService.chatVision(prompt,images, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -229,7 +229,7 @@ class OpenaiServiceTest {
 		AtomicBoolean isDone = new AtomicBoolean(false);
 		openaiService.chatReasoning(messages,OpenaiCommon.OpenaiReasoning.HIGH.getEffort(), data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {

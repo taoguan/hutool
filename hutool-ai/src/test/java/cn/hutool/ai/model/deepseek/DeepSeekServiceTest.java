@@ -51,7 +51,7 @@ class DeepSeekServiceTest {
 
 		deepSeekService.chat(prompt, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {
@@ -92,7 +92,7 @@ class DeepSeekServiceTest {
 
 		deepSeekService.beta(beta, data -> {
 			assertNotNull(data);
-			if (data.equals("data: [DONE]")) {
+			if (data.contains("[DONE]")) {
 				// 设置结束标志
 				isDone.set(true);
 			} else if (data.contains("\"error\"")) {

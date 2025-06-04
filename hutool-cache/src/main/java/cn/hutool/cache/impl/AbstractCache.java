@@ -89,7 +89,11 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 
 		// issue#3618 对于替换的键值对，不做满队列检查和清除
 		if (cacheMap.containsKey(mKey)) {
-			// 存在相同key，覆盖之
+			CacheObj<K, V> oldObj = cacheMap.get(mKey);
+			if (oldObj != null) {
+				onRemove(oldObj.key, oldObj.obj);
+				cacheMap.remove(mKey);
+			}
 			cacheMap.put(mKey, co);
 		} else {
 			if (isFull()) {

@@ -5,7 +5,7 @@
 # 5.8.39(2025-06-09)
 
 ### 🐣新特性
-* 【ai     】      增加SSE流式返回函数参数callback，豆包、grok新增文生图接口，豆包生成视频支持使用model
+* 【ai     】      增加SSE流式返回函数参数callback，增加超时时间配置，豆包、grok新增文生图接口，豆包生成视频支持使用model,新增HutoolAI平台
 * 【core   】      DesensitizedUtil新增护照号码脱敏功能（pr#1347@Gitee）
 * 【core   】      优化XXXToMapCopier的部分性能（pr#1345@Gitee）
 * 【http   】      `HttpConfig`增加参数`setIgnoreContentLength`可选忽略读取响应contentLength头（issue#ICB1B8@Gitee）

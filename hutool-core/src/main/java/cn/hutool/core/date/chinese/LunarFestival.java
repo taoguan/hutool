@@ -59,7 +59,6 @@ public class LunarFestival {
 		// 七月
 		L_FTV.put(new Pair<>(7, 7), "七夕");
 		L_FTV.put(new Pair<>(7, 14), "鬼节(南方)");
-		L_FTV.put(new Pair<>(7, 15), "中元节");
 		L_FTV.put(new Pair<>(7, 15), "盂兰盆节 中元节");
 		L_FTV.put(new Pair<>(7, 30), "地藏节");
 

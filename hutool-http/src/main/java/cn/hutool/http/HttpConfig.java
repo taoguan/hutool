@@ -102,6 +102,12 @@ public class HttpConfig {
 	boolean useDefaultContentTypeIfNull = true;
 
 	/**
+	 * 是否忽略Content-Length，如果为true，则忽略Content-Length，自动根据响应内容计算Content-Length<br>
+	 * issue#ICB1B8@Gitee，此参数主要解决服务端响应中Content-Length错误的问题
+	 */
+	boolean ignoreContentLength = false;
+
+	/**
 	 * 设置超时，单位：毫秒<br>
 	 * 超时包括：
 	 *
@@ -330,6 +336,17 @@ public class HttpConfig {
 	 */
 	public HttpConfig setUseDefaultContentTypeIfNull(boolean useDefaultContentTypeIfNull) {
 		this.useDefaultContentTypeIfNull = useDefaultContentTypeIfNull;
+		return this;
+	}
+
+	/**
+	 * 设置是否忽略Content-Length，如果为true，则忽略Content-Length，自动根据响应内容计算Content-Length
+	 * @param ignoreContentLength 是否忽略Content-Length
+	 * @return this
+	 * @since 5.8.39
+	 */
+	public HttpConfig setIgnoreContentLength(boolean ignoreContentLength) {
+		this.ignoreContentLength = ignoreContentLength;
 		return this;
 	}
 }

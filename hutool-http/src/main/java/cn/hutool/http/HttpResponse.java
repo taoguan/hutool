@@ -664,7 +664,8 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 			return;
 		}
 
-		final long contentLength = contentLength();
+		// issue#ICB1B8，如果用户定义忽略contentLength头，则不读取
+		final long contentLength = config.ignoreContentLength ? -1 : contentLength();
 		final FastByteArrayOutputStream out = new FastByteArrayOutputStream((int) contentLength);
 		copyBody(in, out, contentLength, null, this.config.ignoreEOFError);
 		this.body = new BytesResource(out.toByteArray());

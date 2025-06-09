@@ -1,7 +1,9 @@
 package cn.hutool.core.thread;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.util.RuntimeUtil;
 
+import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
@@ -322,7 +324,9 @@ public class ThreadUtil {
 		try {
 			timeUnit.sleep(timeout.longValue());
 		} catch (InterruptedException e) {
-			return false;
+            // 重新标记线程为中断状态（恢复中断信息），让后续代码能感知到“线程曾被中断过”
+            Thread.currentThread().interrupt();
+            return false;
 		}
 		return true;
 	}
@@ -352,6 +356,8 @@ public class ThreadUtil {
 			try {
 				Thread.sleep(millis);
 			} catch (InterruptedException e) {
+                // 重新标记线程为中断状态（恢复中断信息），让后续代码能感知到“线程曾被中断过”
+                Thread.currentThread().interrupt();
 				return false;
 			}
 		}
@@ -506,7 +512,8 @@ public class ThreadUtil {
 				thread.join();
 				dead = true;
 			} catch (InterruptedException e) {
-				// ignore
+                // 重新标记线程为中断状态（恢复中断信息），让后续代码能感知到“线程曾被中断过”
+                Thread.currentThread().interrupt();
 			}
 		} while (false == dead);
 	}
@@ -613,7 +620,8 @@ public class ThreadUtil {
 			try {
 				obj.wait();
 			} catch (InterruptedException e) {
-				// ignore
+                // 重新标记线程为中断状态（恢复中断信息），让后续代码能感知到“线程曾被中断过”
+                Thread.currentThread().interrupt();
 			}
 		}
 	}
@@ -629,10 +637,13 @@ public class ThreadUtil {
 	 * @return {@link ConcurrencyTester}
 	 * @since 4.5.8
 	 */
-	@SuppressWarnings("resource")
 	public static ConcurrencyTester concurrencyTest(int threadSize, Runnable runnable) {
-		return (new ConcurrencyTester(threadSize)).test(runnable);
-	}
+        try (ConcurrencyTester tester = new ConcurrencyTester(threadSize)) {
+            return tester.test(runnable);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+    }
 
 	/**
 	 * 创建{@link ScheduledThreadPoolExecutor}

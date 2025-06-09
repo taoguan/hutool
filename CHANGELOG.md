@@ -18,6 +18,7 @@
 * 【core   】      修复`Money`中金额分配的问题bug（issue#IC9Y35@Gitee）
 * 【poi    】      修复`ExcelPicUtil`中可能的空指针异常
 * 【core   】      修复`LunarFestival`中重复节日问题（issue#ICC8X3@Gitee）
+* 【core   】      修复`ThreadUtil`中中断异常处理丢失中断信息的问题，解决ConcurrencyTester资源未释放的问题（pr#1358@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.38(2025-05-13)

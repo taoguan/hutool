@@ -1,5 +1,6 @@
 package cn.hutool.core.util;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.date.Week;
@@ -8,6 +9,7 @@ import cn.hutool.core.lang.test.bean.ExamInfoDict;
 import cn.hutool.core.util.ClassUtilTest.TestSubClass;
 import lombok.Data;
 import static org.junit.jupiter.api.Assertions.*;
+import lombok.experimental.FieldNameConstants;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +20,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 反射工具类单元测试
@@ -80,10 +84,38 @@ public class ReflectUtilTest {
 	}
 
 	@Test
+	public void getFieldMapTest() {
+		// 获取指定类中字段名和字段对应的有序Map，包括其父类中的字段
+		// 如果子类与父类中存在同名字段，则后者覆盖前者。
+		Map<String, Field> fieldMap = ReflectUtil.getFieldMap(TestSubUser.class);
+		assertEquals(3, fieldMap.size());
+	}
+
+	@Test
 	public void getFieldsTest() {
 		// 能够获取到父类字段
-		final Field[] fields = ReflectUtil.getFields(TestSubClass.class);
+		Field[] fields = ReflectUtil.getFields(TestSubClass.class);
 		assertEquals(4, fields.length);
+
+		// 如果子类与父类中存在同名字段，则这两个字段同时存在，子类字段在前，父类字段在后。
+		fields = ReflectUtil.getFields(TestSubUser.class);
+		assertEquals(4, fields.length);
+		List<Field> idFieldList = Arrays.asList(fields).stream().filter(f -> Objects.equals(f.getName(), TestSubUser.Fields.id)).collect(Collectors.toList());
+		Field firstIdField = CollUtil.getFirst(idFieldList);
+		assertEquals(true, Objects.equals(firstIdField.getDeclaringClass().getName(), TestSubUser.class.getName()));
+	}
+
+	@Data
+	static class TestBaseEntity {
+		private Long id;
+		private String remark;
+	}
+
+	@Data
+	@FieldNameConstants
+	static class TestSubUser extends TestBaseEntity {
+		private Long id;
+		private String name;
 	}
 
 	@Test

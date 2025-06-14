@@ -20,6 +20,7 @@
 * 【core   】      修复`LunarFestival`中重复节日问题（issue#ICC8X3@Gitee）
 * 【core   】      修复`ThreadUtil`中中断异常处理丢失中断信息的问题，解决ConcurrencyTester资源未释放的问题（pr#1358@Gitee）
 * 【core   】      修复`TEL_400_800`正则规则太窄问题（issue#3967@Github）
+* 【core   】      修复`ClassUti`isNormalClass判断未排除String问题（issue#3965@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.38(2025-05-13)

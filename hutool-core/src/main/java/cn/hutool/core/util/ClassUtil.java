@@ -917,7 +917,9 @@ public class ClassUtil {
 				&& false == clazz.isArray() //
 				&& false == clazz.isAnnotation() //
 				&& false == clazz.isSynthetic() //
-				&& false == clazz.isPrimitive();//
+				&& false == clazz.isPrimitive()//
+ 				// issue#3965 String有isEmpty方法，但是不能被当作bean
+				&& clazz != String.class;//
 	}
 
 	/**

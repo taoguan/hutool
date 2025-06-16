@@ -2,6 +2,8 @@ package cn.hutool.core.math;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
+import java.util.Currency;
 
 public class MoneyTest {
 
@@ -20,4 +22,12 @@ public class MoneyTest {
 
 		assertEquals(1234.56D, MathUtil.centToYuan(123456), 0);
 	}
+
+	@Test
+	public void currencyScalingTest() {
+		Money jpyMoney = new Money(0, Currency.getInstance("JPY"));
+		jpyMoney.setAmount(BigDecimal.ONE);
+		assertEquals(1, jpyMoney.getCent());
+	}
+
 }

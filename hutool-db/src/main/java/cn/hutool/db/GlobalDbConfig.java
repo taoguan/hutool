@@ -36,6 +36,10 @@ public class GlobalDbConfig {
 	 * @since 5.8.0
 	 */
 	private static String dbSettingPath = null;
+	/**
+	 * 自定义构造结果集时每次从数据库取的行数
+	 */
+	protected static Integer statementFetchSize=null;
 
 	/**
 	 * 设置全局是否在结果中忽略大小写<br>
@@ -118,5 +122,13 @@ public class GlobalDbConfig {
 	 */
 	public static void setShowSql(boolean isShowSql, boolean isFormatSql, boolean isShowParams, Level level) {
 		SqlLog.INSTANCE.init(isShowSql, isFormatSql, isShowParams, level);
+	}
+
+	/**
+	 * 设置构造结果集时每次从数据库取到的行数
+	 * @param statementFetchSize 每一轮网络请求获取的行数
+	 */
+	public static void setStatementFetchSize(Integer statementFetchSize) {
+		GlobalDbConfig.statementFetchSize = statementFetchSize;
 	}
 }

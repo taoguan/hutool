@@ -151,6 +151,7 @@ public class StatementUtil {
 		} else {
 			ps = conn.prepareStatement(sql);
 		}
+		setFetchSize(ps);
 		return fillParams(ps, params);
 	}
 
@@ -189,6 +190,7 @@ public class StatementUtil {
 			fillParams(ps, new ArrayIter<>(params), nullTypeMap);
 			ps.addBatch();
 		}
+		setFetchSize(ps);
 		return ps;
 	}
 
@@ -215,6 +217,7 @@ public class StatementUtil {
 			fillParams(ps, CollUtil.valuesOfKeys(entity, fields), nullTypeMap);
 			ps.addBatch();
 		}
+		setFetchSize(ps);
 		return ps;
 	}
 
@@ -391,6 +394,16 @@ public class StatementUtil {
 
 		// 其它参数类型
 		ps.setObject(paramIndex, param);
+	}
+
+	/**
+	 * 为{@link PreparedStatement} 设置FetchSize
+	 * @param ps {@link PreparedStatement}
+	 * @throws SQLException SQL异常
+	 */
+	private static void setFetchSize(PreparedStatement ps) throws SQLException {
+		if(GlobalDbConfig.statementFetchSize!=null)
+			ps.setFetchSize(GlobalDbConfig.statementFetchSize);
 	}
 	//--------------------------------------------------------------------------------------------- Private method end
 }

@@ -926,7 +926,7 @@ public class ZipUtil {
 	 */
 	public static byte[] zlib(InputStream in, int level, int length) {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream(length);
-		Deflate.of(in, out, false).deflater(level);
+		Deflate.of(in, out, false).deflater(level).close();
 		return out.toByteArray();
 	}
 
@@ -974,7 +974,7 @@ public class ZipUtil {
 	 */
 	public static byte[] unZlib(InputStream in, int length) {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream(length);
-		Deflate.of(in, out, false).inflater();
+		Deflate.of(in, out, false).inflater().close();
 		return out.toByteArray();
 	}
 

@@ -4,12 +4,12 @@ import cn.hutool.cache.impl.TimedCache;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RandomUtil;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 缓存测试用例
@@ -155,19 +155,15 @@ public class CacheTest {
 	 */
 	@Test
 	public void reentrantCache_clear_Method_Test() {
-		Cache<String, String> lruCache = CacheUtil.newLRUCache(4);
-		lruCache.setListener(new CacheListener<String, String>() {
-			@Override
-			public void onRemove(String key, String cachedObject) {
-				System.out.println(" listener key= "+ key+" value = "+cachedObject.toString()+" cachedObject资源释放操作...");
-			}
-		}  );
+		final AtomicInteger removeCount = new AtomicInteger();
+		final Cache<String, String> lruCache = CacheUtil.newLRUCache(4);
+		lruCache.setListener((key, cachedObject) -> removeCount.getAndIncrement());
 		lruCache.put("key1","String1");
 		lruCache.put("key2","String2");
 		lruCache.put("key3","String3");
 		lruCache.put("key1","String4");//key已经存在，原始putWithoutLock方法存在资源泄露
 		lruCache.put("key4","String5");
 		lruCache.clear();//ReentrantCache类clear()方法存在资源泄露
-
+		Assertions.assertEquals(5, removeCount.get());
 	}
 }

@@ -24,6 +24,7 @@
 * 【core   】      修复`ClassUti`isNormalClass判断未排除String问题（issue#3965@Github）
 * 【core   】      修复`ZipUtil`中zlib和unZlib调用后资源未释放问题（issue#3976@Github）
 * 【core   】      修复`Money`类的setAmount方法没有获取当前币种的小数位数而是使用的默认小数位和在遇到非2小数位的币种(如日元使用 0 位)会导致金额设置错误问题（pr#3970@Github）
+* 【cahce  】      修复`AbstractCache`putWithoutLock方法可能导致的外部资源泄露问题（pr#3958@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.38(2025-05-13)

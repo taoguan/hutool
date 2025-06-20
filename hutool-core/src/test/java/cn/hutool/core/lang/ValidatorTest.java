@@ -165,6 +165,8 @@ public class ValidatorTest {
 	public void isPlateNumberTest() {
 		assertTrue(Validator.isPlateNumber("粤BA03205"));
 		assertTrue(Validator.isPlateNumber("闽20401领"));
+		//issue#3979
+		assertTrue(Validator.isPlateNumber("沪AE22075"));
 	}
 
 	@Test

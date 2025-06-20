@@ -1,8 +1,11 @@
 package cn.hutool.cache.impl;
 
 import cn.hutool.core.collection.CopiedIter;
+import cn.hutool.core.lang.mutable.Mutable;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -81,7 +84,14 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 	public void clear() {
 		lock.lock();
 		try {
-			cacheMap.clear();
+			// 获取所有键的副本
+			Set<Mutable<K>> keys = new HashSet<>(cacheMap.keySet());
+			for (Mutable<K> key : keys) {
+				CacheObj<K, V> co = removeWithoutLock(key.get());
+				if (co != null) {
+					onRemove(co.key, co.obj); // 触发资源释放
+				}
+			}
 		} finally {
 			lock.unlock();
 		}

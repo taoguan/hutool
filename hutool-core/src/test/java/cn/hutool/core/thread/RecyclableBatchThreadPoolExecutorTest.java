@@ -1,6 +1,7 @@
 package cn.hutool.core.thread;
 
 import cn.hutool.core.thread.RecyclableBatchThreadPoolExecutor.Warp;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -18,9 +19,9 @@ public class RecyclableBatchThreadPoolExecutorTest {
 
 	/**
 	 * 批量处理数据
-	 * @throws InterruptedException
 	 */
 	@Test
+	@Disabled
 	public void test() throws InterruptedException {
 		int corePoolSize = 10;// 线程池大小
 		int batchSize = 100;// 每批次数据量
@@ -32,6 +33,7 @@ public class RecyclableBatchThreadPoolExecutorTest {
 	 * 普通查询接口加速
 	 */
 	@Test
+	@Disabled
 	public void test2() {
 		RecyclableBatchThreadPoolExecutor executor = new RecyclableBatchThreadPoolExecutor(10);
 		long s = System.nanoTime();

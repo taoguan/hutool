@@ -29,6 +29,11 @@ public class RecyclableBatchThreadPoolExecutor {
 
 	private final ExecutorService executor;
 
+	/**
+	 * 构造
+	 *
+	 * @param poolSize 线程池大小
+	 */
 	public RecyclableBatchThreadPoolExecutor(int poolSize){
 		this(poolSize,"recyclable-batch-pool-");
 	}

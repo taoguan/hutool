@@ -29,7 +29,7 @@ public class BitSetBloomFilter implements BloomFilter {
 	 *
 	 * @param c 当前过滤器预先开辟的最大包含记录,通常要比预计存入的记录多一倍.
 	 * @param n 当前过滤器预计所要包含的记录.
-	 * @param k 哈希函数的个数，等同每条记录要占用的bit数.
+	 * @param k 哈希函数的个数，等同每条记录要占用的bit数，此处值取值为1~8
 	 */
 	public BitSetBloomFilter(int c, int n, int k) {
 		this.hashFunctionNumber = k;

@@ -10,6 +10,7 @@
 * 【core   】      优化XXXToMapCopier的部分性能（pr#1345@Gitee）
 * 【http   】      `HttpConfig`增加参数`setIgnoreContentLength`可选忽略读取响应contentLength头（issue#ICB1B8@Gitee）
 * 【core   】      `Assert`新增断言给定集合为空的方法以及单元测试用例（pr#3952@Github）
+* 【db     】      Db添加FetchSize的全局设置（pr#3978@Github）
 * 
 ### 🐞Bug修复
 * 【core   】      修复`NumberUtil`isNumber方法以L结尾没有小数点判断问题（issue#3938@Github）

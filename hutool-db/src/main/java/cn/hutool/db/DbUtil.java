@@ -254,9 +254,11 @@ public final class DbUtil {
 
 	/**
 	 * 设置构造结果集时每次从数据库取到的行数
+	 *
 	 * @param fetchSize 每一轮网络请求获取的行数
+	 * @since 5.8.39
 	 */
-	public static void setStatementFetchSizeGlobal(Integer fetchSize){
+	public static void setStatementFetchSizeGlobal(Integer fetchSize) {
 		GlobalDbConfig.setStatementFetchSize(fetchSize);
 	}
 }

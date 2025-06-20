@@ -39,7 +39,7 @@ public class GlobalDbConfig {
 	/**
 	 * 自定义构造结果集时每次从数据库取的行数
 	 */
-	protected static Integer statementFetchSize=null;
+	protected static Integer statementFetchSize = null;
 
 	/**
 	 * 设置全局是否在结果中忽略大小写<br>
@@ -126,7 +126,9 @@ public class GlobalDbConfig {
 
 	/**
 	 * 设置构造结果集时每次从数据库取到的行数
+	 *
 	 * @param statementFetchSize 每一轮网络请求获取的行数
+	 * @since 5.8.39
 	 */
 	public static void setStatementFetchSize(Integer statementFetchSize) {
 		GlobalDbConfig.statementFetchSize = statementFetchSize;

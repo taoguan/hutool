@@ -251,4 +251,12 @@ public final class DbUtil {
 	public static void setDbSettingPathGlobal(String dbSettingPath) {
 		GlobalDbConfig.setDbSettingPath(dbSettingPath);
 	}
+
+	/**
+	 * 设置构造结果集时每次从数据库取到的行数
+	 * @param fetchSize 每一轮网络请求获取的行数
+	 */
+	public static void setStatementFetchSizeGlobal(Integer fetchSize){
+		GlobalDbConfig.setStatementFetchSize(fetchSize);
+	}
 }

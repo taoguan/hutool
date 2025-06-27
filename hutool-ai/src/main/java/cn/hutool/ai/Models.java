@@ -192,4 +192,19 @@ public class Models {
 		}
 	}
 
+	// Ollama的模型
+	public enum Ollama {
+		QWEN3_32B("qwen3:32b");
+
+		private final String model;
+
+		Ollama(String model) {
+			this.model = model;
+		}
+
+		public String getModel() {
+			return model;
+		}
+	}
+
 }

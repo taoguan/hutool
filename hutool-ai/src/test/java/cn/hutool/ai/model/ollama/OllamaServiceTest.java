@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2025 Hutool Team and hutool.cn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.hutool.ai.model.ollama;
 
 import cn.hutool.ai.AIServiceFactory;
@@ -20,6 +36,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * OllamaService
+ *
+ * @author yangruoyu-yumeisoft
+ * @since 5.8.40
+ */
 class OllamaServiceTest {
 	// 创建service
 	OllamaService ollamaService = AIServiceFactory.getAIService(
@@ -121,7 +143,6 @@ class OllamaServiceTest {
 	@Disabled
 	void testSimple() {
 		final String answer = ollamaService.chat("写一个疯狂星期四广告词");
-		System.out.println(answer);
 		assertNotNull(answer);
 	}
 
@@ -142,9 +163,7 @@ class OllamaServiceTest {
 				return;
 			}
 
-			if ("false".equals(streamData.getByPath("done").toString())) {
-				System.out.print(streamData.getByPath("message.content"));
-			} else if ("true".equals(streamData.getByPath("done").toString())) {
+			if ("true".equals(streamData.getByPath("done").toString())) {
 				isDone.set(true);
 			}
 		});
@@ -167,7 +186,6 @@ class OllamaServiceTest {
 		messageList.add(new Message("system",javaEngineerPrompt));
 		messageList.add(new Message("user","帮我写一个Java通过Post方式发送JSON给HTTP接口，请求头带有token"));
 		String result = ollamaService.chat(messageList);
-		System.out.println(result);
 		assertNotNull(result);
 	}
 
@@ -188,9 +206,7 @@ class OllamaServiceTest {
 				return;
 			}
 
-			if ("false".equals(streamData.getByPath("done").toString())) {
-				System.out.print(streamData.getByPath("message.content"));
-			} else if ("true".equals(streamData.getByPath("done").toString())) {
+			if ("true".equals(streamData.getByPath("done").toString())) {
 				isDone.set(true);
 			}
 		});
@@ -211,9 +227,6 @@ class OllamaServiceTest {
 	void testListModels(){
 		String models = ollamaService.listModels();
 		JSONArray modelList = JSONUtil.parse(models).getByPath("models", JSONArray.class);
-		for (Object o : modelList) {
-			System.out.println(BeanPath.create("name").get(o));
-		}
 	}
 
 	/**
@@ -223,7 +236,6 @@ class OllamaServiceTest {
 	@Disabled
 	void testPullModel(){
 		String result = ollamaService.pullModel("qwen2.5:0.5b");
-		System.out.println(result);
 		List<String> lines = StrUtil.splitTrim(result, "\n");
 		for (String line : lines) {
 			if(line.contains("error")){
@@ -239,6 +251,6 @@ class OllamaServiceTest {
 	@Disabled
 	void testDeleteModel(){
 		// 不会返回任何信息
-		System.out.println(ollamaService.deleteModel("qwen2.5:0.5b"));
+		ollamaService.deleteModel("qwen2.5:0.5b");
 	}
 }

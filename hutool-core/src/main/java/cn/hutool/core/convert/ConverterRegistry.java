@@ -1,6 +1,7 @@
 package cn.hutool.core.convert;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.RecordUtil;
 import cn.hutool.core.convert.impl.*;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.lang.Opt;
@@ -344,6 +345,12 @@ public class ConverterRegistry implements Serializable {
 		if(ObjectUtil.isEmpty(value)){
 			// issue#3649 空值转空对象，则直接实例化
 			return ReflectUtil.newInstanceIfPossible(rowType);
+		}
+
+		// record
+		// issue#3985@Github since 5.8.40
+		if(RecordUtil.isRecord(rowType)){
+			return (T) new RecordConverter(rowType).convert(value, defaultValue);
 		}
 
 		// 表示非需要特殊转换的对象

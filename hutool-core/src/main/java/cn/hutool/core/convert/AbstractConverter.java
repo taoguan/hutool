@@ -12,8 +12,8 @@ import java.util.Map;
  * 抽象转换器，提供通用的转换逻辑，同时通过convertInternal实现对应类型的专属逻辑<br>
  * 转换器不会抛出转换异常，转换失败时会返回{@code null}
  *
+ * @param <T> 转换的目标类型
  * @author Looly
- *
  */
 public abstract class AbstractConverter<T> implements Converter<T>, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public abstract class AbstractConverter<T> implements Converter<T>, Serializable
 	 * 不抛异常转换<br>
 	 * 当转换失败时返回默认值
 	 *
-	 * @param value 被转换的值
+	 * @param value        被转换的值
 	 * @param defaultValue 默认值
 	 * @return 转换后的值
 	 * @since 4.5.7
@@ -59,7 +59,7 @@ public abstract class AbstractConverter<T> implements Converter<T>, Serializable
 			return ((null == result) ? defaultValue : result);
 		} else {
 			throw new IllegalArgumentException(
-					StrUtil.format("Default value [{}]({}) is not the instance of [{}]", defaultValue, defaultValue.getClass(), targetType));
+				StrUtil.format("Default value [{}]({}) is not the instance of [{}]", defaultValue, defaultValue.getClass(), targetType));
 		}
 	}
 
@@ -98,9 +98,9 @@ public abstract class AbstractConverter<T> implements Converter<T>, Serializable
 			return value.toString();
 		} else if (ArrayUtil.isArray(value)) {
 			return ArrayUtil.toString(value);
-		} else if(CharUtil.isChar(value)) {
+		} else if (CharUtil.isChar(value)) {
 			//对于ASCII字符使用缓存加速转换，减少空间创建
-			return CharUtil.toString((char)value);
+			return CharUtil.toString((char) value);
 		}
 		return value.toString();
 	}

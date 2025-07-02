@@ -16,10 +16,14 @@ public class MathGenerator implements CodeGenerator {
 
 	private static final String operators = "+-*";
 
-	/** 参与计算数字最大长度 */
+	/**
+	 * 参与计算数字最大长度
+	 */
 	private final int numberLength;
 
-	/** 计算结果是否允许负数 */
+	/**
+	 * 计算结果是否允许负数
+	 */
 	private final boolean resultHasNegativeNumber;
 
 	/**
@@ -41,6 +45,15 @@ public class MathGenerator implements CodeGenerator {
 	/**
 	 * 构造
 	 *
+	 * @param numberLength 参与计算最大数字位数
+	 */
+	public MathGenerator(int numberLength) {
+		this(numberLength, true);
+	}
+
+	/**
+	 * 构造
+	 *
 	 * @param numberLength            参与计算最大数字位数
 	 * @param resultHasNegativeNumber 结果是否允许负数
 	 */
@@ -57,7 +70,7 @@ public class MathGenerator implements CodeGenerator {
 		int numberInt2 = 0;
 		numberInt1 = RandomUtil.randomInt(limit);
 		// 如果禁止了结果有负数，且计算方式正好计算为减法，需要第二个数小于第一个数
-		if (!resultHasNegativeNumber && CharUtil.equals('-',operator,false)) {
+		if (!resultHasNegativeNumber && CharUtil.equals('-', operator, false)) {
 			//如果第一个数为0，第二个数必须为0，随机[0,0)的数字会报错
 			numberInt2 = numberInt1 == 0 ? 0 : RandomUtil.randomInt(0, numberInt1);
 		} else {

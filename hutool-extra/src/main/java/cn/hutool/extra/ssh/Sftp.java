@@ -226,7 +226,7 @@ public class Sftp extends AbstractFtp {
 		}
 		try {
 			this.cd(StrUtil.SLASH);
-		} catch (FtpException e) {
+		} catch (Exception e) {
 			close();
 			init();
 		}

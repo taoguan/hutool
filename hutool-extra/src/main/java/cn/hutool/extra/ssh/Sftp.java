@@ -692,7 +692,9 @@ public class Sftp extends AbstractFtp {
 	@Override
 	public void close() {
 		JschUtil.close(this.channel);
+		this.channel = null;
 		JschUtil.close(this.session);
+		this.session = null;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package cn.hutool.core.convert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -355,5 +356,11 @@ public class NumberChineseFormatterTest {
 	public void dotTest() {
 		final String format = NumberChineseFormatter.format(new BigDecimal("3.1415926"), false, false);
 		assertEquals("三点一四一五九二六", format);
+	}
+
+	@Test
+	public void issue3986Test() {
+		final String format = NumberChineseFormatter.format(100000.0, true, true);
+		Assertions.assertEquals("壹拾万元整", format);
 	}
 }

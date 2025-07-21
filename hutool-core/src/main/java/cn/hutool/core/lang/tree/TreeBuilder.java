@@ -188,7 +188,9 @@ public class TreeBuilder<E> implements Builder<Tree<E>> {
 			}
 
 		}
-		return append(map);
+		// this.idTreeMap重复put
+		// return append(map);
+		return this;
 	}
 
 	/**
@@ -224,7 +226,9 @@ public class TreeBuilder<E> implements Builder<Tree<E>> {
 			}
 
 		}
-		return append(map);
+		// this.idTreeMap重复put
+		// return append(map);
+		return this;
 	}
 
 	/**

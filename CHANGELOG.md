@@ -12,6 +12,7 @@
 * 【extra  】      `Sftp``reconnectIfTimeout`方法改为捕获所有异常（issue#3989@Github）
 * 【core   】      修复`ChineseDate `闰年闰月节日获取问题（issue#ICL1BT@Gitee）
 * 【core   】      修复`TreeBuilder`append重复向idTreeMap中put问题（pr#3992@Github）
+* 【extra  】      修复`QLExpressEngine`allowClassSet无效问题（issue#3994@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.39(2025-06-20)

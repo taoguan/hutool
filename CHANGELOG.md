@@ -2,11 +2,12 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.40(2025-07-21)
+# 5.8.40(2025-07-24)
 
 ### 🐣新特性
 * 【captcha】      `MathGenerator`四则运算方式支持不生成负数结果（pr#1363@Gitee）
 * 【core   】      增加`MapValueProvider`和`RecordConverter`并支持Record转换（issue#3985@Github）
+* 【core   】      `CalendarUtil`增加`isSameYear`和`calendar`方法（issue#3995@Github）
 
 ### 🐞Bug修复
 * 【extra  】      `Sftp``reconnectIfTimeout`方法改为捕获所有异常（issue#3989@Github）

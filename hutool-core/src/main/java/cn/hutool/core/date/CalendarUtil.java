@@ -75,6 +75,21 @@ public class CalendarUtil {
 	}
 
 	/**
+	 * 转换为指定时区的Calendar，返回新的Calendar
+	 *
+	 * @param calendar 时间
+	 * @param timeZone 新时区
+	 * @return 指定时区的新的calendar对象
+	 * @since 5.8.30
+	 */
+	public static Calendar calendar(Calendar calendar, final TimeZone timeZone) {
+		// 转换到统一时区，例如UTC
+		calendar = (Calendar) calendar.clone();
+		calendar.setTimeZone(timeZone);
+		return calendar;
+	}
+
+	/**
 	 * 是否为上午
 	 *
 	 * @param calendar {@link Calendar}
@@ -433,6 +448,30 @@ public class CalendarUtil {
 
 		return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && //
 			cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+			// issue#3011@Github
+			cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA);
+	}
+
+	/**
+	 * 比较两个日期是否为同一年<br>
+	 * 同一个年的意思是：ERA（公元）、year（年）都一致。
+	 *
+	 * @param cal1 日期1
+	 * @param cal2 日期2
+	 * @return 是否为同一年
+	 * @since 5.8.30
+	 */
+	public static boolean isSameYear(final Calendar cal1, Calendar cal2) {
+		if (cal1 == null || cal2 == null) {
+			throw new IllegalArgumentException("The date must not be null");
+		}
+
+		if (!ObjUtil.equals(cal1.getTimeZone(), cal2.getTimeZone())) {
+			// 统一时区
+			cal2 = calendar(cal2, cal1.getTimeZone());
+		}
+
+		return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && //
 			// issue#3011@Github
 			cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA);
 	}

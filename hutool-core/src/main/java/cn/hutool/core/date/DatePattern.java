@@ -286,6 +286,15 @@ public class DatePattern {
 	public static final FastDateFormat UTC_WITH_XXX_OFFSET_FORMAT = FastDateFormat.getInstance(UTC_WITH_XXX_OFFSET_PATTERN);
 
 	/**
+	 * UTC时间：yyyy-MM-dd'T'HH:mmXXX
+	 */
+	public static final String UTC_SIMPLE_MINUTE_WITH_XXX_OFFSET_PATTERN = "yyyy-MM-dd'T'HH:mmXXX";
+	/**
+	 * UTC时间{@link FastDateFormat}：yyyy-MM-dd'T'HH:mmXXX
+	 */
+	public static final FastDateFormat UTC_SIMPLE_MINUTE_WITH_XXX_OFFSET_FORMAT = FastDateFormat.getInstance(UTC_SIMPLE_MINUTE_WITH_XXX_OFFSET_PATTERN);
+
+	/**
 	 * UTC时间：yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 	 */
 	public static final String UTC_MS_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";

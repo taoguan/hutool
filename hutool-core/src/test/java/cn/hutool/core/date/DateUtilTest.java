@@ -667,6 +667,12 @@ public class DateUtilTest {
 		dateStr = dt.toString(simpleDateFormat);
 		assertEquals("2018-09-13 13:34:39.999", dateStr);
 
+		dateStr1 = "2025-07-28T20:00+08:00";
+		dt = DateUtil.parse(dateStr1);
+		assert dt != null;
+		dateStr = dt.toString();
+		assertEquals("2025-07-28 20:00:00", dateStr);
+
 		// 使用UTC时区
 		dateStr1 = "2018-09-13T13:34:39.99";
 		dt = DateUtil.parse(dateStr1);

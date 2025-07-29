@@ -862,4 +862,29 @@ public class MapUtilTest {
 		assertEquals(0, MapUtil.get(map, "age", new TypeReference<Integer>() {
 		}, 0));
 	}
+
+	@Test
+	public void flattenMapReturnsTest() {
+		Map<String, String> clothes = new HashMap<>();
+		clothes.put("clothesName", "ANTA");
+		clothes.put("clothesPrice", "200");
+
+		Map<String, Object> person = new HashMap<>();
+		person.put("personName", "XXXX");
+		person.put("clothes", clothes);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("home", "AAA");
+		map.put("person", person);
+
+		Map<String, Object> flattenMap = MapUtil.flatten(map);
+		assertEquals("ANTA", MapUtil.get(flattenMap, "clothesName", new TypeReference<String>() {
+		}));
+		assertEquals("200", MapUtil.get(flattenMap, "clothesPrice", new TypeReference<String>() {
+		}));
+		assertEquals("XXXX", MapUtil.get(flattenMap, "personName", new TypeReference<String>() {
+		}));
+		assertEquals("AAA", MapUtil.get(flattenMap, "home", new TypeReference<String>() {
+		}));
+	}
 }

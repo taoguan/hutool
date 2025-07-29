@@ -1577,7 +1577,7 @@ public class MapUtil {
 	public static <K, V> Map<K, V> flatten(Map<K, V> map) {
 		Assert.notNull(map);
 		Map<K, V> flatMap = new HashMap<>();
-		flatten(map,  flatMap);
+		flatten(map, flatMap);
 		return flatMap;
 	}
 }

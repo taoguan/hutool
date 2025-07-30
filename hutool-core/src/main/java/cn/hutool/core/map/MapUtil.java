@@ -1544,4 +1544,40 @@ public class MapUtil {
 		}
 		return list;
 	}
+
+	/**
+	 * 递归调用将多层级Map处理为一个层级Map类型
+	 *
+	 * @param map 入参Map
+	 * @param flatMap 单层级Map返回值
+	 * @param <K>  键类型
+	 * @param <V>  值类型
+	 */
+	private static <K, V>  void flatten(Map<K, V> map, Map<K, V> flatMap) {
+		for (Map.Entry<K, V> entry : map.entrySet()) {
+			K key = entry.getKey();
+			V value = entry.getValue();
+			if (value instanceof Map) {
+				flatten((Map<K, V>) value, flatMap);
+			} else {
+				flatMap.put(key, value);
+			}
+		}
+	}
+
+
+	/**
+	 * 将多层级Map处理为一个层级Map类型
+	 *
+	 * @param map 入参Map
+	 * @return 单层级Map返回值
+	 * @param <K>  键类型
+	 * @param <V>  值类型
+	 */
+	public static <K, V> Map<K, V> flatten(Map<K, V> map) {
+		Assert.notNull(map);
+		Map<K, V> flatMap = new HashMap<>();
+		flatten(map, flatMap);
+		return flatMap;
+	}
 }

@@ -901,6 +901,9 @@ public class DateUtil extends CalendarUtil {
 				// 带毫秒，格式类似：2018-09-13T05:34:31.999+08:00
 				iso8601String = normalizeMillSeconds(iso8601String, ".", "+");
 				return parse(iso8601String, DatePattern.UTC_MS_WITH_XXX_OFFSET_FORMAT);
+			} else if (iso8601String.length() == 22 && StrUtil.count(iso8601String, ':') == 2) {
+				// 精确到分钟，格式类似：2025-07-28T20:00+08:00
+				return parse(iso8601String, DatePattern.UTC_SIMPLE_MINUTE_WITH_XXX_OFFSET_FORMAT);
 			} else {
 				// 格式类似：2018-09-13T05:34:31+08:00
 				return parse(iso8601String, DatePattern.UTC_WITH_XXX_OFFSET_FORMAT);

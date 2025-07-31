@@ -469,7 +469,7 @@ public class CollUtil {
 	 *
 	 * @param collection 集合
 	 * @param value      需要查找的值
-	 * @return 果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+	 * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
 	 * @since 5.7.16
 	 */
 	public static boolean safeContains(Collection<?> collection, Object value) {

@@ -529,6 +529,44 @@ public class FileUtilTest {
 	}
 
 	@Test
+	public void isSub_SubIsAncestorOfParentTest() {
+		File parent = new File("d:/home/user/docs/notes");
+		File sub = new File("d:/home/user/docs");
+		assertFalse(FileUtil.isSub(parent, sub));
+	}
+
+	@Test
+	public void isSub_SamePathTest() {
+		File parent = new File("d:/home/user/docs");
+		File sub = new File("d:/home/user/docs");
+		assertTrue(FileUtil.isSub(parent, sub));
+	}
+
+	@Test
+	public void isSub_NonexistentPathsTest() {
+		File parent = new File("d:/unlikely/to/exist/parent");
+		File sub = new File("d:/unlikely/to/exist/parent/child/file.txt");
+		assertTrue(FileUtil.isSub(parent, sub));
+
+		File nonchild = new File("d:/also/unlikely/path.txt");
+		assertFalse(FileUtil.isSub(parent, nonchild));
+	}
+
+	@Test
+	public void isSub_NullParentTest() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			FileUtil.isSub(null, new java.io.File("d:/any/path"));
+		});
+	}
+
+	@Test
+	public void isSub_NullSubTest() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			FileUtil.isSub(new java.io.File("d:/any/path"), null);
+		});
+	}
+
+	@Test
 	@Disabled
 	public void appendLinesTest(){
 		final List<String> list = ListUtil.toList("a", "b", "c");

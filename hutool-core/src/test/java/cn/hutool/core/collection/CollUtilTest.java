@@ -63,6 +63,25 @@ public class CollUtilTest {
 	}
 
 	@Test
+	public void testPadLeft_NegativeMinLen_ShouldNotModifyList() {
+		List<String> list = CollUtil.newArrayList("a", "b", "c");
+		List<String> original = CollUtil.newArrayList("a", "b", "c");
+
+		CollUtil.padLeft(list, -5, "x");
+
+		assertEquals(original, list, "List should remain unchanged when minLen is negative");
+	}
+
+	@Test
+	public void testPadLeft_EmptyList_MinLenZero() {
+		List<String> list = CollUtil.newArrayList();
+
+		CollUtil.padLeft(list, 0, "x");
+
+		assertTrue(list.isEmpty(), "List should remain empty when minLen is 0");
+	}
+
+	@Test
 	public void testPadRight() {
 		final List<String> srcList = CollUtil.newArrayList("a");
 		final List<String> answerList = CollUtil.newArrayList("a", "b", "b", "b", "b");
@@ -211,6 +230,19 @@ public class CollUtilTest {
 		final List<String> r2 = CollUtil.subtractToList(map1.keySet(), map2.keySet());
 		assertEquals("[1]", r2.toString());
 	}
+	
+	@Test
+    public void testSubtractWithDuplicates() {
+        Collection<String> coll1 = new ArrayList<>(Arrays.asList("a", "b", "b", "c"));
+        Collection<String> coll2 = Collections.singletonList("b");
+        Collection<String> result = CollUtil.subtract(coll1, coll2);
+
+        List<String> expected = Arrays.asList("a", "c");
+        List<String> resultList = new ArrayList<>(result);
+        Collections.sort(resultList);
+        Collections.sort(expected);
+        assertEquals(expected, resultList);
+    }
 
 	@Test
 	public void toMapListAndToListMapTest() {
@@ -823,6 +855,34 @@ public class CollUtilTest {
 		// 去重后c排第三
 		final int i = CollUtil.lastIndexOf(list, (str) -> str.charAt(0) == 'c');
 		assertEquals(2, i);
+	}
+
+	@Test
+	public void lastIndexOf_NoMatchExists() {
+		List<String> list = CollUtil.newArrayList("a", "b", "c");
+		int idx = CollUtil.lastIndexOf(list, item -> item.equals("z"));
+		assertEquals(-1, idx);
+	}
+
+	@Test
+	public void lastIndexOf_MatcherIsNull_MatchAll() {
+		List<String> list = CollUtil.newArrayList("x", "y", "z");
+		int idx = CollUtil.lastIndexOf(list, null);
+		assertEquals(2, idx);
+	}
+
+	@Test
+	public void lastIndexOf_EmptyCollection() {
+		List<String> list = CollUtil.newArrayList();
+		int idx = CollUtil.lastIndexOf(list, item -> item != null);
+		assertEquals(-1, idx);
+	}
+
+	@Test
+	public void lastIndexOf_SingletonCollection_Match() {
+		List<String> list = CollUtil.newArrayList("foo");
+		int idx = CollUtil.lastIndexOf(list, item -> item.equals("foo"));
+		assertEquals(0, idx);
 	}
 
 	@Test

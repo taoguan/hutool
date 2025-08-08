@@ -1823,7 +1823,7 @@ public class NumberUtil {
 	 * @param bigNum1 数字1
 	 * @param bigNum2 数字2
 	 * @return 是否大于等于
-	 * @since 3, 0.9
+	 * @since 3.0.9
 	 */
 	public static boolean isGreaterOrEqual(BigDecimal bigNum1, BigDecimal bigNum2) {
 		Assert.notNull(bigNum1);
@@ -1837,7 +1837,7 @@ public class NumberUtil {
 	 * @param bigNum1 数字1
 	 * @param bigNum2 数字2
 	 * @return 是否小于
-	 * @since 3, 0.9
+	 * @since 3.0.9
 	 */
 	public static boolean isLess(BigDecimal bigNum1, BigDecimal bigNum2) {
 		Assert.notNull(bigNum1);
@@ -1851,7 +1851,7 @@ public class NumberUtil {
 	 * @param bigNum1 数字1
 	 * @param bigNum2 数字2
 	 * @return 是否小于等于
-	 * @since 3, 0.9
+	 * @since 3.0.9
 	 */
 	public static boolean isLessOrEqual(BigDecimal bigNum1, BigDecimal bigNum2) {
 		Assert.notNull(bigNum1);

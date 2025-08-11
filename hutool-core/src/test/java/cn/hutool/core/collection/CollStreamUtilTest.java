@@ -4,12 +4,13 @@ import cn.hutool.core.map.MapUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * CollectionStream测试方法
@@ -19,17 +20,17 @@ public class CollStreamUtilTest {
 	@Test
 	public void testToIdentityMap() {
 		Map<Long, Student> map = CollStreamUtil.toIdentityMap(null, Student::getStudentId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.toIdentityMap(list, Student::getStudentId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 1, 2, "李四"));
 		list.add(new Student(1, 1, 3, "王五"));
 		map = CollStreamUtil.toIdentityMap(list, Student::getStudentId);
-		assertEquals(map.get(1L).getName(), "张三");
-		assertEquals(map.get(2L).getName(), "李四");
-		assertEquals(map.get(3L).getName(), "王五");
+		assertEquals("张三", map.get(1L).getName());
+		assertEquals("李四", map.get(2L).getName());
+		assertEquals("王五", map.get(3L).getName());
 		assertNull(map.get(4L));
 
 		// 测试value为空时
@@ -41,17 +42,17 @@ public class CollStreamUtilTest {
 	@Test
 	public void testToMap() {
 		Map<Long, String> map = CollStreamUtil.toMap(null, Student::getStudentId, Student::getName);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.toMap(list, Student::getStudentId, Student::getName);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 1, 2, "李四"));
 		list.add(new Student(1, 1, 3, "王五"));
 		map = CollStreamUtil.toMap(list, Student::getStudentId, Student::getName);
-		assertEquals(map.get(1L), "张三");
-		assertEquals(map.get(2L), "李四");
-		assertEquals(map.get(3L), "王五");
+		assertEquals("张三", map.get(1L));
+		assertEquals("李四", map.get(2L));
+		assertEquals("王五", map.get(3L));
 		assertNull(map.get(4L));
 
 		// 测试value为空时
@@ -64,7 +65,7 @@ public class CollStreamUtilTest {
 	public void testToMap_KeyCollision_SilentlyOverwrite() {
 		List<Student> list = new ArrayList<>();
 		list.add(new Student(1, 101, 1, "张三"));
-		list.add(new Student(1, 102, 1, "李四")); 
+		list.add(new Student(1, 102, 1, "李四"));
 		Map<Long, String> map = CollStreamUtil.toMap(list, Student::getStudentId, Student::getName, false);
 
 		assertEquals(1, map.size());
@@ -97,10 +98,10 @@ public class CollStreamUtilTest {
 	@Test
 	public void testGroupByKey() {
 		Map<Long, List<Student>> map = CollStreamUtil.groupByKey(null, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.groupByKey(list, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 2, 2, "李四"));
 		list.add(new Student(2, 1, 1, "擎天柱"));
@@ -126,10 +127,10 @@ public class CollStreamUtilTest {
 	@Test
 	public void testGroupBy2Key() {
 		Map<Long, Map<Long, List<Student>>> map = CollStreamUtil.groupBy2Key(null, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.groupBy2Key(list, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 2, 2, "李四"));
 		list.add(new Student(1, 2, 3, "王五"));
@@ -165,11 +166,11 @@ public class CollStreamUtilTest {
 	@Test
 	public void testGroup2Map() {
 		Map<Long, Map<Long, Student>> map = CollStreamUtil.group2Map(null, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.group2Map(list, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 2, 1, "李四"));
 		list.add(new Student(2, 2, 1, "王五"));
@@ -186,7 +187,10 @@ public class CollStreamUtilTest {
 
 		// 对null友好
 		Map<Long, Map<Long, Student>> termIdClassIdStudentMap = CollStreamUtil.group2Map(Arrays.asList(null, new Student(2, 2, 1, "王五")), Student::getTermId, Student::getClassId);
-		Map<Long, Map<Long, Student>> termIdClassIdStudentCompareMap = new HashMap<Long, Map<Long, Student>>() {{
+		Map<Long, Map<Long, Student>> termIdClassIdStudentCompareMap = new HashMap<Long, Map<Long, Student>>() {
+			private static final long serialVersionUID = -26683057599474572L;
+
+			{
 			put(null, MapUtil.of(null, null));
 			put(2L, MapUtil.of(2L, new Student(2, 2, 1, "王五")));
 		}};
@@ -196,11 +200,11 @@ public class CollStreamUtilTest {
 	@Test
 	public void testGroupKeyValue() {
 		Map<Long, List<Long>> map = CollStreamUtil.groupKeyValue(null, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.groupKeyValue(list, Student::getTermId, Student::getClassId);
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		list.add(new Student(1, 1, 1, "张三"));
 		list.add(new Student(1, 2, 1, "李四"));
 		list.add(new Student(2, 2, 1, "王五"));
@@ -218,12 +222,12 @@ public class CollStreamUtilTest {
 
 		// 参数null测试
 		Map<Long, List<Student>> map = CollStreamUtil.groupBy(null, Student::getTermId, Collectors.toList());
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 
 		// 参数空数组测试
 		List<Student> list = new ArrayList<>();
 		map = CollStreamUtil.groupBy(list, Student::getTermId, Collectors.toList());
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 
 		// 放入元素
 		list.add(new Student(1, 1, 1, "张三"));
@@ -264,10 +268,10 @@ public class CollStreamUtilTest {
 	@Test
 	public void testTranslate2List() {
 		List<String> list = CollStreamUtil.toList(null, Student::getName);
-		assertEquals(list, Collections.EMPTY_LIST);
+		assertEquals(Collections.EMPTY_LIST, list);
 		List<Student> students = new ArrayList<>();
 		list = CollStreamUtil.toList(students, Student::getName);
-		assertEquals(list, Collections.EMPTY_LIST);
+		assertEquals(Collections.EMPTY_LIST, list);
 		students.add(new Student(1, 1, 1, "张三"));
 		students.add(new Student(1, 2, 2, "李四"));
 		students.add(new Student(2, 1, 1, "李四"));
@@ -286,10 +290,10 @@ public class CollStreamUtilTest {
 	@Test
 	public void testTranslate2Set() {
 		Set<String> set = CollStreamUtil.toSet(null, Student::getName);
-		assertEquals(set, Collections.EMPTY_SET);
+		assertEquals(Collections.EMPTY_SET, set);
 		List<Student> students = new ArrayList<>();
 		set = CollStreamUtil.toSet(students, Student::getName);
-		assertEquals(set, Collections.EMPTY_SET);
+		assertEquals(Collections.EMPTY_SET, set);
 		students.add(new Student(1, 1, 1, "张三"));
 		students.add(new Student(1, 2, 2, "李四"));
 		students.add(new Student(2, 1, 1, "李四"));
@@ -308,7 +312,7 @@ public class CollStreamUtilTest {
 		Map<Long, Student> map1 = null;
 		Map<Long, Student> map2 = Collections.emptyMap();
 		Map<Long, String> map = CollStreamUtil.merge(map1, map2, (s1, s2) -> s1.getName() + s2.getName());
-		assertEquals(map, Collections.EMPTY_MAP);
+		assertEquals(Collections.EMPTY_MAP, map);
 		map1 = new HashMap<>();
 		map1.put(1L, new Student(1, 1, 1, "张三"));
 		map = CollStreamUtil.merge(map1, map2, this::merge);

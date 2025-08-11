@@ -230,7 +230,7 @@ public class CollUtilTest {
 		final List<String> r2 = CollUtil.subtractToList(map1.keySet(), map2.keySet());
 		assertEquals("[1]", r2.toString());
 	}
-	
+
 	@Test
     public void testSubtractWithDuplicates() {
         Collection<String> coll1 = new ArrayList<>(Arrays.asList("a", "b", "b", "c"));
@@ -874,7 +874,7 @@ public class CollUtilTest {
 	@Test
 	public void lastIndexOf_EmptyCollection() {
 		List<String> list = CollUtil.newArrayList();
-		int idx = CollUtil.lastIndexOf(list, item -> item != null);
+		int idx = CollUtil.lastIndexOf(list, Objects::nonNull);
 		assertEquals(-1, idx);
 	}
 
@@ -967,7 +967,7 @@ public class CollUtilTest {
 		// 测试集合1和集合2不包含相同元素的情况
 		final List<String> list1 = Arrays.asList("a", "b", "c");
 		final List<String> list2 = Arrays.asList("d", "e", "f");
-		
+
 		// 期望结果：返回集合1的完整拷贝
 		final List<String> result = CollUtil.subtractToList(list1, list2);
 		assertEquals(3, result.size());
@@ -976,11 +976,11 @@ public class CollUtilTest {
 		assertEquals("c", result.get(2));
 		assertEquals(list1, result);
 		assertNotSame(list1, result); // 确保返回的是拷贝而不是原始引用
-		
+
 		// 测试集合1中有重复元素的情况
 		final List<String> list3 = Arrays.asList("a", "a", "b", "b", "c");
 		final List<String> list4 = Arrays.asList("d", "e", "f");
-		
+
 		// 期望结果：返回集合1的完整拷贝，包括重复元素
 		final List<String> result2 = CollUtil.subtractToList(list3, list4);
 		assertEquals(5, result2.size());
@@ -991,11 +991,11 @@ public class CollUtilTest {
 		assertEquals("c", result2.get(4));
 		assertEquals(list3, result2);
 		assertNotSame(list3, result2);
-		
+
 		// 测试不同类型的元素但确保两个集合的泛型类型一致
 		final List<Integer> list5 = Arrays.asList(1, 2, 3);
 		final List<Integer> list6 = Arrays.asList(4, 5, 6);
-		
+
 		// 期望结果：返回集合1的完整拷贝
 		final List<Integer> result3 = CollUtil.subtractToList(list5, list6);
 		assertEquals(3, result3.size());
@@ -1287,9 +1287,9 @@ public class CollUtilTest {
 		genderMap.put(5, "小孩");
 		genderMap.put(6, "男");
 
-		assertEquals(people.get(1).getGender(), "woman");
+		assertEquals("woman", people.get(1).getGender());
 		CollUtil.setValueByMap(people, genderMap, Person::getId, Person::setGender);
-		assertEquals(people.get(1).getGender(), "妇女");
+		assertEquals("妇女", people.get(1).getGender());
 
 		final Map<Integer, Person> personMap = new HashMap<>();
 		personMap.put(1, new Person("AA", 21, "男", 1));
@@ -1305,7 +1305,7 @@ public class CollUtilTest {
 			x.setAge(y.getAge());
 		});
 
-		assertEquals(people.get(1).getGender(), "小孩");
+		assertEquals("小孩", people.get(1).getGender());
 	}
 
 	@Test

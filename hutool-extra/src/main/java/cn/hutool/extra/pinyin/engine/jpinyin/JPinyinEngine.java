@@ -27,7 +27,7 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
  */
 public class JPinyinEngine implements PinyinEngine {
 
-	//设置汉子拼音输出的格式
+	//设置汉字拼音输出的格式
 	PinyinFormat format;
 
 	public JPinyinEngine(){

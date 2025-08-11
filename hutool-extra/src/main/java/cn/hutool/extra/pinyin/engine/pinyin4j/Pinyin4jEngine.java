@@ -33,7 +33,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class Pinyin4jEngine implements PinyinEngine {
 
-	//设置汉子拼音输出的格式
+	//设置汉字拼音输出的格式
 	HanyuPinyinOutputFormat format;
 
 	/**

@@ -61,6 +61,40 @@ public class CollStreamUtilTest {
 	}
 
 	@Test
+	public void testToMap_KeyCollision_SilentlyOverwrite() {
+		List<Student> list = new ArrayList<>();
+		list.add(new Student(1, 101, 1, "张三"));
+		list.add(new Student(1, 102, 1, "李四")); 
+		Map<Long, String> map = CollStreamUtil.toMap(list, Student::getStudentId, Student::getName, false);
+
+		assertEquals(1, map.size());
+		assertEquals("李四", map.get(1L));   // 确保后面的值覆盖前面的
+	}
+
+	@Test
+	public void testToMap_NullKeyOrValue() {
+		List<Student> list = new ArrayList<>();
+		list.add(new Student(1, 1, 1L, "张三"));
+		list.add(null);
+		list.add(new Student(1, 2, 2L, null));
+
+		assertThrows(NullPointerException.class, () -> {
+			CollStreamUtil.toMap(list, Student::getStudentId, Student::getName);
+		});
+	}
+
+	@Test
+	public void testToMap_LargeInputPerformance() {
+		List<Student> list = new ArrayList<>();
+		for (long i = 0; i < 10000; i++) {
+			list.add(new Student(1, 1, i, "学生" + i));
+		}
+		Map<Long, String> map = CollStreamUtil.toMap(list, Student::getStudentId, Student::getName);
+
+		assertEquals(10000, map.size());
+	}
+
+	@Test
 	public void testGroupByKey() {
 		Map<Long, List<Student>> map = CollStreamUtil.groupByKey(null, Student::getClassId);
 		assertEquals(map, Collections.EMPTY_MAP);

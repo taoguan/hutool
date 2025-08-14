@@ -45,4 +45,32 @@ public class LogTest {
 		log.info(null);
 		log.warn(null);
 	}
+
+	@Test
+	public void parameterizedMessageEdgeCasesTest() {
+		Log log = LogFactory.get();
+
+		// 测试不同数量的参数
+		log.info("No parameters");
+		log.info("One: {}", "param1");
+		log.info("Two: {} and {}", "param1", "param2");
+		log.info("Three: {}, {}, {}", "param1", "param2", "param3");
+		log.info("Four: {}, {}, {}, {}", "param1", "param2", "param3", "param4");
+
+		// 测试参数不足的情况
+		log.info("Missing param: {} and {}", "only_one");
+
+		// 测试参数过多的情况
+		log.info("Extra param: {}", "param1", "extra_param");
+	}
+
+	@Test
+	public void i18nMessageTest() {
+		Log log = LogFactory.get();
+		// 国际化消息测试
+		log.info("中文消息测试");
+		log.info("Message with unicode: {}", "特殊字符©®™✓✗★☆");
+		log.info("多语言混排: 中文, English, 日本語, 한글");
+		log.info("Emoji测试: 😀🚀🌏");
+	}
 }

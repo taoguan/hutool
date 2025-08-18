@@ -7,6 +7,11 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.log.level.Level;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 日志门面单元测试
  * @author Looly
@@ -72,5 +77,18 @@ public class LogTest {
 		log.info("Message with unicode: {}", "特殊字符©®™✓✗★☆");
 		log.info("多语言混排: 中文, English, 日本語, 한글");
 		log.info("Emoji测试: 😀🚀🌏");
+	}
+
+	@Test
+	public void complexObjectTest() {
+		Log log = LogFactory.get();
+		// 复杂对象参数测试
+		List<String> list = Arrays.asList("item1", "item2");
+		Map<String, Object> map = new HashMap<>();
+		map.put("key", "value");
+
+		log.info("List: {}", list);
+		log.info("Map: {}", map);
+		log.info("Null object: {}", (Object)null);
 	}
 }

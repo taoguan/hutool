@@ -173,6 +173,9 @@ public class DialectFactory implements DriverNamePool {
 		} else if (nameContainsProductInfo.contains("sap")) {
 			// sap hana
 			driver = DRIVER_HANA;
+		} else if (nameContainsProductInfo.contains("gbasedbt-sqli")) {
+			// Gbase8s，见：https://www.gbase.cn/community/post/4029
+			driver = DRIVER_GBASE8S;
 		}
 
 		return driver;

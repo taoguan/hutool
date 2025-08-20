@@ -271,7 +271,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable {
 		} else if (csq instanceof StrBuilder) {
 			((StrBuilder) csq).getChars(0, len, this.value, index);
 		} else {
-			for (int i = 0, j = this.position; i < len; i++, j++) {
+			for (int i = 0, j = index; i < len; i++, j++) {
 				this.value[j] = csq.charAt(i);
 			}
 		}
@@ -316,7 +316,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable {
 
 		final int length = end - start;
 		moveDataAfterIndex(index, length);
-		for (int i = start, j = this.position; i < end; i++, j++) {
+		for (int i = start, j = index; i < end; i++, j++) {
 			value[j] = csq.charAt(i);
 		}
 		this.position = Math.max(this.position, index) + length;

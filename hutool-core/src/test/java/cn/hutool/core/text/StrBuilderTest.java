@@ -1,12 +1,13 @@
 package cn.hutool.core.text;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.lang.Console;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * StrBuilder单元测试
@@ -115,5 +116,19 @@ public class StrBuilderTest {
 		// 删除全部
 		builder = strBuilder.delTo(0);
 		assertEquals("", builder.toString());
+	}
+
+	@Test
+	void issueICTSRZTest() {
+		final StrBuilder helloWorld = StrBuilder.create("Hello World");
+		helloWorld.insert(6, "Beautiful ", 0, 10);
+		Assertions.assertEquals("Hello Beautiful World", helloWorld.toString());
+	}
+
+	@Test
+	void issueICTSRZTest2() {
+		final StrBuilder helloWorld = StrBuilder.create("Hello World");
+		helloWorld.insert(6, "Beautiful ");
+		Assertions.assertEquals("Hello Beautiful World", helloWorld.toString());
 	}
 }

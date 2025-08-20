@@ -50,8 +50,21 @@ public class DayOfMonthMatcher extends BoolArrayMatcher {
 		return value == Month.getLastDay(month - 1, isLeapYear);
 	}
 
+
 	public boolean isLast() {
 		return match(31);
+	}
+
+	/**
+	 * 检查value是这个月的最后一天
+	 * @param value 被检查的值
+	 * @return
+	 */
+	public boolean isLastDay(Integer value,Integer month, boolean isLeapYear) {
+		if(isLastDayOfMonth(value, month, isLeapYear)) {
+			return match(31);
+		}
+		return  false;
 	}
 
 }

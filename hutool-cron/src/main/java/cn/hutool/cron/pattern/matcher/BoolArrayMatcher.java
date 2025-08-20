@@ -35,7 +35,6 @@ public class BoolArrayMatcher implements PartMatcher {
 		}
 		this.minValue = min;
 	}
-
 	@Override
 	public boolean match(Integer value) {
 		if (null == value || value >= bValues.length) {

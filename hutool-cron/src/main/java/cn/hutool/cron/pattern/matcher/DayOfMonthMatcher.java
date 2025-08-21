@@ -50,7 +50,6 @@ public class DayOfMonthMatcher extends BoolArrayMatcher {
 		return value == Month.getLastDay(month - 1, isLeapYear);
 	}
 
-
 	public boolean isLast() {
 		return match(31);
 	}

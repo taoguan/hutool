@@ -54,7 +54,7 @@ public class CronPatternNextMatchTest {
 		// 时间正常递增
 		//noinspection ConstantConditions
 		Calendar calendar = pattern.nextMatchAfter(
-				DateUtil.parse("2022-04-12 09:12:12").toCalendar());
+			DateUtil.parse("2022-04-12 09:12:12").toCalendar());
 
 		assertTrue(pattern.match(calendar, true));
 		assertEquals("2022-04-12 09:12:23", DateUtil.date(calendar).toString());
@@ -62,28 +62,28 @@ public class CronPatternNextMatchTest {
 		// 秒超出规定值的最大值，分+1，秒取最小值
 		//noinspection ConstantConditions
 		calendar = pattern.nextMatchAfter(
-				DateUtil.parse("2022-04-12 09:09:24").toCalendar());
+			DateUtil.parse("2022-04-12 09:09:24").toCalendar());
 		assertTrue(pattern.match(calendar, true));
 		assertEquals("2022-04-12 09:12:23", DateUtil.date(calendar).toString());
 
 		// 秒超出规定值的最大值，分不变，小时+1，秒和分使用最小值
 		//noinspection ConstantConditions
 		calendar = pattern.nextMatchAfter(
-				DateUtil.parse("2022-04-12 09:12:24").toCalendar());
+			DateUtil.parse("2022-04-12 09:12:24").toCalendar());
 		assertTrue(pattern.match(calendar, true));
 		assertEquals("2022-04-12 10:12:23", DateUtil.date(calendar).toString());
 
 		// 天超出规定值的最大值，月+1，天、时、分、秒取最小值
 		//noinspection ConstantConditions
 		calendar = pattern.nextMatchAfter(
-				DateUtil.parse("2022-04-13 09:12:24").toCalendar());
+			DateUtil.parse("2022-04-13 09:12:24").toCalendar());
 		assertTrue(pattern.match(calendar, true));
 		assertEquals("2022-05-12 00:12:23", DateUtil.date(calendar).toString());
 
 		// 跨年
 		//noinspection ConstantConditions
 		calendar = pattern.nextMatchAfter(
-				DateUtil.parse("2021-12-22 00:00:00").toCalendar());
+			DateUtil.parse("2021-12-22 00:00:00").toCalendar());
 		assertTrue(pattern.match(calendar, true));
 		assertEquals("2022-01-12 00:12:23", DateUtil.date(calendar).toString());
 	}

@@ -16,15 +16,16 @@
 
 /**
  * 对Ollama的封装实现.
- *
+ * <p>
  * 使用方法：
  * // 创建AI服务
+ * <pre>{@code
  * OllamaService aiService = AIServiceFactory.getAIService(
- * 	new AIConfigBuilder(ModelName.OLLAMA.getValue())
- * 		.setApiUrl("http://localhost:11434")
- * 		.setModel("qwen2.5-coder:32b")
- * 		.build(),
- * 	OllamaService.class
+ * new AIConfigBuilder(ModelName.OLLAMA.getValue())
+ * .setApiUrl("http://localhost:11434")
+ * .setModel("qwen2.5-coder:32b")
+ * .build(),
+ * OllamaService.class
  * );
  *
  * // 构造上下文
@@ -33,10 +34,10 @@
  * messageList.add(new Message("user","你能帮我做什么"));
  *
  * // 输出对话结果
- * System.out.println(aiService.chat(messageList));
+ * Console.log(aiService.chat(messageList));
+ * }</pre>
  *
  * @author yangruoyu-yumeisoft
  * @since 5.8.40
  */
-
 package cn.hutool.ai.model.ollama;

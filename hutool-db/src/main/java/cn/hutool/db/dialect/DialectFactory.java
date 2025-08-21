@@ -182,9 +182,6 @@ public class DialectFactory implements DriverNamePool {
 		} else if (nameContainsProductInfo.contains("tdsql-pg")) {
 			// 腾讯数据库 TDSQL PostgreSQL 版本，见：https://cloud.tencent.com/document/product/1129/116487
 			driver = DRIVER_TDSQL_POSTGRESQL;
-		} else if (nameContainsProductInfo.contains("clickhouse")) {
-			// 腾讯数据库 TDSQL-H LibraDB，见：https://cloud.tencent.com/document/product/1488/79810
-			driver = DRIVER_TDSQL_H_LIBRADB;
 		} else if (nameContainsProductInfo.contains("snowflake")) {
 			// Snowflake，见：https://docs.snowflake.cn/zh/developer-guide/jdbc/jdbc-configure#label-jdbc-connection-string
 			driver = DRIVER_SNOWFLAKE;

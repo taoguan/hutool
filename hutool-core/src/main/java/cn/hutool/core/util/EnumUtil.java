@@ -8,6 +8,7 @@ import cn.hutool.core.map.MapUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -243,6 +244,7 @@ public class EnumUtil {
 
 	/**
 	 * 通过 某字段对应值 获取 枚举，获取不到时为 {@code defaultEnum}
+	 * 通过缓存减少反射带来的影响
 	 *
 	 * @param enumClass   枚举类
 	 * @param predicate   条件
@@ -254,9 +256,13 @@ public class EnumUtil {
 		if (null == enumClass || null == predicate) {
 			return null;
 		}
-		return Arrays.stream(enumClass.getEnumConstants())
+
+		Enum<?>[] constants = CACHE.computeIfAbsent(enumClass, k -> enumClass.getEnumConstants());
+		return Arrays.stream((E[]) constants)
 			.filter(predicate).findFirst().orElse(defaultEnum);
 	}
+
+	private static final Map<Class<?>, Enum<?>[]> CACHE = new ConcurrentHashMap<>();
 
 	/**
 	 * 通过 某字段对应值 获取 枚举，获取不到时为 {@code null}

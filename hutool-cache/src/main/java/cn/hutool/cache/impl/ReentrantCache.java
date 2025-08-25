@@ -1,6 +1,7 @@
 package cn.hutool.cache.impl;
 
 import cn.hutool.core.collection.CopiedIter;
+import cn.hutool.core.lang.func.Func0;
 import cn.hutool.core.lang.mutable.Mutable;
 
 import java.util.HashSet;
@@ -24,6 +25,20 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 	// TODO 最优的解决方案是使用Guava的ConcurrentLinkedHashMap，此处使用简化的互斥锁
 	protected final ReentrantLock lock = new ReentrantLock();
 
+	private boolean useKeyLock = true;
+
+	/**
+	 * 设置是否使用key锁，默认为true
+	 *
+	 * @param useKeyLock 是否使用key锁
+	 * @return this
+	 * @since 5.8.40
+	 */
+	public ReentrantCache<K, V> setUseKeyLock(boolean useKeyLock) {
+		this.useKeyLock = useKeyLock;
+		return this;
+	}
+
 	@Override
 	public void put(K key, V object, long timeout) {
 		lock.lock();
@@ -42,6 +57,36 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 	@Override
 	public V get(K key, boolean isUpdateLastAccess) {
 		return getOrRemoveExpired(key, isUpdateLastAccess, true);
+	}
+
+	@Override
+	public V get(final K key, final boolean isUpdateLastAccess, final long timeout, final Func0<V> valueFactory) {
+		if(useKeyLock){
+			// 用户如果允许，则使用key锁，可以减少valueFactory对象创建造成的
+			return super.get(key, isUpdateLastAccess, timeout, valueFactory);
+		}
+
+		V v = get(key, isUpdateLastAccess);
+
+		// 对象不存在，则加锁创建
+		if (null == v && null != valueFactory) {
+			// 按照pr#1385提议，使用key锁可以避免对象创建等待问题，但是会带来循环锁问题，见：issue#4022
+			// 因此此处依旧采用全局锁，在对象创建过程中，全局等待，避免循环锁依赖
+			// 这样避免了循环锁，但是会存在一个缺点，即对象创建过程中，其它线程无法获得锁，从而无法使用缓存，因此需要考虑对象创建的耗时问题
+			lock.lock();
+			try {
+				// 双重检查锁，防止在竞争锁的过程中已经有其它线程写入
+				final CacheObj<K, V> co = getWithoutLock(key);
+				if (null == co) {
+					// supplier的创建是一个耗时过程，此处创建与全局锁无关，而与key锁相关，这样就保证每个key只创建一个value，且互斥
+					v = valueFactory.callWithRuntimeException();
+					put(key, v, timeout);
+				}
+			} finally {
+				lock.unlock();
+			}
+		}
+		return v;
 	}
 
 	@Override

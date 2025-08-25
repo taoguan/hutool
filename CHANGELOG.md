@@ -13,6 +13,7 @@
 * 【extra  】      `getClientIP`优先获取传入的请求头信息（pr#1373@Gitee）
 * 【db     】      增加`Gbase8s`驱动支持（issue#ICSFAM@Gitee）
 * 【db     】      增加TDSQL PostgreSQL版本、TDSQL-H LibraDB、Snowflake、Teradata 的驱动支持（pr#4024@Github）
+* 【core   】      `EnumUtil`增加缓存支持（pr#1376@Gitee）
 
 ### 🐞Bug修复
 * 【extra  】      `Sftp``reconnectIfTimeout`方法改为捕获所有异常（issue#3989@Github）

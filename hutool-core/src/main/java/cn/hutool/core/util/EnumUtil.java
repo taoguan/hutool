@@ -20,6 +20,15 @@ import java.util.function.Predicate;
  */
 public class EnumUtil {
 
+	private static final Map<Class<?>, Enum<?>[]> CACHE = new ConcurrentHashMap<>();
+
+	/**
+	 * 清空缓存，重新加载枚举类
+	 */
+	public static void clearCache() {
+		CACHE.clear();
+	}
+
 	/**
 	 * 指定类是否为Enum类
 	 *
@@ -64,7 +73,7 @@ public class EnumUtil {
 		if (null == enumClass) {
 			return null;
 		}
-		final E[] enumConstants = enumClass.getEnumConstants();
+		final E[] enumConstants = getEnums(enumClass);
 		if (index < 0) {
 			index = enumConstants.length + index;
 		}
@@ -128,7 +137,6 @@ public class EnumUtil {
 	 * @param value     值
 	 * @return 匹配到的枚举对象，未匹配到返回null
 	 */
-	@SuppressWarnings("unchecked")
 	public static <E extends Enum<E>> E likeValueOf(Class<E> enumClass, Object value) {
 		if (null == enumClass || null == value) {
 			return null;
@@ -138,7 +146,7 @@ public class EnumUtil {
 		}
 
 		final Field[] fields = ReflectUtil.getFields(enumClass);
-		final Enum<?>[] enums = enumClass.getEnumConstants();
+		final E[] enums = getEnums(enumClass);
 		String fieldName;
 		for (Field field : fields) {
 			fieldName = field.getName();
@@ -146,9 +154,9 @@ public class EnumUtil {
 				// 跳过一些特殊字段
 				continue;
 			}
-			for (Enum<?> enumObj : enums) {
+			for (E enumObj : enums) {
 				if (ObjectUtil.equal(value, ReflectUtil.getFieldValue(enumObj, field))) {
-					return (E) enumObj;
+					return enumObj;
 				}
 			}
 		}
@@ -165,7 +173,7 @@ public class EnumUtil {
 		if (null == clazz) {
 			return null;
 		}
-		final Enum<?>[] enums = clazz.getEnumConstants();
+		final Enum<?>[] enums = getEnums2(clazz);
 		if (null == enums) {
 			return null;
 		}
@@ -187,7 +195,7 @@ public class EnumUtil {
 		if (null == clazz || StrUtil.isBlank(fieldName)) {
 			return null;
 		}
-		final Enum<?>[] enums = clazz.getEnumConstants();
+		final Enum<?>[] enums = getEnums2(clazz);
 		if (null == enums) {
 			return null;
 		}
@@ -257,12 +265,9 @@ public class EnumUtil {
 			return null;
 		}
 
-		Enum<?>[] constants = CACHE.computeIfAbsent(enumClass, k -> enumClass.getEnumConstants());
-		return Arrays.stream((E[]) constants)
+		return Arrays.stream(getEnums(enumClass))
 			.filter(predicate).findFirst().orElse(defaultEnum);
 	}
-
-	private static final Map<Class<?>, Enum<?>[]> CACHE = new ConcurrentHashMap<>();
 
 	/**
 	 * 通过 某字段对应值 获取 枚举，获取不到时为 {@code null}
@@ -351,7 +356,7 @@ public class EnumUtil {
 			return null;
 		}
 		final Class<E> implClass = LambdaUtil.getRealClass(field);
-		return Arrays.stream(implClass.getEnumConstants())
+		return Arrays.stream(getEnums(implClass))
 			// 过滤
 			.filter(constant -> ObjUtil.equals(condition.apply(constant), value))
 			// 获取第一个并转换为结果
@@ -374,7 +379,7 @@ public class EnumUtil {
 			return null;
 		}
 		final LinkedHashMap<String, E> map = new LinkedHashMap<>();
-		for (final E e : enumClass.getEnumConstants()) {
+		for (final E e : getEnums(enumClass)) {
 			map.put(e.name(), e);
 		}
 		return map;
@@ -392,7 +397,7 @@ public class EnumUtil {
 		if (null == clazz || StrUtil.isBlank(fieldName)) {
 			return null;
 		}
-		final Enum<?>[] enums = clazz.getEnumConstants();
+		final Enum<?>[] enums = getEnums2(clazz);
 		if (null == enums) {
 			return null;
 		}
@@ -451,5 +456,30 @@ public class EnumUtil {
 	 */
 	public static boolean equals(final Enum<?> e, String val) {
 		return StrUtil.equals(toString(e), val);
+	}
+
+	/**
+	 * 获取枚举类中的枚举值，调用过的枚举值会缓存，下次调用会从缓存中获取
+	 *
+	 * @param <E>       枚举类型
+	 * @param enumClass 枚举类
+	 * @return 枚举类中的枚举值
+	 */
+	@SuppressWarnings("unchecked")
+	private static <E extends Enum<E>> E[] getEnums(final Class<E> enumClass) {
+		return (E[]) getEnums2(enumClass);
+	}
+
+	/**
+	 * 获取枚举类中的枚举值，调用过的枚举值会缓存，下次调用会从缓存中获取
+	 *
+	 * @param enumClass 枚举类
+	 * @return 枚举类中的枚举值
+	 */
+	private static Enum<?>[] getEnums2(final Class<? extends Enum<?>> enumClass) {
+		if (null == enumClass) {
+			return null;
+		}
+		return CACHE.computeIfAbsent(enumClass, (k) -> enumClass.getEnumConstants());
 	}
 }

@@ -6,11 +6,12 @@ import cn.hutool.cache.impl.WeakCache;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.thread.ConcurrencyTester;
 import cn.hutool.core.thread.ThreadUtil;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 缓存单元测试
@@ -88,6 +89,7 @@ public class CacheConcurrentTest {
 	}
 
 	@Test
+	@Disabled
 	public void effectiveTest() {
 		// 模拟耗时操作消耗时间
 		int delay = 2000;

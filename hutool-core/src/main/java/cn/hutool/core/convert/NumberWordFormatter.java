@@ -13,15 +13,18 @@ import cn.hutool.core.util.StrUtil;
  */
 public class NumberWordFormatter {
 
-	private static final String[] NUMBER = new String[]{"", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN",
-			"EIGHT", "NINE"};
-	private static final String[] NUMBER_TEEN = new String[]{"TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN",
-			"FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"};
-	private static final String[] NUMBER_TEN = new String[]{"TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY",
-			"SEVENTY", "EIGHTY", "NINETY"};
-	private static final String[] NUMBER_MORE = new String[]{"", "THOUSAND", "MILLION", "BILLION", "TRILLION"};
+	private static final String[] NUMBER = new String[] { "", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN",
+		"EIGHT", "NINE" };
+	private static final String[] NUMBER_TEEN = new String[] { "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN",
+		"FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN" };
+	private static final String[] NUMBER_TEN = new String[] { "TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY",
+		"SEVENTY", "EIGHTY", "NINETY" };
+	private static final String[] NUMBER_MORE = new String[] { "", "THOUSAND", "MILLION", "BILLION", "TRILLION" };
 
-	private static final String[] NUMBER_SUFFIX = new String[]{"k", "w", "", "m", "", "", "b", "", "", "t", "", "", "p", "", "", "e"};
+	private static final String[] NUMBER_SUFFIX = new String[] { "k", "w", "m", "b", "t", "p", "e" };
+
+	// 标准单位序列(k, m, b, t, p, e)在NUMBER_SUFFIX中的索引
+	private static final int[] STANDARD_UNIT_INDICES = { 0, 2, 3, 4, 5, 6 };
 
 	/**
 	 * 将阿拉伯数字转为英文表达式
@@ -61,18 +64,32 @@ public class NumberWordFormatter {
 		if (value < 1000) {
 			return String.valueOf(value);
 		}
-		int index = -1;
+
 		double res = value;
-		while (res > 10 && (false == isTwo || index < 1)) {
-			if (res >= 1000) {
+		int index = 0;
+
+		if (isTwo) {
+			// 当isTwo为true时，只使用k和w单位
+			if (value >= 100000) {
+				// 使用w单位（除以10000，即10k = 1w）
+				res = value / 10000.0;
+				index = 1; // w在NUMBER_SUFFIX[1]
+			} else {
+				// 使用k单位（除以1000）
+				res = value / 1000.0;
+				index = 0; // k在NUMBER_SUFFIX[0]
+			}
+		} else {
+			// 当isTwo为false时，使用标准单位序列 (k, m, b, t, p, e)
+			// 对应NUMBER_SUFFIX中的索引为 0, 2, 3, 4, 5, 6
+			int unitIndex = -1;
+			while (res >= 1000 && unitIndex < STANDARD_UNIT_INDICES.length - 1) {
 				res = res / 1000;
-				index++;
+				unitIndex++;
 			}
-			if (res > 10) {
-				res = res / 10;
-				index++;
-			}
+			index = STANDARD_UNIT_INDICES[unitIndex];
 		}
+
 		return String.format("%s%s", NumberUtil.decimalFormat("#.##", res), NUMBER_SUFFIX[index]);
 	}
 
@@ -107,7 +124,7 @@ public class NumberWordFormatter {
 		StringBuilder lm = new StringBuilder(); // 用来存放转换后的整数部分
 		for (int i = 0; i < lstrrev.length() / 3; i++) {
 			a[i] = StrUtil.reverse(lstrrev.substring(3 * i, 3 * i + 3)); // 截取第一个三位
-			if (false == "000".equals(a[i])) { // 用来避免这种情况：1000000 = one million
+			if (!"000".equals(a[i])) { // 用来避免这种情况：1000000 = one million
 				// thousand only
 				if (i != 0) {
 					lm.insert(0, transThree(a[i]) + " " + parseMore(i) + " "); // 加:

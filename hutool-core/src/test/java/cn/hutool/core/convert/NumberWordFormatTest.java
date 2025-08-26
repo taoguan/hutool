@@ -33,6 +33,9 @@ public class NumberWordFormatTest {
 
 		final String format5 = NumberWordFormatter.formatSimple(438);
 		assertEquals("438", format5);
+
+		final String format6 = NumberWordFormatter.formatSimple(1000000, false);
+		assertEquals("1m", format6);
 	}
 
 	@Test

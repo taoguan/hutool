@@ -66,11 +66,11 @@ public class NumberWordFormatter {
 		}
 
 		double res = value;
-		int index = 0;
+		final int index;
 
 		if (isTwo) {
 			// 当isTwo为true时，只使用k和w单位
-			if (value >= 100000) {
+			if (value >= 10000) {
 				// 使用w单位（除以10000，即10k = 1w）
 				res = value / 10000.0;
 				index = 1; // w在NUMBER_SUFFIX[1]

@@ -1,7 +1,9 @@
 package cn.hutool.core.convert;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NumberWordFormatTest {
 
@@ -42,5 +44,53 @@ public class NumberWordFormatTest {
 	public void formatSimpleTest2(){
 		final String s = NumberWordFormatter.formatSimple(1000);
 		assertEquals("1k", s);
+	}
+
+	@Test
+	public void issue4033Test(){
+		String s = NumberWordFormatter.formatSimple(1_000, false);
+		Assertions.assertEquals("1k", s);
+
+		s = NumberWordFormatter.formatSimple(10_000, false);
+		Assertions.assertEquals("10k", s);
+
+		s = NumberWordFormatter.formatSimple(100_000, false);
+		Assertions.assertEquals("100k", s);
+
+		s = NumberWordFormatter.formatSimple(1_000_000, false);
+		Assertions.assertEquals("1m", s);
+
+		s = NumberWordFormatter.formatSimple(10_000_000, false);
+		Assertions.assertEquals("10m", s);
+
+		s = NumberWordFormatter.formatSimple(100_000_000, false);
+		Assertions.assertEquals("100m", s);
+
+		s = NumberWordFormatter.formatSimple(1_000_000_000, false);
+		Assertions.assertEquals("1b", s);
+	}
+
+	@Test
+	public void issue4033Test2(){
+		String s = NumberWordFormatter.formatSimple(1_000, true);
+		Assertions.assertEquals("1k", s);
+
+		s = NumberWordFormatter.formatSimple(10_000, true);
+		Assertions.assertEquals("1w", s);
+
+		s = NumberWordFormatter.formatSimple(100_000, true);
+		Assertions.assertEquals("10w", s);
+
+		s = NumberWordFormatter.formatSimple(1_000_000, true);
+		Assertions.assertEquals("100w", s);
+
+		s = NumberWordFormatter.formatSimple(10_000_000, true);
+		Assertions.assertEquals("1000w", s);
+
+		s = NumberWordFormatter.formatSimple(100_000_000, true);
+		Assertions.assertEquals("10000w", s);
+
+		s = NumberWordFormatter.formatSimple(1_000_000_000, true);
+		Assertions.assertEquals("100000w", s);
 	}
 }

@@ -25,20 +25,6 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 	// TODO 最优的解决方案是使用Guava的ConcurrentLinkedHashMap，此处使用简化的互斥锁
 	protected final ReentrantLock lock = new ReentrantLock();
 
-	private boolean useKeyLock = true;
-
-	/**
-	 * 设置是否使用key锁，默认为true
-	 *
-	 * @param useKeyLock 是否使用key锁
-	 * @return this
-	 * @since 5.8.40
-	 */
-	public ReentrantCache<K, V> setUseKeyLock(boolean useKeyLock) {
-		this.useKeyLock = useKeyLock;
-		return this;
-	}
-
 	@Override
 	public void put(K key, V object, long timeout) {
 		lock.lock();
@@ -61,11 +47,6 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 
 	@Override
 	public V get(final K key, final boolean isUpdateLastAccess, final long timeout, final Func0<V> valueFactory) {
-		if(useKeyLock){
-			// 用户如果允许，则使用key锁，可以减少valueFactory对象创建造成的
-			return super.get(key, isUpdateLastAccess, timeout, valueFactory);
-		}
-
 		V v = get(key, isUpdateLastAccess);
 
 		// 对象不存在，则加锁创建
@@ -80,7 +61,7 @@ public abstract class ReentrantCache<K, V> extends AbstractCache<K, V> {
 				if (null == co) {
 					// supplier的创建是一个耗时过程，此处创建与全局锁无关，而与key锁相关，这样就保证每个key只创建一个value，且互斥
 					v = valueFactory.callWithRuntimeException();
-					put(key, v, timeout);
+					putWithoutLock(key, v, timeout);
 				}
 			} finally {
 				lock.unlock();

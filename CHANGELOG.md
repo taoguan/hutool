@@ -22,7 +22,7 @@
 * 【extra  】      修复`QLExpressEngine`allowClassSet无效问题（issue#3994@Github）
 * 【core   】      修复`StrBuilder`insert插入计算错误问题（issue#ICTSRZ@Gitee）
 * 【cron   】      修复`CronPatternUtil.nextDateAfter`计算下一个匹配表达式的日期时，计算错误问题（issue#4006@Github）
-* 【cache  】      `ReentrantCache`增加`setUseKeyLock`让用户选择是否使用键锁来增强性能，或者保证安全。（issue#4022@Github）
+* 【cache  】      `ReentrantCache`修改get逻辑key锁改为全局锁，保证安全。（issue#4022@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.39(2025-06-20)

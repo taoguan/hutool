@@ -134,18 +134,18 @@ Each module can be introduced individually, or all modules can be introduced by 
 <dependency>
     <groupId>cn.hutool</groupId>
     <artifactId>hutool-all</artifactId>
-    <version>5.8.40</version>
+    <version>5.8.41</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'cn.hutool:hutool-all:5.8.40'
+implementation 'cn.hutool:hutool-all:5.8.41'
 ```
 
 ## 📥Download
 
-- [Maven Repo](https://repo1.maven.org/maven2/cn/hutool/hutool-all/5.8.40/)
+- [Maven Repo](https://repo1.maven.org/maven2/cn/hutool/hutool-all/5.8.41/)
 
 > 🔔️note:
 > Hutool 5.x supports JDK8+ and is not tested on Android platforms, and cannot guarantee that all tool classes or tool methods are available.

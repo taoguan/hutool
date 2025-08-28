@@ -12,8 +12,17 @@ public class ConditionTest {
 		Condition conditionNull = new Condition("user", null);
 		assertEquals("user IS NULL", conditionNull.toString());
 
+		Condition conditionNull2 = new Condition("user", "=", (String) null);
+		assertEquals("user IS NULL", conditionNull2.toString());
+
 		Condition conditionNotNull = new Condition("user", "!= null");
 		assertEquals("user IS NOT NULL", conditionNotNull.toString());
+
+		Condition conditionNotNull2 = new Condition("user", "!=", (String) null);
+		assertEquals("user IS NOT NULL", conditionNotNull2.toString());
+
+		Condition conditionNotNull3 = new Condition("user", "<>", (String) null);
+		assertEquals("user IS NOT NULL", conditionNotNull3.toString());
 
 		Condition condition2 = new Condition("user", "= zhangsan");
 		assertEquals("user = ?", condition2.toString());

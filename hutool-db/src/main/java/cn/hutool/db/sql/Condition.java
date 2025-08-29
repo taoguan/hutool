@@ -127,7 +127,12 @@ public class Condition extends CloneSupport<Condition> {
 	}
 
 	/**
-	 * 构造
+	 * 构造LIKE value条件，支持：
+	 * <ul>
+	 *     <li>{@link LikeType#StartWith}：LIKE value%</li>
+	 *     <li>{@link LikeType#EndWith}：LIKE %value</li>
+	 *     <li>{@link LikeType#Contains}：LIKE %value%</li>
+	 * </ul>
 	 *
 	 * @param field    字段
 	 * @param value    值
@@ -137,6 +142,21 @@ public class Condition extends CloneSupport<Condition> {
 		this.field = field;
 		this.operator = OPERATOR_LIKE;
 		this.value = SqlUtil.buildLikeValue(value, likeType, false);
+	}
+
+	/**
+	 * 构造BETWEEN leftValue and rightValue条件
+	 *
+	 * @param field    字段
+	 * @param leftValue  左值
+	 * @param rightValue 右值
+	 * @since 5.8.41
+	 */
+	public Condition(final String field, final Object leftValue, final Object rightValue){
+		this.field = field;
+		this.operator = OPERATOR_BETWEEN;
+		this.value = leftValue;
+		this.secondValue = rightValue;
 	}
 	// --------------------------------------------------------------- Constructor end
 

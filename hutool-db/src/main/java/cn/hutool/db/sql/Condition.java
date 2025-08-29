@@ -258,6 +258,17 @@ public class Condition extends CloneSupport<Condition> {
 	}
 
 	/**
+	 * 是否 IS NOT条件
+	 *
+	 * @return 是否IS NOT条件
+	 * @since 5.8.0
+	 */
+	public boolean isOperatorIsNot() {
+		return OPERATOR_IS_NOT.equalsIgnoreCase(this.operator);
+	}
+
+
+	/**
 	 * 是否LIKE条件
 	 *
 	 * @return 是否LIKE条件
@@ -268,17 +279,23 @@ public class Condition extends CloneSupport<Condition> {
 	}
 
 	/**
-	 * 检查值是否为null，如果为null转换为 "IS NULL"形式
+	 * 检查值是否为null，如果为null转换为 "IS NULL"或"IS NOT NULL"形式
 	 *
 	 * @return this
 	 */
 	public Condition checkValueNull() {
 		if (null == this.value) {
-			this.operator = OPERATOR_IS;
+			// 检查是否为"不等于"操作符（包括!=和<>）
+			if ("!=".equalsIgnoreCase(this.operator) || "<>".equalsIgnoreCase(this.operator)) {
+				this.operator = OPERATOR_IS_NOT;
+			} else {
+				this.operator = OPERATOR_IS;
+			}
 			this.value = VALUE_NULL;
 		}
 		return this;
 	}
+
 
 	/**
 	 * 获得between 类型中第二个值
@@ -345,8 +362,8 @@ public class Condition extends CloneSupport<Condition> {
 			// 类似：" (?,?,?)" 或者 " (1,2,3,4)"
 			buildValuePartForIN(conditionStrBuilder, paramValues);
 		} else {
-			if (isPlaceHolder() && false == isOperatorIs()) {
-				// 使用条件表达式占位符，条件表达式并不适用于 IS NULL
+			if (isPlaceHolder() && !isOperatorIs() && !isOperatorIsNot()) {
+				// 使用条件表达式占位符，条件表达式并不适用于 IS NULL 和 IS NOT NULL
 				conditionStrBuilder.append(" ?");
 				if (null != paramValues) {
 					paramValues.add(this.value);
@@ -355,7 +372,7 @@ public class Condition extends CloneSupport<Condition> {
 				// 直接使用条件值
 				final String valueStr = String.valueOf(this.value);
 				conditionStrBuilder.append(" ").append(isOperatorLike() ?
-						StrUtil.wrap(valueStr, "'") : valueStr);
+					StrUtil.wrap(valueStr, "'") : valueStr);
 			}
 		}
 

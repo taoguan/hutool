@@ -75,14 +75,14 @@ public class DesensitizedUtil {
 		 * IPv6地址
 		 */
 		IPV6,
-        /**
-         * 护照号
-         */
-        PASSPORT,
-        /**
-         * 统一社会信用代码
-         */
-        CREDIT_CODE,
+		/**
+		 * 护照号
+		 */
+		PASSPORT,
+		/**
+		 * 统一社会信用代码
+		 */
+		CREDIT_CODE,
 		/**
 		 * 定义了一个first_mask的规则，只显示第一个字符。
 		 */
@@ -161,12 +161,12 @@ public class DesensitizedUtil {
 			case IPV6:
 				newStr = ipv6(String.valueOf(str));
 				break;
-            case PASSPORT:
-                newStr = passport(String.valueOf(str));
-                break;
-            case CREDIT_CODE:
-                newStr = creditCode(String.valueOf(str));
-                break;
+			case PASSPORT:
+				newStr = passport(String.valueOf(str));
+				break;
+			case CREDIT_CODE:
+				newStr = creditCode(String.valueOf(str));
+				break;
 			case FIRST_MASK:
 				newStr = firstMask(String.valueOf(str));
 				break;
@@ -412,29 +412,34 @@ public class DesensitizedUtil {
 		return StrUtil.subBefore(ipv6, ':', false) + ":*:*:*:*:*:*:*";
 	}
 
-    /**
-     * 护照号脱敏
-     * 规则：前2后2，长度不足时保留最小有效信息
-     * 示例：PJ1234567 → PJ*****67
-     */
-    public static String passport(String passport) {
-        if (StrUtil.isBlank(passport)) return passport;
-        final int length = passport.length();
-        if (length <= 2) return StrUtil.hide(passport, 0, length);
-        return StrUtil.hide(passport, 2, length - 2);
-    }
+	/**
+	 * 护照号脱敏
+	 * 规则：前2后2，长度不足时保留最小有效信息
+	 * 示例：PJ1234567 → PJ*****67
+	 *
+	 * @param passport 护照号
+	 * @return 脱敏后的护照号
+	 */
+	public static String passport(String passport) {
+		if (StrUtil.isBlank(passport)) return passport;
+		final int length = passport.length();
+		if (length <= 2) return StrUtil.hide(passport, 0, length);
+		return StrUtil.hide(passport, 2, length - 2);
+	}
 
-    /**
-     * 统一社会信用代码脱敏
-     * 规则：前4后4，长度不足时保留最小有效信息
-     * 统一社会信用代码由18位数字或大写英文字母组成
-     * 示例：91110108MA01ABCDE7   → 9111**********CDE7
-     *
-     */
-    public static String creditCode(String code) {
-        if (StrUtil.isBlank(code)) return code;
-        final int length = code.length();
-        if (length <= 4) return StrUtil.hide(code, 0, length);
-        return StrUtil.hide(code, 4, length - 4);
-    }
+	/**
+	 * 统一社会信用代码脱敏
+	 * 规则：前4后4，长度不足时保留最小有效信息
+	 * 统一社会信用代码由18位数字或大写英文字母组成
+	 * 示例：91110108MA01ABCDE7   → 9111**********CDE7
+	 *
+	 * @param code 统一社会信用代码
+	 * @return 脱敏后的统一社会信用代码
+	 */
+	public static String creditCode(String code) {
+		if (StrUtil.isBlank(code)) return code;
+		final int length = code.length();
+		if (length <= 4) return StrUtil.hide(code, 0, length);
+		return StrUtil.hide(code, 4, length - 4);
+	}
 }

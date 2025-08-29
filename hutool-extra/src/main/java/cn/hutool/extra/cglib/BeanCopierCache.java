@@ -43,7 +43,7 @@ public enum BeanCopierCache {
 	 */
 	public BeanCopier get(Class<?> srcClass, Class<?> targetClass, boolean useConverter) {
 		final String key = genKey(srcClass, targetClass, useConverter);
-		return cache.computeIfAbsent(key, () -> BeanCopier.create(srcClass, targetClass, useConverter));
+		return cache.computeIfAbsent(key, (k) -> BeanCopier.create(srcClass, targetClass, useConverter));
 	}
 
 	/**

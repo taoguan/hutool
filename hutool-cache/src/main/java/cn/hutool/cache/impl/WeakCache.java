@@ -3,9 +3,8 @@ package cn.hutool.cache.impl;
 import cn.hutool.cache.CacheListener;
 import cn.hutool.core.lang.Opt;
 import cn.hutool.core.lang.mutable.Mutable;
-import cn.hutool.core.map.WeakConcurrentMap;
-
-import java.lang.ref.Reference;
+import cn.hutool.core.lang.ref.Ref;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
 /**
  * 弱引用缓存<br>
@@ -27,16 +26,18 @@ public class WeakCache<K, V> extends TimedCache<K, V>{
 	 * @param timeout 超时时常，单位毫秒，-1或0表示无限制
 	 */
 	public WeakCache(long timeout) {
-		super(timeout, new WeakConcurrentMap<>());
+		super(timeout, new WeakKeyValueConcurrentMap<>());
 	}
 
 	@Override
 	public WeakCache<K, V> setListener(CacheListener<K, V> listener) {
 		super.setListener(listener);
 
-		final WeakConcurrentMap<Mutable<K>, CacheObj<K, V>> map = (WeakConcurrentMap<Mutable<K>, CacheObj<K, V>>) this.cacheMap;
+		final WeakKeyValueConcurrentMap<Mutable<K>, CacheObj<K, V>> map = (WeakKeyValueConcurrentMap<Mutable<K>, CacheObj<K, V>>) this.cacheMap;
 		// WeakKey回收之后，key对应的值已经是null了，因此此处的key也为null
-		map.setPurgeListener((key, value)-> listener.onRemove(Opt.ofNullable(key).map(Reference::get).map(Mutable::get).get(), value.getValue()));
+		map.setPurgeListener((key, value)-> listener.onRemove(
+			Opt.ofNullable(key).map(Ref::get).map(Mutable::get).get(),
+			Opt.ofNullable(value).map(Ref::get).map(CacheObj::getValue).get()));
 
 		return this;
 	}

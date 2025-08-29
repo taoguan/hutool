@@ -1,7 +1,7 @@
 package cn.hutool.core.lang.func;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -18,7 +18,7 @@ import java.lang.invoke.SerializedLambda;
  */
 public class LambdaUtil {
 
-	private static final WeakConcurrentMap<String, SerializedLambda> cache = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<String, SerializedLambda> cache = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 通过对象的方法或类的静态方法引用，获取lambda实现类

@@ -794,7 +794,6 @@ public class URLUtil extends URLEncodeUtil {
 	 *
 	 * @param url URL
 	 * @return 长度
-	 * @since 6.0.0
 	 */
 	public static long size(final URL url) {
 		if (URLUtil.isFileURL(url)) {
@@ -826,7 +825,6 @@ public class URLUtil extends URLEncodeUtil {
 	 * 如果连接为JNLP方式，则打开缓存
 	 *
 	 * @param con {@link URLConnection}
-	 * @since 6.0.0
 	 */
 	public static void useCachesIfNecessary(final URLConnection con) {
 		con.setUseCaches(con.getClass().getSimpleName().startsWith("JNLP"));

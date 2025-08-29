@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * @param <V> 值类型
  * @author looly
  * @since 5.8.0
+ * @deprecated 请使用{@link cn.hutool.core.map.reference.ReferenceConcurrentMap}
  */
 public class ReferenceConcurrentMap<K, V> implements ConcurrentMap<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
 

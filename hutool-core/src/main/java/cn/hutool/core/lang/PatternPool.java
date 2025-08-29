@@ -1,6 +1,6 @@
 package cn.hutool.core.lang;
 
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
 import java.util.regex.Pattern;
 
@@ -196,7 +196,7 @@ public class PatternPool {
 	/**
 	 * Pattern池
 	 */
-	private static final WeakConcurrentMap<RegexWithFlag, Pattern> POOL = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<RegexWithFlag, Pattern> POOL = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 先从Pattern池中查找正则对应的{@link Pattern}，找不到则编译正则表达式并入池。

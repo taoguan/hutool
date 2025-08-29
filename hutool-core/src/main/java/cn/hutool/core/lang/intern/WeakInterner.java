@@ -1,6 +1,6 @@
 package cn.hutool.core.lang.intern;
 
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
 import java.lang.ref.WeakReference;
 
@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
  */
 public class WeakInterner<T> implements Interner<T>{
 
-	private final WeakConcurrentMap<T, WeakReference<T>> cache = new WeakConcurrentMap<>();
+	private final WeakKeyValueConcurrentMap<T, WeakReference<T>> cache = new WeakKeyValueConcurrentMap<>();
 
 	public T intern(T sample) {
 		if (sample == null) {

@@ -1,16 +1,9 @@
 package cn.hutool.script;
 
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 import cn.hutool.core.util.StrUtil;
 
-import javax.script.Bindings;
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.Invocable;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import javax.script.*;
 
 /**
  * 脚本工具类
@@ -20,7 +13,7 @@ import javax.script.ScriptException;
 public class ScriptUtil {
 
 	private static final ScriptEngineManager MANAGER = new ScriptEngineManager();
-	private static final WeakConcurrentMap<String, ScriptEngine> CACHE = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<String, ScriptEngine> CACHE = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 获得单例的{@link ScriptEngine} 实例
@@ -29,7 +22,7 @@ public class ScriptUtil {
 	 * @return {@link ScriptEngine} 实例
 	 */
 	public static ScriptEngine getScript(String nameOrExtOrMime) {
-		return CACHE.computeIfAbsent(nameOrExtOrMime, () -> createScript(nameOrExtOrMime));
+		return CACHE.computeIfAbsent(nameOrExtOrMime, (key) -> createScript(nameOrExtOrMime));
 	}
 
 	/**

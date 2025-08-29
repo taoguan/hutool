@@ -6,7 +6,7 @@ import cn.hutool.core.lang.func.Func0;
 import cn.hutool.core.lang.mutable.Mutable;
 import cn.hutool.core.lang.mutable.MutableObj;
 import cn.hutool.core.map.SafeConcurrentHashMap;
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
 
 /**
- * 简单缓存，无超时实现，默认使用{@link WeakConcurrentMap}实现缓存自动清理
+ * 简单缓存，无超时实现，默认使用{@link WeakKeyValueConcurrentMap}实现缓存自动清理
  *
  * @param <K> 键类型
  * @param <V> 值类型
@@ -43,7 +43,7 @@ public class SimpleCache<K, V> implements Iterable<Map.Entry<K, V>>, Serializabl
 	 * 构造，默认使用{@link WeakHashMap}实现缓存自动清理
 	 */
 	public SimpleCache() {
-		this(new WeakConcurrentMap<>());
+		this(new WeakKeyValueConcurrentMap<>());
 	}
 
 	/**

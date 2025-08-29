@@ -1,10 +1,8 @@
 package cn.hutool.core.util;
 
-import java.lang.ref.PhantomReference;
-import java.lang.ref.Reference;
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
+import cn.hutool.core.lang.ref.Ref;
+
+import java.lang.ref.*;
 
 /**
  * 引用工具类，主要针对{@link Reference} 工具化封装<br>
@@ -52,6 +50,30 @@ public class ReferenceUtil {
 		default:
 			return null;
 		}
+	}
+
+	/**
+	 * {@code null}全的解包获取原始对象
+	 *
+	 * @param <T> 对象类型
+	 * @param obj Reference对象
+	 * @return 原始对象 or {@code null}
+	 * @since 5.8.41
+	 */
+	public static <T> T get(final Reference<T> obj) {
+		return ObjUtil.apply(obj, Reference::get);
+	}
+
+	/**
+	 * {@code null}安全的解包获取原始对象
+	 *
+	 * @param <T> 对象类型
+	 * @param obj Ref对象
+	 * @return 原始对象 or {@code null}
+	 * @since 5.8.41
+	 */
+	public static <T> T get(final Ref<T> obj) {
+		return ObjUtil.apply(obj, Ref::get);
 	}
 
 	/**

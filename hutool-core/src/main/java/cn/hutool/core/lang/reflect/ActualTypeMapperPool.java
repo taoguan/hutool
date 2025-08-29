@@ -1,7 +1,7 @@
 package cn.hutool.core.lang.reflect;
 
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.TypeUtil;
 
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ActualTypeMapperPool {
 
-	private static final WeakConcurrentMap<Type, Map<Type, Type>> CACHE = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<Type, Map<Type, Type>> CACHE = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 获取泛型变量和泛型实际类型的对应关系Map

@@ -1125,8 +1125,21 @@ public class IoUtil extends NioUtil {
 	 *
 	 * @param obj 可关闭对象
 	 * @since 4.3.2
+	 * @deprecated 拼写错误，请使用{@link #closeIfPossible(Object)}
 	 */
+	@Deprecated
 	public static void closeIfPosible(Object obj) {
+		closeIfPossible( obj);
+	}
+
+	/**
+	 * 尝试关闭指定对象<br>
+	 * 判断对象如果实现了{@link AutoCloseable}，则调用之
+	 *
+	 * @param obj 可关闭对象
+	 * @since 5.8.41
+	 */
+	public static void closeIfPossible(Object obj) {
 		if (obj instanceof AutoCloseable) {
 			close((AutoCloseable) obj);
 		}

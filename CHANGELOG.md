@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-08-29)
+# 5.8.41(2025-08-30)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -10,6 +10,7 @@
 * 【core   】      `ObjectUtil`增加`apply`方法
 * 【core   】      `ReferenceUtil`增加`get`方法
 * 【db     】      `Condition`增加构造方法支持BETWEEN（issue#4041@Github）
+* 【core   】      `IoUtil.writeObjects`判空避免空指针（issue#4049@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

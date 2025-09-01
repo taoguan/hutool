@@ -204,7 +204,6 @@ public class ColorUtil {
 	 *
 	 * @param color 指定颜色
 	 * @return 其余颜色与color的最大距离
-	 * @since 6.0.0-M16
 	 */
 	public static int maxDistance(final Color color) {
 		if (null == color) {

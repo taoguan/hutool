@@ -1,7 +1,7 @@
 package cn.hutool.core.bean;
 
 import cn.hutool.core.lang.func.Func0;
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
 /**
  * Bean属性缓存<br>
@@ -12,7 +12,7 @@ import cn.hutool.core.map.WeakConcurrentMap;
 public enum BeanDescCache {
 	INSTANCE;
 
-	private final WeakConcurrentMap<Class<?>, BeanDesc> bdCache = new WeakConcurrentMap<>();
+	private final WeakKeyValueConcurrentMap<Class<?>, BeanDesc> bdCache = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 获得属性名和{@link BeanDesc}Map映射

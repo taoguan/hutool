@@ -6,6 +6,7 @@ import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.io.copy.ReaderWriterCopier;
 import cn.hutool.core.io.copy.StreamCopier;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
@@ -1071,6 +1072,10 @@ public class IoUtil extends NioUtil {
 	public static void writeObjects(OutputStream out, boolean isCloseOut, Serializable... contents) throws IORuntimeException {
 		ObjectOutputStream osw = null;
 		try {
+			if(ArrayUtil.isEmpty( contents)){
+				return;
+			}
+
 			osw = out instanceof ObjectOutputStream ? (ObjectOutputStream) out : new ObjectOutputStream(out);
 			for (Object content : contents) {
 				if (content != null) {
@@ -1125,8 +1130,21 @@ public class IoUtil extends NioUtil {
 	 *
 	 * @param obj 可关闭对象
 	 * @since 4.3.2
+	 * @deprecated 拼写错误，请使用{@link #closeIfPossible(Object)}
 	 */
+	@Deprecated
 	public static void closeIfPosible(Object obj) {
+		closeIfPossible( obj);
+	}
+
+	/**
+	 * 尝试关闭指定对象<br>
+	 * 判断对象如果实现了{@link AutoCloseable}，则调用之
+	 *
+	 * @param obj 可关闭对象
+	 * @since 5.8.41
+	 */
+	public static void closeIfPossible(Object obj) {
 		if (obj instanceof AutoCloseable) {
 			close((AutoCloseable) obj);
 		}

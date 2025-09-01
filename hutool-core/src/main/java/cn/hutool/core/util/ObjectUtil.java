@@ -8,6 +8,7 @@ import cn.hutool.core.map.MapUtil;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -365,6 +366,33 @@ public class ObjectUtil {
 			return handle.apply(source);
 		}
 		return defaultValue;
+	}
+
+	/**
+	 * 如果指定的对象不为 {@code null},则应用提供的映射函数并返回结果,否则返回 {@code null}。
+	 *
+	 * @param source  要检查的对象
+	 * @param handler 要应用的映射函数
+	 * @param <T>     输入对象的类型
+	 * @param <R>     映射函数的返回类型
+	 * @return 映射函数的结果, 如果输入对象为 null,则返回 null
+	 * @since 5.8.41
+	 */
+	public static <T, R> R apply(final T source, final Function<T, R> handler) {
+		return defaultIfNull(source, handler, null);
+	}
+
+	/**
+	 * 如果指定的对象不为 {@code null},则执行{@link Consumer}处理source，否则不进行操作
+	 *
+	 * @param source   要检查的对象
+	 * @param consumer source处理逻辑
+	 * @param <T>      输入对象的类型
+	 */
+	public static <T> void accept(final T source, final Consumer<T> consumer) {
+		if (null != source) {
+			consumer.accept(source);
+		}
 	}
 
 	/**

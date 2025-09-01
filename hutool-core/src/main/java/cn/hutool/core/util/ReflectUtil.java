@@ -11,22 +11,10 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Filter;
 import cn.hutool.core.lang.reflect.MethodHandleUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * 反射工具类
@@ -39,15 +27,15 @@ public class ReflectUtil {
 	/**
 	 * 构造对象缓存
 	 */
-	private static final WeakConcurrentMap<Class<?>, Constructor<?>[]> CONSTRUCTORS_CACHE = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<Class<?>, Constructor<?>[]> CONSTRUCTORS_CACHE = new WeakKeyValueConcurrentMap<>();
 	/**
 	 * 字段缓存
 	 */
-	private static final WeakConcurrentMap<Class<?>, Field[]> FIELDS_CACHE = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<Class<?>, Field[]> FIELDS_CACHE = new WeakKeyValueConcurrentMap<>();
 	/**
 	 * 方法缓存
 	 */
-	private static final WeakConcurrentMap<Class<?>, Method[]> METHODS_CACHE = new WeakConcurrentMap<>();
+	private static final WeakKeyValueConcurrentMap<Class<?>, Method[]> METHODS_CACHE = new WeakKeyValueConcurrentMap<>();
 
 	// --------------------------------------------------------------------------------------------------------- Constructor
 
@@ -89,7 +77,7 @@ public class ReflectUtil {
 	@SuppressWarnings("unchecked")
 	public static <T> Constructor<T>[] getConstructors(Class<T> beanClass) throws SecurityException {
 		Assert.notNull(beanClass);
-		return (Constructor<T>[]) CONSTRUCTORS_CACHE.computeIfAbsent(beanClass, () -> getConstructorsDirectly(beanClass));
+		return (Constructor<T>[]) CONSTRUCTORS_CACHE.computeIfAbsent(beanClass, (key) -> getConstructorsDirectly(beanClass));
 	}
 
 	/**
@@ -178,7 +166,7 @@ public class ReflectUtil {
 	 */
 	public static Field[] getFields(Class<?> beanClass) throws SecurityException {
 		Assert.notNull(beanClass);
-		return FIELDS_CACHE.computeIfAbsent(beanClass, () -> getFieldsDirectly(beanClass, true));
+		return FIELDS_CACHE.computeIfAbsent(beanClass, (key) -> getFieldsDirectly(beanClass, true));
 	}
 
 
@@ -673,7 +661,7 @@ public class ReflectUtil {
 	public static Method[] getMethods(Class<?> beanClass) throws SecurityException {
 		Assert.notNull(beanClass);
 		return METHODS_CACHE.computeIfAbsent(beanClass,
-			() -> getMethodsDirectly(beanClass, true, true));
+			(key) -> getMethodsDirectly(beanClass, true, true));
 	}
 
 	/**

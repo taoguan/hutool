@@ -5,16 +5,14 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.*;
 import cn.hutool.core.stream.CollectorUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.JdkUtil;
-import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.*;
 
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Map相关工具类
@@ -1344,6 +1342,40 @@ public class MapUtil {
 			}
 		}
 
+		return map;
+	}
+
+	/**
+	 * 去除Map中值为指定值的键值对<br>
+	 * 注意：此方法在传入的Map上直接修改。
+	 *
+	 * @param <K>   key的类型
+	 * @param <V>   value的类型
+	 * @param map   Map
+	 * @param value 给定值
+	 * @return map
+	 * @since 5.8.41
+	 */
+	public static <K, V> Map<K, V> removeByValue(final Map<K, V> map, final V value) {
+		return removeIf(map, entry -> ObjUtil.equals(value, entry.getValue()));
+	}
+
+	/**
+	 * 去除Map中值为{@code null}的键值对<br>
+	 * 注意：此方法在传入的Map上直接修改。
+	 *
+	 * @param <K>       key的类型
+	 * @param <V>       value的类型
+	 * @param map       Map
+	 * @param predicate 移除条件，当{@link Predicate#test(Object)}为{@code true}时移除
+	 * @return map
+	 * @since 5.8.41
+	 */
+	public static <K, V> Map<K, V> removeIf(final Map<K, V> map, final Predicate<Entry<K, V>> predicate) {
+		if (isEmpty(map)) {
+			return map;
+		}
+		map.entrySet().removeIf(predicate);
 		return map;
 	}
 

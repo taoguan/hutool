@@ -1,6 +1,6 @@
 package cn.hutool.extra.cglib;
 
-import cn.hutool.core.map.WeakConcurrentMap;
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 import cn.hutool.core.util.StrUtil;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.core.Converter;
@@ -18,7 +18,7 @@ public enum BeanCopierCache {
 	 */
 	INSTANCE;
 
-	private final WeakConcurrentMap<String, BeanCopier> cache = new WeakConcurrentMap<>();
+	private final WeakKeyValueConcurrentMap<String, BeanCopier> cache = new WeakKeyValueConcurrentMap<>();
 
 	/**
 	 * 获得类与转换器生成的key在{@link BeanCopier}的Map中对应的元素
@@ -43,7 +43,7 @@ public enum BeanCopierCache {
 	 */
 	public BeanCopier get(Class<?> srcClass, Class<?> targetClass, boolean useConverter) {
 		final String key = genKey(srcClass, targetClass, useConverter);
-		return cache.computeIfAbsent(key, () -> BeanCopier.create(srcClass, targetClass, useConverter));
+		return cache.computeIfAbsent(key, (k) -> BeanCopier.create(srcClass, targetClass, useConverter));
 	}
 
 	/**

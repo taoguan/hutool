@@ -1,17 +1,20 @@
 package cn.hutool.core.map;
 
+import cn.hutool.core.map.reference.WeakKeyValueConcurrentMap;
 import cn.hutool.core.thread.ConcurrencyTester;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WeakConcurrentMapTest {
 
 	@Test
 	public void putAndGetTest(){
-		final WeakConcurrentMap<Object, Object> map = new WeakConcurrentMap<>();
+		final WeakKeyValueConcurrentMap<Object, Object> map = new WeakKeyValueConcurrentMap<>();
 		Object
 				key1 = new Object(), value1 = new Object(),
 				key2 = new Object(), value2 = new Object(),
@@ -41,7 +44,7 @@ public class WeakConcurrentMapTest {
 
 	@Test
 	public void getConcurrencyTest(){
-		final WeakConcurrentMap<String, String> cache = new WeakConcurrentMap<>();
+		final WeakKeyValueConcurrentMap<String, String> cache = new WeakKeyValueConcurrentMap<>();
 		final ConcurrencyTester tester = new ConcurrencyTester(9000);
 		tester.test(()-> cache.computeIfAbsent("aaa" + RandomUtil.randomInt(2), (key)-> "aaaValue"));
 

@@ -735,7 +735,6 @@ public class PathUtil {
 	 * @param dir       临时文件创建的所在目录
 	 * @return 临时文件
 	 * @throws IORuntimeException IO异常
-	 * @since 6.0.0
 	 */
 	public static Path createTempFile(final String prefix, final String suffix, final Path dir) throws IORuntimeException {
 		int exceptionsCount = 0;

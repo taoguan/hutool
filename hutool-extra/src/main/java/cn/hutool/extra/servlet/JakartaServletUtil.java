@@ -308,7 +308,6 @@ public class JakartaServletUtil {
 	 *
 	 * @param request 请求对象{@link HttpServletRequest}
 	 * @return header值
-	 * @since 6.0.0
 	 */
 	public static Map<String, List<String>> getHeadersMap(final HttpServletRequest request) {
 		final Map<String, List<String>> headerMap = new LinkedHashMap<>();

@@ -32,6 +32,7 @@ public class OsInfo implements Serializable{
 	private final boolean IS_OS_WINDOWS_8 = getOSMatches("Windows", "6.2");
 	private final boolean IS_OS_WINDOWS_8_1 = getOSMatches("Windows", "6.3");
 	private final boolean IS_OS_WINDOWS_10 = getOSMatches("Windows", "10.0");
+	private final boolean IS_OS_WINDOWS_11 = getOSMatches("Windows 11");
 
 	// 由于改变file.encoding属性并不会改变系统字符编码，为了保持一致，通过LocaleUtil取系统默认编码。
 	private final String FILE_SEPARATOR = SystemUtil.get("file.separator", false);
@@ -340,7 +341,20 @@ public class OsInfo implements Serializable{
 	 * @return 如果当前OS类型为Windows 10，则返回{@code true}
 	 */
 	public final boolean isWindows10() {
-		return IS_OS_WINDOWS_10;
+		return IS_OS_WINDOWS_10 && !IS_OS_WINDOWS_11;
+	}
+
+	/**
+	 * 判断当前OS的类型。
+	 *
+	 * <p>
+	 * 如果不能取得系统属性{@code os.name}（因为Java安全限制），则总是返回{@code false}
+	 * </p>
+	 *
+	 * @return 如果当前OS类型为Windows 11，则返回{@code true}
+	 */
+	public final boolean isWindows11() {
+		return IS_OS_WINDOWS_11;
 	}
 
 	/**

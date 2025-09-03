@@ -11,6 +11,7 @@
 * 【core   】      `ReferenceUtil`增加`get`方法
 * 【db     】      `Condition`增加构造方法支持BETWEEN（issue#4041@Github）
 * 【core   】      `IoUtil.writeObjects`判空避免空指针（issue#4049@Github）
+* 【extra  】      `OsInfo`增加`isWindows11`方法（pr#4054@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

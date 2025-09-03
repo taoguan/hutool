@@ -352,6 +352,7 @@ public class OsInfo implements Serializable{
 	 * </p>
 	 *
 	 * @return 如果当前OS类型为Windows 11，则返回{@code true}
+	 * @since 5.8.41
 	 */
 	public final boolean isWindows11() {
 		return IS_OS_WINDOWS_11;

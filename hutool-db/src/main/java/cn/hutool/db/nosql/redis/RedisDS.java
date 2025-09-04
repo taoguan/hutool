@@ -138,6 +138,26 @@ public class RedisDS implements Closeable, Serializable {
 	}
 
 	/**
+	 * 获取Jedis连接池
+	 *
+	 * @return Jedis连接池
+	 * @since 5.8.41
+	 */
+	public JedisPool getPool() {
+		return pool;
+	}
+
+	/**
+	 * 获取配置
+	 *
+	 * @return 配置
+	 * @since 5.8.41
+	 */
+	public Setting getSetting() {
+		return setting;
+	}
+
+	/**
 	 * 从资源池中获取{@link Jedis}
 	 *
 	 * @return {@link Jedis}

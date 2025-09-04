@@ -2570,7 +2570,7 @@ public class NumberUtil {
 	 * @param scale        保留的小数位 (指数为负数时生效)
 	 * @param roundingMode 保留小数的模式 {@link RoundingMode} (指数为负数时生效)
 	 * @return 幂的积
-	 * @since 4.1.0
+	 * @since 5.8.41
 	 */
 	public static BigDecimal pow(BigDecimal number, int n, int scale, RoundingMode roundingMode) {
 		if (n < 0) {

@@ -13,6 +13,7 @@
 * 【core   】      `IoUtil.writeObjects`判空避免空指针（issue#4049@Github）
 * 【extra  】      `OsInfo`增加`isWindows11`方法（pr#4054@Github）
 * 【extra  】      `RedisDS`增加`getPool`和`getSetting`方法（issue#ICVWDI@Gitee）
+* 【core   】      `NumberUtil.pow`增加重载，支持指数自定义保留位数（pr#4052@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

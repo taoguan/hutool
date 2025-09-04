@@ -2549,7 +2549,7 @@ public class NumberUtil {
 
 	/**
 	 * 提供精确的幂运算<br>
-	 * 如果n为负数，则返回1/a的-n次方，默认四舍五入
+	 * 如果n为负数，则返回1/a的-n次方，默认四舍五入，保留两位小数
 	 *
 	 * @param number 底数
 	 * @param n      指数，如果为负数，则返回1/a的-n次方
@@ -2557,9 +2557,25 @@ public class NumberUtil {
 	 * @since 4.1.0
 	 */
 	public static BigDecimal pow(BigDecimal number, int n) {
+		return pow(number, n, 2, RoundingMode.HALF_UP);
+	}
+
+
+	/**
+	 * 提供精确的幂运算<br>
+	 * 如果n为负数，则返回1/a的-n次方，默认四舍五入
+	 *
+	 * @param number       底数
+	 * @param n            指数，如果为负数，则返回1/a的-n次方
+	 * @param scale        保留的小数位 (指数为负数时生效)
+	 * @param roundingMode 保留小数的模式 {@link RoundingMode} (指数为负数时生效)
+	 * @return 幂的积
+	 * @since 4.1.0
+	 */
+	public static BigDecimal pow(BigDecimal number, int n, int scale, RoundingMode roundingMode) {
 		if (n < 0) {
 			// a的n次方，如果n为负数，则返回1/a的-n次方
-			return BigDecimal.ONE.divide(pow(number, -n), 2, RoundingMode.HALF_UP);
+			return BigDecimal.ONE.divide(pow(number, -n), scale, roundingMode);
 		}
 		return number.pow(n);
 	}

@@ -661,6 +661,14 @@ public class NumberUtilTest {
 	}
 
 	@Test
+	public void testPowSmallNumberScale() {
+		BigDecimal number = new BigDecimal("1.2");
+		int exponent = -3;
+		BigDecimal expected = new BigDecimal("0.58");
+		assertEquals(expected, NumberUtil.pow(number, exponent));
+	}
+
+	@Test
 	public void issue3636Test() {
 		final Number number = NumberUtil.parseNumber("12,234,456");
 		assertEquals(new BigDecimal(12234456), number);

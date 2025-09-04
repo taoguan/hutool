@@ -26,6 +26,7 @@ public class RedisDS implements Closeable, Serializable {
 	private Setting setting;
 	/** Jedis连接池 */
 	private JedisPool pool;
+	private String group;
 
 	// --------------------------------------------------------------------------------- Static method start
 	/**
@@ -93,6 +94,7 @@ public class RedisDS implements Closeable, Serializable {
 	 * @return this
 	 */
 	public RedisDS init(String group) {
+		this.group = group;
 		if (null == setting) {
 			setting = new Setting(REDIS_CONFIG_PATH, true);
 		}
@@ -155,6 +157,16 @@ public class RedisDS implements Closeable, Serializable {
 	 */
 	public Setting getSetting() {
 		return setting;
+	}
+
+	/**
+	 * 获取分组
+	 *
+	 * @return 分组
+	 * @since 5.8.41
+	 */
+	public String getGroup() {
+		return group;
 	}
 
 	/**

@@ -23,7 +23,7 @@ public enum Part {
 	SECOND(Calendar.SECOND, 0, 59),
 	MINUTE(Calendar.MINUTE, 0, 59),
 	HOUR(Calendar.HOUR_OF_DAY, 0, 23),
-	DAY_OF_MONTH(Calendar.DAY_OF_MONTH, 1, 31),
+	DAY_OF_MONTH(Calendar.DAY_OF_MONTH, 1, 32),
 	MONTH(Calendar.MONTH, Month.JANUARY.getValueBaseOne(), Month.DECEMBER.getValueBaseOne()),
 	DAY_OF_WEEK(Calendar.DAY_OF_WEEK, Week.SUNDAY.ordinal(), Week.SATURDAY.ordinal()),
 	YEAR(Calendar.YEAR, 1970, 2099);

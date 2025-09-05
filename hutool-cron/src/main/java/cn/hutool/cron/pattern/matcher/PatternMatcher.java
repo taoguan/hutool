@@ -177,8 +177,6 @@ public class PatternMatcher {
 	 * @return {@link Calendar}，毫秒数为0
 	 */
 	private int[] nextMatchValuesAfter(int[] values) {
-		final int[] newValues = values.clone();
-
 		int i = Part.YEAR.ordinal();
 		// 新值，-1表示标识为回退
 		int nextValue = 0;
@@ -189,30 +187,20 @@ public class PatternMatcher {
 				continue;
 			}
 
-			// pr#1189
-			if (i == Part.DAY_OF_MONTH.ordinal()
-				&& matchers[i] instanceof DayOfMonthMatcher
-				&& ((DayOfMonthMatcher) matchers[i]).isLastDay(values[i],values[i+1],DateUtil.isLeapYear(values[Part.YEAR.ordinal()]))) {
-				int newMonth = newValues[Part.MONTH.ordinal()];
-				int newYear = newValues[Part.YEAR.ordinal()];
-				nextValue = getLastDay(newMonth, newYear);
-			} else {
-				nextValue = matchers[i].nextAfter(values[i]);
-			}
+			nextValue = getNextMatch(values, i, 0);
 
 			if (nextValue > values[i]) {
 				// 此部分正常获取新值，结束循环，后续的部分置最小值
-				newValues[i] = nextValue;
+				values[i] = nextValue;
 				i--;
 				break;
 			} else if (nextValue < values[i]) {
-				// 回退前保存最新值
-				newValues[i] = nextValue;
 				// 此部分下一个值获取到的值产生回退，回到上一个部分，继续获取新值
 				i++;
 				nextValue = -1;// 标记回退查找
 				break;
 			}
+
 			// 值不变，检查下一个部分
 			i--;
 		}
@@ -224,17 +212,12 @@ public class PatternMatcher {
 					// 周不参与计算
 					i++;
 					continue;
-				} else if (i == Part.DAY_OF_MONTH.ordinal()
-					&& matchers[i] instanceof DayOfMonthMatcher
-					&& ((DayOfMonthMatcher) matchers[i]).isLastDay(values[i],values[i+1],DateUtil.isLeapYear(values[Part.YEAR.ordinal()]))) {
-					int newMonth = newValues[Part.MONTH.ordinal()];
-					int newYear = newValues[Part.YEAR.ordinal()];
-					nextValue = getLastDay(newMonth, newYear);
-				} else {
-					nextValue = matchers[i].nextAfter(values[i] + 1);
 				}
+
+				nextValue = getNextMatch(values, i, 1);
+
 				if (nextValue > values[i]) {
-					newValues[i] = nextValue;
+					values[i] = nextValue;
 					i--;
 					break;
 				}
@@ -243,8 +226,32 @@ public class PatternMatcher {
 		}
 
 		// 修改值以下的字段全部归最小值
-		setToMin(newValues, i);
-		return newValues;
+		setToMin(values, i);
+		return values;
+	}
+
+	/**
+	 * 获取指定部分的下一个匹配值，三种结果：
+	 * <ul>
+	 *     <li>结果值大于原值：此部分已更新，后续部分取匹配的最小值。</li>
+	 *     <li>结果值小于原值：此部分获取到了最小值，上一个部分需要继续取下一个值。</li>
+	 *     <li>结果值等于原值：此部分匹配，获取下一个部分的next值</li>
+	 * </ul>
+	 *
+	 * @param newValues   时间字段值，{second, minute, hour, dayOfMonth, monthBase1, dayOfWeekBase0, year}
+	 * @param partOrdinal 序号
+	 * @param plusValue   获取的偏移值
+	 * @return 下一个值
+	 */
+	private int getNextMatch(final int[] newValues, final int partOrdinal, final int plusValue) {
+		if (partOrdinal == Part.DAY_OF_MONTH.ordinal() && matchers[partOrdinal] instanceof DayOfMonthMatcher) {
+			// 对于日需要考虑月份和闰年，单独处理
+			final boolean isLeapYear = DateUtil.isLeapYear(newValues[Part.YEAR.ordinal()]);
+			final int month = newValues[Part.MONTH.ordinal()];
+			return ((DayOfMonthMatcher) matchers[partOrdinal]).nextAfter(newValues[partOrdinal] + plusValue, month, isLeapYear);
+		}
+
+		return matchers[partOrdinal].nextAfter(newValues[partOrdinal] + plusValue);
 	}
 
 	/**
@@ -253,19 +260,21 @@ public class PatternMatcher {
 	 * @param values 值数组
 	 * @param toPart 截止的部分
 	 */
-	private void setToMin(int[] values, int toPart) {
+	private void setToMin(final int[] values, final int toPart) {
 		Part part;
-		for (int i = 0; i <= toPart; i++) {
+		for (int i = toPart; i >= 0; i--) {
 			part = Part.of(i);
-			if (part == Part.DAY_OF_MONTH
-				&& get(part) instanceof DayOfMonthMatcher
-				&& ((DayOfMonthMatcher) get(part)).isLast()) {
-				int newMonth = values[Part.MONTH.ordinal()];
-				int newYear = values[Part.YEAR.ordinal()];
-				values[i] = getLastDay(newMonth, newYear);
-			} else {
-				values[i] = getMin(part);
+			if (part == Part.DAY_OF_MONTH) {
+				final boolean isLeapYear = DateUtil.isLeapYear(values[Part.YEAR.ordinal()]);
+				final int month = values[Part.MONTH.ordinal()];
+				final PartMatcher partMatcher = get(part);
+				if (partMatcher instanceof DayOfMonthMatcher) {
+					values[i] = ((DayOfMonthMatcher) partMatcher).getMinValue(month, isLeapYear);
+					continue;
+				}
 			}
+
+			values[i] = getMin(part);
 		}
 	}
 

@@ -3,10 +3,13 @@ package cn.hutool.cron.pattern;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import static org.junit.jupiter.api.Assertions.*;
+import cn.hutool.core.lang.Console;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CronPatternNextMatchTest {
 
@@ -180,6 +183,16 @@ public class CronPatternNextMatchTest {
 			int lastDayOfMonth = DateUtil.getLastDayOfMonth(result);
 			result.setField(DateField.DAY_OF_MONTH, lastDayOfMonth);
 		}
+	}
+
+	@Test
+	public void testLastDayOfMonthForEveryYear3() {
+		DateTime date = DateUtil.parse("2022-03-08 07:44:16");
+		DateTime result = DateUtil.parse("2023-02-28 03:02:01");
+		// 匹配每一年2月的最后一天
+		CronPattern pattern = new CronPattern("1 2 3 L 2 ?");
+		Calendar calendar = pattern.nextMatchAfter(date.toCalendar());
+		Console.log(DateUtil.date(calendar));
 	}
 
 	@Test

@@ -1342,10 +1342,11 @@ public class NumberUtil {
 	 */
 	public static boolean isPrimes(int n) {
 		Assert.isTrue(n > 1, "The number must be > 1");
-		for (int i = 2; i <= Math.sqrt(n); i++) {
-			if (n % i == 0) {
-				return false;
-			}
+		if (n <= 3) return true;
+		if ((n & 1) == 0) return false;
+		if (n % 3 == 0) return false;
+		for (int i = 5; i <= n / i; i += 6) {
+			if (n % i == 0 || n % (i + 2) == 0) return false;
 		}
 		return true;
 	}

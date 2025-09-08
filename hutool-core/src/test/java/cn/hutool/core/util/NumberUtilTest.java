@@ -606,6 +606,23 @@ public class NumberUtilTest {
 	}
 
 	@Test
+	public void isPrimesTest() {
+		assertTrue(NumberUtil.isPrimes(2));
+		assertTrue(NumberUtil.isPrimes(3));
+		assertFalse(NumberUtil.isPrimes(4));
+		assertTrue(NumberUtil.isPrimes(5));
+		assertTrue(NumberUtil.isPrimes(7));
+		assertFalse(NumberUtil.isPrimes(9));
+		assertTrue(NumberUtil.isPrimes(13));
+		assertFalse(NumberUtil.isPrimes(25));
+		assertFalse(NumberUtil.isPrimes(49));
+		assertTrue(NumberUtil.isPrimes(113));
+		assertFalse(NumberUtil.isPrimes(121));
+		assertTrue(NumberUtil.isPrimes(2147483647));
+		assertFalse(NumberUtil.isPrimes(2147483646));
+	}
+	
+	@Test
 	public void range(){
 		assertFalse(NumberUtil.isIn(new BigDecimal("1"),new BigDecimal("2"),new BigDecimal("12")));
 		assertTrue(NumberUtil.isIn(new BigDecimal("1"),new BigDecimal("1"),new BigDecimal("2")));

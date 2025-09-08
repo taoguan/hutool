@@ -121,6 +121,7 @@ public class NumberUtil {
 
 	/**
 	 * 提供精确的加法运算
+	 *
 	 * @param v1 被加数
 	 * @param v2 加数
 	 * @return 和
@@ -1342,11 +1343,17 @@ public class NumberUtil {
 	 */
 	public static boolean isPrimes(int n) {
 		Assert.isTrue(n > 1, "The number must be > 1");
-		if (n <= 3) return true;
-		if ((n & 1) == 0) return false;
-		if (n % 3 == 0) return false;
+		if (n <= 3) {
+			return true;
+		} else if ((n & 1) == 0) {
+			return false;
+		} else if (n % 3 == 0) {
+			return false;
+		}
 		for (int i = 5; i <= n / i; i += 6) {
-			if (n % i == 0 || n % (i + 2) == 0) return false;
+			if (n % i == 0 || n % (i + 2) == 0) {
+				return false;
+			}
 		}
 		return true;
 	}

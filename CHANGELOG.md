@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-09-06)
+# 5.8.41(2025-09-08)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -14,6 +14,7 @@
 * 【extra  】      `OsInfo`增加`isWindows11`方法（pr#4054@Github）
 * 【extra  】      `RedisDS`增加`getPool`和`getSetting`方法（issue#ICVWDI@Gitee）
 * 【core   】      `NumberUtil.pow`增加重载，支持指数自定义保留位数（pr#4052@Github）
+* 【core   】      `NumberUtil.isPrimes`优化判断（pr#4058@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

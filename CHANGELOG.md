@@ -22,7 +22,8 @@
 * 【core   】      修复`IoUtil`的`closeIfPosible`拼写错误，新建一个`closeIfPossible`方法，原方法标记deprecated（issue#4047@Github）
 * 【http   】      修复`HttpRequest.sendRedirectIfPossible`未对308做判断问题。（issue#4053@Github）
 * 【cron   】      修复`CronPatternUtil.nextDateAfter`当日为L时计算错误问题。（issue#4056@Github）
-* 【cron   】      修复`DialectRunner.count`方法中，去除包含多字段order by子句的SQL语句时错误问题（issue#4066@Github）
+* 【db     】      修复`NamedSql.replaceVar`关键字处理问题（issue#4062@Github）
+* 【db     】      修复`DialectRunner.count`方法中，去除包含多字段order by子句的SQL语句时错误问题（issue#4066@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

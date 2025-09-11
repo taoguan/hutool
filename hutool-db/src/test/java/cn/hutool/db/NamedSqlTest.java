@@ -2,13 +2,14 @@ package cn.hutool.db;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.db.sql.NamedSql;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NamedSqlTest {
 
@@ -99,5 +100,29 @@ public class NamedSqlTest {
 		// 采用传统方式查询是否能识别Map类型参数
 		query = Db.use().query(sql, new Object[]{paramMap});
 		assertEquals(1, query.size());
+	}
+
+	@Test
+	public void parseInTest2() {
+		// 测试表名包含"in"但不是IN子句的情况
+		final String sql = "select * from information where info_data = :info";
+		final HashMap<String, Object> paramMap = MapUtil.of("info", new int[]{10, 20});
+
+		final NamedSql namedSql = new NamedSql(sql, paramMap);
+		// sql语句不包含IN子句，不会展开数组
+		assertEquals("select * from information where info_data = ?", namedSql.getSql());
+		assertArrayEquals(new int[]{10, 20}, (int[]) namedSql.getParams()[0]);
+	}
+
+	@Test
+	public void parseInTest3() {
+		// 测试字符串中包含"in"关键字但不是IN子句的情况
+		final String sql = "select * from user where comment = 'include in text' and id = :id";
+		final HashMap<String, Object> paramMap = MapUtil.of("id", new int[]{5, 6});
+
+		final NamedSql namedSql = new NamedSql(sql, paramMap);
+		// sql语句不包含IN子句，不会展开数组
+		assertEquals("select * from user where comment = 'include in text' and id = ?", namedSql.getSql());
+		assertArrayEquals(new int[]{5, 6}, (int[]) namedSql.getParams()[0]);
 	}
 }

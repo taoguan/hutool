@@ -465,7 +465,7 @@ public class Mail implements Builder<MimeMessage> {
 		// 正文
 		final MimeBodyPart body = new MimeBodyPart();
 		body.setContent(content, StrUtil.format("text/{}; charset={}", isHtml ? "html" : "plain", charsetStr));
-		this.multipart.addBodyPart(body);
+		this.multipart.addBodyPart(body, 0);
 
 		return this.multipart;
 	}

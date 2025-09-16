@@ -4,9 +4,9 @@ import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.StrUtil;
 import com.jcraft.jsch.Session;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Jsch会话池
@@ -19,7 +19,7 @@ public enum JschSessionPool {
 	/**
 	 * SSH会话池，key：host，value：Session对象
 	 */
-	private final SimpleCache<String, Session> cache = new SimpleCache<>(new HashMap<>());
+	private final SimpleCache<String, Session> cache = new SimpleCache<>(new ConcurrentHashMap<>());
 
 	/**
 	 * 获取Session，不存在返回null

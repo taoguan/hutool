@@ -27,6 +27,7 @@
 * 【cron   】      修复`CronPatternUtil.nextDateAfter`当日为L时计算错误问题。（issue#4056@Github）
 * 【db     】      修复`NamedSql.replaceVar`关键字处理问题（issue#4062@Github）
 * 【db     】      修复`DialectRunner.count`方法中，去除包含多字段order by子句的SQL语句时错误问题（issue#4066@Github）
+* 【extra  】      修复`JschSessionPool`并发问题（pr#4079@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

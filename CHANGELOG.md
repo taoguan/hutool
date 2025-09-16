@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-09-13)
+# 5.8.41(2025-09-16)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -16,6 +16,7 @@
 * 【core   】      `NumberUtil.pow`增加重载，支持指数自定义保留位数（pr#4052@Github）
 * 【core   】      `NumberUtil.isPrimes`优化判断（pr#4058@Github）
 * 【extra  】      `Mail.buildContent`改进，正文部分总在最前（issue#4072@Github）
+* 【core   】      `DataSizeUtil`改进，兼容`GiB`等单位名称（issue#ICXXVF@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

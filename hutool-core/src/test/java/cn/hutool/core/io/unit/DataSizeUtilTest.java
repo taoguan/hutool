@@ -1,5 +1,6 @@
 package cn.hutool.core.io.unit;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,5 +80,11 @@ public class DataSizeUtilTest {
 		final String size = DataSizeUtil.format(10240000);
 		final long bytes = DataSize.parse(size).toBytes();
 		assertEquals(10244587, bytes);
+	}
+
+	@Test
+	void issueICXXVFTest(){
+		final long parse = DataSizeUtil.parse("279.40GiB");
+		Assertions.assertEquals(300003465625L, parse);
 	}
 }

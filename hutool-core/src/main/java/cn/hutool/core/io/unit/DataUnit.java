@@ -1,5 +1,6 @@
 package cn.hutool.core.io.unit;
 
+import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
@@ -75,11 +76,16 @@ public enum DataUnit {
 	/**
 	 * 通过后缀返回对应的 DataUnit
 	 *
-	 * @param suffix 单位后缀
-	 * @return 匹配到的{@link DataUnit}
+	 * @param suffix 单位后缀，如KB、GB、GiB等
+	 * @return 匹配到的{@code DataUnit}
 	 * @throws IllegalArgumentException 后缀无法识别报错
 	 */
 	public static DataUnit fromSuffix(String suffix) {
+		// issue#ICXXVF 兼容KiB、MiB、GiB
+		if(StrUtil.length(suffix) == 3 && CharUtil.equals(suffix.charAt(1), 'i', true)){
+			suffix = new String(new char[]{suffix.charAt(0), suffix.charAt(2)});
+		}
+
 		for (DataUnit candidate : values()) {
 			// 支持类似于 3MB，3M，3m等写法
 			if (StrUtil.startWithIgnoreCase(candidate.suffix, suffix)) {

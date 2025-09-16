@@ -17,6 +17,7 @@
 * 【core   】      `NumberUtil.isPrimes`优化判断（pr#4058@Github）
 * 【extra  】      `Mail.buildContent`改进，正文部分总在最前（issue#4072@Github）
 * 【core   】      `DataSizeUtil`改进，兼容`GiB`等单位名称（issue#ICXXVF@Github）
+* 【ai     】      `Message`增加setter和构造方法（issue#ICXTP2@Gitee）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

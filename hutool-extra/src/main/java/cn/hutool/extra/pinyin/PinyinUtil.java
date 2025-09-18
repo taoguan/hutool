@@ -104,7 +104,7 @@ public class PinyinUtil {
 	 * @return 汉字返回拼音，非汉字原样返回
 	 */
 	public static String getFirstLetter(String str, String separator) {
-		return getEngine().getFirstLetter(str, separator);
+		return (str == null) ? null : getEngine().getFirstLetter(str, separator);
 	}
 
 	/**

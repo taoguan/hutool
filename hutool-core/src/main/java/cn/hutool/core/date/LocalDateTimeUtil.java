@@ -298,7 +298,7 @@ public class LocalDateTimeUtil {
 	}
 
 	/**
-	 * 解析日期时间字符串为{@link LocalDate}，仅支持yyyy-MM-dd'T'HH:mm:ss格式，例如：2007-12-03T10:15:30
+	 * 解析日期时间字符串为{@link LocalDate}，仅支持yyyy-MM-dd格式，例如：2007-12-03
 	 *
 	 * @param text 日期时间字符串
 	 * @return {@link LocalDate}

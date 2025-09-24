@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-09-19)
+# 5.8.41(2025-09-24)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -19,6 +19,7 @@
 * 【core   】      `DataSizeUtil`改进，兼容`GiB`等单位名称（issue#ICXXVF@Github）
 * 【ai     】      `Message`增加setter和构造方法（issue#ICXTP2@Gitee）
 * 【extra  】      `PinyinUtil`增加判空（pr#4081@Github）
+* 【core   】      `LocalDateTimeUtil.parseDate`注释修正（pr#parseDate @Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

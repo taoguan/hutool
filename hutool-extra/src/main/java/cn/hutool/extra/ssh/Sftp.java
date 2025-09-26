@@ -462,9 +462,9 @@ public class Sftp extends AbstractFtp {
 			fileName = entry.getFilename();
 			if (false == ".".equals(fileName) && false == "..".equals(fileName)) {
 				if (entry.getAttrs().isDir()) {
-					delDir(fileName);
+					delDir(dirPath + "/" + fileName);
 				} else {
-					delFile(fileName);
+					delFile(dirPath + "/" + fileName);
 				}
 			}
 		}

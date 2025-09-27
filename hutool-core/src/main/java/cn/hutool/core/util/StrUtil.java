@@ -370,6 +370,9 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 	 * @since 3.0.9
 	 */
 	public static String reverse(String str) {
+		if (null == str) {
+			return null;
+		}
 		return new String(ArrayUtil.reverse(str.toCharArray()));
 	}
 
@@ -414,6 +417,9 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 	 * @since 3.1.2
 	 */
 	public static String fill(String str, char filledChar, int len, boolean isPre) {
+		if (null == str) {
+			str = "";
+		}
 		final int strLen = str.length();
 		if (strLen > len) {
 			return str;

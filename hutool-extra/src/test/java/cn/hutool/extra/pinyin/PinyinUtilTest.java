@@ -22,4 +22,10 @@ public class PinyinUtilTest {
 		final String result = PinyinUtil.getFirstLetter("崞阳", ", ");
 		assertEquals("g, y", result);
 	}
+
+	@Test
+	public void getFirstLetterTest3(){
+		final String result = PinyinUtil.getFirstLetter(null, ", ");
+		assertNull(result);
+	}
 }

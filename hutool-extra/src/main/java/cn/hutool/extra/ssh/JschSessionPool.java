@@ -6,7 +6,6 @@ import com.jcraft.jsch.Session;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Jsch会话池
@@ -14,12 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author looly
  */
 public enum JschSessionPool {
+
+	/**
+	 * 单例对象
+	 */
 	INSTANCE;
 
 	/**
 	 * SSH会话池，key：host，value：Session对象
 	 */
-	private final SimpleCache<String, Session> cache = new SimpleCache<>(new ConcurrentHashMap<>());
+	private final SimpleCache<String, Session> cache = new SimpleCache<>();
 
 	/**
 	 * 获取Session，不存在返回null

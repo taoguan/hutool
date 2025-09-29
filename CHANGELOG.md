@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-09-16)
+# 5.8.41(2025-09-28)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -18,6 +18,9 @@
 * 【extra  】      `Mail.buildContent`改进，正文部分总在最前（issue#4072@Github）
 * 【core   】      `DataSizeUtil`改进，兼容`GiB`等单位名称（issue#ICXXVF@Github）
 * 【ai     】      `Message`增加setter和构造方法（issue#ICXTP2@Gitee）
+* 【extra  】      `PinyinUtil`增加判空（pr#4081@Github）
+* 【core   】      `LocalDateTimeUtil.parseDate`注释修正（pr#4085@Github）
+* 【core   】      `StrUtil`增加null检查处理（pr#4086@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）
@@ -27,6 +30,8 @@
 * 【cron   】      修复`CronPatternUtil.nextDateAfter`当日为L时计算错误问题。（issue#4056@Github）
 * 【db     】      修复`NamedSql.replaceVar`关键字处理问题（issue#4062@Github）
 * 【db     】      修复`DialectRunner.count`方法中，去除包含多字段order by子句的SQL语句时错误问题（issue#4066@Github）
+* 【extra  】      修复`JschSessionPool`并发问题（pr#4079@Github）
+* 【extra  】      修复`Sftp`递归删除目录时使用相对路径可能导致死循环的问题（pr#1380@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

@@ -118,12 +118,12 @@ public class DfaTest {
 
 	/**
 	 * Github Issue #4091
-	 * 测试当关键词以停顿词（如括号）结尾时，其合法前缀是否能被正确匹配
+	 * 测试当关键词以停顿词结尾时，其合法前缀是否能被正确匹配
 	 */
 	@Test
 	public void addWordWithTrailingFilteredCharTest() {
 		WordTree tree = new WordTree();
-		tree.addWord("hello "); // 以被过滤字符结尾
+		tree.addWord("hello("); // 以停顿词 '(' 结尾
 
 		List<String> matches = tree.matchAll("hello", -1);
 		assertEquals(1, matches.size());
@@ -137,7 +137,7 @@ public class DfaTest {
 	@Test
 	public void addWordWithMiddleFilteredCharTest() {
 		WordTree tree = new WordTree();
-		tree.addWord("he llo"); // 中间 '(' 被过滤
+		tree.addWord("he(llo"); // 中间 '(' 被过滤
 
 		List<String> matches = tree.matchAll("hello", -1);
 		assertEquals(1, matches.size());

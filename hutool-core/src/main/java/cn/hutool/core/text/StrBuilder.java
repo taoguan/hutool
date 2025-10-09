@@ -486,7 +486,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable {
 		if(index < 0){
 			index = this.position + index;
 		}
-		if ((index < 0) || (index > this.position)) {
+		if ((index < 0) || (index >= this.position)) {
 			throw new StringIndexOutOfBoundsException(index);
 		}
 		return this.value[index];

@@ -112,8 +112,21 @@ public class AIConfigBuilder {
 	 * @param timeout 超时时间
 	 * @return config
 	 * @since 5.8.39
+	 * @deprecated 请使用 {@link #setTimeout(int)}
 	 */
-	public synchronized AIConfigBuilder setTimout(final int timeout) {
+	@Deprecated
+	public AIConfigBuilder setTimout(final int timeout) {
+		return setTimeout(timeout);
+	}
+
+	/**
+	 * 设置连接超时时间，不设置为默认值
+	 *
+	 * @param timeout 超时时间
+	 * @return config
+	 * @since 5.8.41
+	 */
+	public synchronized AIConfigBuilder setTimeout(final int timeout) {
 		if (timeout > 0) {
 			config.setTimeout(timeout);
 		}
@@ -126,10 +139,23 @@ public class AIConfigBuilder {
 	 * @param readTimout 取超时时间
 	 * @return config
 	 * @since 5.8.39
+	 * @deprecated 请使用 {@link #setReadTimeout(int)}
 	 */
-	public synchronized AIConfigBuilder setReadTimout(final int readTimout) {
-		if (readTimout > 0) {
-			config.setReadTimeout(readTimout);
+	@Deprecated
+	public AIConfigBuilder setReadTimout(final int readTimout) {
+		return setReadTimeout(readTimout);
+	}
+
+	/**
+	 * 设置读取超时时间，不设置为默认值
+	 *
+	 * @param readTimeout 取超时时间
+	 * @return config
+	 * @since 5.8.41
+	 */
+	public synchronized AIConfigBuilder setReadTimeout(final int readTimeout) {
+		if (readTimeout > 0) {
+			config.setReadTimeout(readTimeout);
 		}
 		return this;
 	}

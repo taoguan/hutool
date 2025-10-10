@@ -34,6 +34,7 @@
 * 【extra  】      修复`Sftp`递归删除目录时使用相对路径可能导致死循环的问题（pr#1380@Gitee）
 * 【db     】      修复`SqlUtil.removeOuterOrderBy`处理没有order by的语句导致异常问题（pr#4089@Github）
 * 【extra  】      修复`Sftp.upload`目标路径为null时空指针问题（issue#ID14WX@Gitee）
+* 【ai     】      修复`AIConfigBuilder`中方法名拼写错误（pr#1382@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

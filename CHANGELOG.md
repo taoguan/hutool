@@ -21,6 +21,7 @@
 * 【extra  】      `PinyinUtil`增加判空（pr#4081@Github）
 * 【core   】      `LocalDateTimeUtil.parseDate`注释修正（pr#4085@Github）
 * 【core   】      `StrUtil`增加null检查处理（pr#4086@Github）
+* 【json   】      增加Record支持（pr#4096@Github）
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

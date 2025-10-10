@@ -109,11 +109,11 @@ public class ObjectMapper {
 		} else if (source instanceof ResourceBundle) {
 			// JSONTokener
 			mapFromResourceBundle((ResourceBundle) source, jsonObject, filter);
+		} else if (RecordUtil.isRecord(source.getClass())) {
+			mapFromBean(source, jsonObject);
 		} else if (BeanUtil.isReadableBean(source.getClass())) {
 			// 普通Bean
 			// TODO 过滤器对Bean无效，需补充。
-			mapFromBean(source, jsonObject);
-		} else if (RecordUtil.isRecord(source.getClass())) {
 			mapFromBean(source, jsonObject);
 		}
 

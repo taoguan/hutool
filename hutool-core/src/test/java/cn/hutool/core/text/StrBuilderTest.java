@@ -135,9 +135,9 @@ public class StrBuilderTest {
 	@Test
 	void charAtTest() {
 		final StrBuilder helloWorld = StrBuilder.create("Hello World");
-		Assertions.assertEquals(helloWorld.charAt(-1),'d');
-		Assertions.assertEquals(helloWorld.charAt(0),'H');
-		Assertions.assertEquals(helloWorld.charAt(10),'d');
+		Assertions.assertEquals('d', helloWorld.charAt(-1));
+		Assertions.assertEquals('H', helloWorld.charAt(0));
+		Assertions.assertEquals('d', helloWorld.charAt(10));
 		Assertions.assertThrows(StringIndexOutOfBoundsException.class, () -> helloWorld.charAt(11));;
 	}
 }

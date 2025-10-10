@@ -3,6 +3,7 @@ package cn.hutool.extra.ssh;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Filter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.ftp.AbstractFtp;
@@ -538,7 +539,8 @@ public class Sftp extends AbstractFtp {
 	 * @since 5.7.16
 	 */
 	public boolean upload(String destPath, String fileName, InputStream fileStream) {
-		destPath = StrUtil.addSuffixIfNot(destPath, StrUtil.SLASH) + StrUtil.removePrefix(fileName, StrUtil.SLASH);
+		Assert.notEmpty(fileName);
+		destPath = StrUtil.addSuffixIfNot(StrUtil.nullToEmpty(destPath), StrUtil.SLASH) + StrUtil.removePrefix(fileName, StrUtil.SLASH);
 		put(fileStream, destPath, null, Mode.OVERWRITE);
 		return true;
 	}
@@ -570,13 +572,16 @@ public class Sftp extends AbstractFtp {
 	 * 将本地文件上传到目标服务器，目标文件名为destPath，若destPath为目录，则目标文件名将与srcFilePath文件名相同。
 	 *
 	 * @param srcFilePath 本地文件路径
-	 * @param destPath    目标路径，
+	 * @param destPath    目标路径，{@code null}表示当前路径
 	 * @param monitor     上传进度监控，通过实现此接口完成进度显示
 	 * @param mode        {@link Mode} 模式
 	 * @return this
 	 * @since 4.6.5
 	 */
-	public Sftp put(String srcFilePath, String destPath, SftpProgressMonitor monitor, Mode mode) {
+	public Sftp 	put(String srcFilePath, String destPath, SftpProgressMonitor monitor, Mode mode) {
+		if(null == destPath){
+			destPath = pwd();
+		}
 		try {
 			getClient().put(srcFilePath, destPath, monitor, mode.ordinal());
 		} catch (SftpException e) {
@@ -589,13 +594,16 @@ public class Sftp extends AbstractFtp {
 	 * 将本地数据流上传到目标服务器，目标文件名为destPath，目标必须为文件
 	 *
 	 * @param srcStream 本地的数据流
-	 * @param destPath  目标路径，
+	 * @param destPath  目标路径，{@code null}表示当前路径
 	 * @param monitor   上传进度监控，通过实现此接口完成进度显示
 	 * @param mode      {@link Mode} 模式
 	 * @return this
 	 * @since 5.7.16
 	 */
 	public Sftp put(InputStream srcStream, String destPath, SftpProgressMonitor monitor, Mode mode) {
+		if(null == destPath){
+			destPath = pwd();
+		}
 		try {
 			getClient().put(srcStream, destPath, monitor, mode.ordinal());
 		} catch (SftpException e) {

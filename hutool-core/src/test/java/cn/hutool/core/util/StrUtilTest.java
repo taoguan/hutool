@@ -1,5 +1,6 @@
 package cn.hutool.core.util;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.lang.Dict;
 import org.junit.jupiter.api.Test;
 
@@ -633,14 +634,14 @@ public class StrUtilTest {
 	public void replaceLastTest() {
 		final String str = "i am jackjack";
 		final String result = StrUtil.replaceLast(str, "JACK", null, true);
-		assertEquals(result, "i am jack");
+		assertEquals("i am jack", result);
 	}
 
 	@Test
 	public void replaceFirstTest() {
 		final String str = "yesyes i do";
 		final String result = StrUtil.replaceFirst(str, "YES", "", true);
-		assertEquals(result, "yes i do");
+		assertEquals("yes i do", result);
 	}
 
 	@Test

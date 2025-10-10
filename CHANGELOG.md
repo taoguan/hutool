@@ -37,6 +37,7 @@
 * 【extra  】      修复`Sftp.upload`目标路径为null时空指针问题（issue#ID14WX@Gitee）
 * 【ai     】      修复`AIConfigBuilder`中方法名拼写错误（pr#1382@Gitee）
 * 【core   】      修复`StrBuilder`charAt越界判断错误（pr#4094@Github）
+* 【dfa    】      修复`WordTree.addWord`末尾为特殊字符导致的无法匹配问题（pr#4092@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

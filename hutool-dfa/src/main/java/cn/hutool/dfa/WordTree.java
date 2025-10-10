@@ -102,23 +102,22 @@ public class WordTree extends HashMap<Character, WordTree> {
 		WordTree parent = null;
 		WordTree current = this;
 		WordTree child;
-		char currentChar = 0;
+		Character lastAcceptedChar = null;
+
 		final int length = word.length();
 		for (int i = 0; i < length; i++) {
-			currentChar = word.charAt(i);
+			char currentChar = word.charAt(i);
 			if (charFilter.accept(currentChar)) {//只处理合法字符
-				child = current.get(currentChar);
-				if (child == null) {
-					//无子类，新建一个子节点后存放下一个字符
-					child = new WordTree();
-					current.put(currentChar, child);
-				}
+				child = current.computeIfAbsent(currentChar, c -> new WordTree());
 				parent = current;
 				current = child;
+				lastAcceptedChar = currentChar;
 			}
 		}
+		// 仅当存在父节点且存在非停顿词时，才设置词尾标记
+		// 当 null != parent 条件成立时，lastAcceptedChar != null 必然成立，故也可以省去
 		if (null != parent) {
-			parent.setEnd(currentChar);
+			parent.setEnd(lastAcceptedChar);
 		}
 		return this;
 	}

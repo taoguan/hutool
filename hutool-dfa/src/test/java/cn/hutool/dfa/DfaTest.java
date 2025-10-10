@@ -116,6 +116,34 @@ public class DfaTest {
 		assertEquals(all, CollUtil.newArrayList("t-io"));
 	}
 
+	/**
+	 * Github Issue #4091
+	 * 测试当关键词以停顿词结尾时，其合法前缀是否能被正确匹配
+	 */
+	@Test
+	public void addWordWithTrailingFilteredCharTest() {
+		WordTree tree = new WordTree();
+		tree.addWord("hello("); // 以停顿词 '(' 结尾
+
+		List<String> matches = tree.matchAll("hello", -1);
+		assertEquals(1, matches.size());
+		assertEquals("hello", matches.get(0));
+	}
+
+	/**
+	 * Github Issue #4091
+	 * 测试关键词中间包含停顿词的情况
+	 */
+	@Test
+	public void addWordWithMiddleFilteredCharTest() {
+		WordTree tree = new WordTree();
+		tree.addWord("he(llo"); // 中间 '(' 被过滤
+
+		List<String> matches = tree.matchAll("hello", -1);
+		assertEquals(1, matches.size());
+		assertEquals("hello", matches.get(0));
+	}
+
 	@Test
 	public void aTest(){
 		WordTree tree = new WordTree();

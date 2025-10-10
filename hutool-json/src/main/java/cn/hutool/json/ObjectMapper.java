@@ -1,6 +1,7 @@
 package cn.hutool.json;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.RecordUtil;
 import cn.hutool.core.collection.ArrayIter;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
@@ -111,6 +112,8 @@ public class ObjectMapper {
 		} else if (BeanUtil.isReadableBean(source.getClass())) {
 			// 普通Bean
 			// TODO 过滤器对Bean无效，需补充。
+			mapFromBean(source, jsonObject);
+		} else if (RecordUtil.isRecord(source.getClass())) {
 			mapFromBean(source, jsonObject);
 		}
 

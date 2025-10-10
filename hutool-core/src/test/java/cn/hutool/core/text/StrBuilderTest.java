@@ -131,4 +131,13 @@ public class StrBuilderTest {
 		helloWorld.insert(6, "Beautiful ");
 		Assertions.assertEquals("Hello Beautiful World", helloWorld.toString());
 	}
+
+	@Test
+	void charAtTest() {
+		final StrBuilder helloWorld = StrBuilder.create("Hello World");
+		Assertions.assertEquals(helloWorld.charAt(-1),'d');
+		Assertions.assertEquals(helloWorld.charAt(0),'H');
+		Assertions.assertEquals(helloWorld.charAt(10),'d');
+		Assertions.assertThrows(StringIndexOutOfBoundsException.class, () -> helloWorld.charAt(11));;
+	}
 }

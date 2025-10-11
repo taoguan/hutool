@@ -589,6 +589,17 @@ public class RandomUtil {
 	}
 
 	/**
+	 * 获得一个随机的字符串（只包含数字和小写字母）
+	 *
+	 * @param length 字符串的长度
+	 * @return 随机字符串
+	 * @since 5.8.41
+	 */
+	public static String randomStringLower(final int length) {
+		return randomString(BASE_CHAR_NUMBER_LOWER, length);
+	}
+
+	/**
 	 * 获得一个随机的字符串（只包含数字和大写字符）
 	 *
 	 * @param length 字符串的长度

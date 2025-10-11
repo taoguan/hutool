@@ -2,7 +2,7 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.41(2025-10-11)
+# 5.8.41(2025-10-12)
 
 ### 🐣新特性
 * 【core   】      增加`WeakKeyValueConcurrentMap`及其关联类，同时废弃`WeakConcurrentMap`并替换（issue#4039@Github）
@@ -22,6 +22,8 @@
 * 【core   】      `LocalDateTimeUtil.parseDate`注释修正（pr#4085@Github）
 * 【core   】      `StrUtil`增加null检查处理（pr#4086@Github）
 * 【json   】      增加Record支持（pr#4096@Github）
+* 【crypto 】      增加`SpecUtil`，`KeyUtil`增加`generateRSAPrivateKey`重载，（issue#ID1EIK@Gitee）
+* 【core   】      `RandomUtil`增加`randomStringLower`方法
 
 ### 🐞Bug修复
 * 【core   】      修复`ReflectUtil`中因class和Method关联导致的缓存无法回收问题（issue#4039@Github）

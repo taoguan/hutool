@@ -39,6 +39,7 @@
 * 【core   】      修复`StrBuilder`charAt越界判断错误（pr#4094@Github）
 * 【dfa    】      修复`WordTree.addWord`末尾为特殊字符导致的无法匹配问题（pr#4092@Github）
 * 【core   】      修复`ServiceLoaderUtil.loadFirstAvailable`在JDK24+后未捕获异常导致的报错问题（pr#4098@Github）
+* 【cron   】      修复`CronTimer`在任务非常多时，追赶系统时间导致遗漏任务的问题（issue#IB49EF@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.40(2025-08-26)

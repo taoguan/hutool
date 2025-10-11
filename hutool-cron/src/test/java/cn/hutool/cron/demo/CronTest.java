@@ -3,6 +3,7 @@ package cn.hutool.cron.demo;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.cron.CronUtil;
+import cn.hutool.cron.Scheduler;
 import cn.hutool.cron.TaskExecutor;
 import cn.hutool.cron.listener.TaskListener;
 import cn.hutool.cron.task.Task;
@@ -13,6 +14,19 @@ import org.junit.jupiter.api.Test;
  * 定时任务样例
  */
 public class CronTest {
+
+	@Test
+	@Disabled
+	void emptyScheduleTest() {
+		final Scheduler scheduler = new Scheduler();
+		// 支持秒级别定时任务
+		scheduler.setMatchSecond(true);
+
+		scheduler.start();
+
+		ThreadUtil.waitForDie();
+		Console.log("Exit.");
+	}
 
 	@Test
 	@Disabled

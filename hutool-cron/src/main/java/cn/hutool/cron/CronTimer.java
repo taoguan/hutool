@@ -22,11 +22,11 @@ public class CronTimer extends Thread implements Serializable {
 	private final long TIMER_UNIT_SECOND = DateUnit.SECOND.getMillis();
 	/** 定时单元：分 */
 	private final long TIMER_UNIT_MINUTE = DateUnit.MINUTE.getMillis();
-	
+
 	/** 定时任务是否已经被强制关闭 */
 	private boolean isStop;
 	private final Scheduler scheduler;
-	
+
 	/**
 	 * 构造
 	 * @param scheduler {@link Scheduler}
@@ -34,35 +34,48 @@ public class CronTimer extends Thread implements Serializable {
 	public CronTimer(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
-	
+
 	@Override
 	public void run() {
 		final long timerUnit = this.scheduler.config.matchSecond ? TIMER_UNIT_SECOND : TIMER_UNIT_MINUTE;
-		
+		final long doubleTimeUnit = 2 * timerUnit;
+
 		long thisTime = System.currentTimeMillis();
 		long nextTime;
 		long sleep;
 		while(false == isStop){
+			spawnLauncher(thisTime);
+
 			//下一时间计算是按照上一个执行点开始时间计算的
 			//此处除以定时单位是为了清零单位以下部分，例如单位是分则秒和毫秒清零
 			nextTime = ((thisTime / timerUnit) + 1) * timerUnit;
 			sleep = nextTime - System.currentTimeMillis();
-			if(isValidSleepMillis(sleep, timerUnit)){
-				if (false == ThreadUtil.safeSleep(sleep)) {
-					//等待直到下一个时间点，如果被中断直接退出Timer
-					break;
+			if(sleep < 0){
+				// 可能循环执行慢导致时间点跟不上系统时间，追赶系统时间并执行中间差异的时间点（issue#IB49EF@Gitee）
+				thisTime = System.currentTimeMillis();
+				while(nextTime <= thisTime){
+					// 追赶系统时间并运行执行点
+					spawnLauncher(nextTime);
+					nextTime = ((thisTime / timerUnit) + 1) * timerUnit;
 				}
-				//执行点，时间记录为执行开始的时间，而非结束时间
+				continue;
+			} else if(sleep > doubleTimeUnit){
+				// 时间回退，可能用户回拨了时间或自动校准了时间，重新计算（issue#1224@Github）
 				thisTime = System.currentTimeMillis();
-				spawnLauncher(thisTime);
-			} else{
-				// 非正常时间重新计算（issue#1224@Github）
-				thisTime = System.currentTimeMillis();
+				continue;
+			} else if (false == ThreadUtil.safeSleep(sleep)) {
+				//等待直到下一个时间点，如果被用户中断直接退出Timer
+				break;
 			}
+
+			// issue#3460 采用叠加方式，确保正好是1分钟或1秒，避免sleep晚醒问题
+			// 此处无需校验，因为每次循环都是sleep与上触发点的时间差。
+			// 当上一次晚醒后，本次会减少sleep时间，保证误差在一个unit内，并不断修正。
+			thisTime = nextTime;
 		}
 		log.debug("Hutool-cron timer stopped.");
 	}
-	
+
 	/**
 	 * 关闭定时器
 	 */
@@ -70,30 +83,13 @@ public class CronTimer extends Thread implements Serializable {
 		this.isStop = true;
 		ThreadUtil.interrupt(this, true);
 	}
-	
+
 	/**
 	 * 启动匹配
 	 * @param millis 当前时间
 	 */
 	private void spawnLauncher(final long millis){
+		//Console.log(millis / 1000, System.currentTimeMillis() / 1000);
 		this.scheduler.taskLauncherManager.spawnLauncher(millis);
-	}
-
-	/**
-	 * 检查是否为有效的sleep毫秒数，包括：
-	 * <pre>
-	 *     1. 是否&gt;0，防止用户向未来调整时间
-	 *     1. 是否&lt;两倍的间隔单位，防止用户向历史调整时间
-	 * </pre>
-	 *
-	 * @param millis 毫秒数
-	 * @param timerUnit 定时单位，为秒或者分的毫秒值
-	 * @return 是否为有效的sleep毫秒数
-	 * @since 5.3.2
-	 */
-	private static boolean isValidSleepMillis(long millis, long timerUnit){
-		return millis > 0 &&
-				// 防止用户向前调整时间导致的长时间sleep
-				millis < (2 * timerUnit);
 	}
 }

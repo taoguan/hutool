@@ -2,10 +2,7 @@ package cn.hutool.core.util;
 
 import cn.hutool.core.collection.ListUtil;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceConfigurationError;
-import java.util.ServiceLoader;
+import java.util.*;
 
 /**
  * SPI机制中的服务加载工具类，流程如下
@@ -23,19 +20,36 @@ import java.util.ServiceLoader;
 public class ServiceLoaderUtil {
 
 	/**
-	 * 。加载第一个可用服务，如果用户定义了多个接口实现类，只获取第一个不报错的服务
+	 * 加载第一个可用的 Service 实现。
+	 * <p>
+	 * 为兼容 JDK 24+ 中 {@link ServiceLoader} 在加载服务实现时可能抛出的 {@link NoClassDefFoundError}，
+	 * 此方法在调用 {@code hasNext()} 和 {@code next()} 时安全忽略异常。
+	 * 当遇到依赖缺失或配置错误的实现时会自动跳过，并返回第一个可用的非空实例。
+	 * </p>
 	 *
-	 * @param <T>   接口类型
-	 * @param clazz 服务接口
-	 * @return 第一个服务接口实现对象，无实现返回{@code null}
+	 * @param clazz 服务接口类型
+	 * @param <T>   服务实现类型
+	 * @return 第一个可用的非空实现，若无可用实现则返回 {@code null}
+	 * @since 5.8.41 （JDK 24+ 兼容优化）
+	 * @see <a href="https://bugs.openjdk.org/browse/JDK-8350481">JDK-8350481</a>
 	 */
 	public static <T> T loadFirstAvailable(Class<T> clazz) {
-		final Iterator<T> iterator = load(clazz).iterator();
-		while (iterator.hasNext()) {
+		final ServiceLoader<T> loader = ServiceLoader.load(clazz);
+		final Iterator<T> iterator = loader.iterator();
+		while (true) {
+			T instance;
 			try {
-				return iterator.next();
-			} catch (ServiceConfigurationError ignore) {
-				// ignore
+				// 注意：JDK 24+ 下 hasNext() 和 next() 均可能触发 NoClassDefFoundError
+				if (!iterator.hasNext()) {
+					break;
+				}
+				instance = iterator.next();
+			} catch (ServiceConfigurationError | NoClassDefFoundError e) {
+				// 安全忽略当前实现，尝试下一个
+				continue;
+			}
+			if (instance != null) {
+				return instance;
 			}
 		}
 		return null;

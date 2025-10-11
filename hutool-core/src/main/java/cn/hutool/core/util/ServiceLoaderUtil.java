@@ -37,8 +37,7 @@ public class ServiceLoaderUtil {
 	 * @see <a href="https://bugs.openjdk.org/browse/JDK-8350481">JDK-8350481</a>
 	 */
 	public static <T> T loadFirstAvailable(Class<T> clazz) {
-		final ServiceLoader<T> loader = ServiceLoader.load(clazz);
-		final Iterator<T> iterator = loader.iterator();
+		final Iterator<T> iterator = load(clazz).iterator();
 		while (true) {
 			T instance;
 			try {

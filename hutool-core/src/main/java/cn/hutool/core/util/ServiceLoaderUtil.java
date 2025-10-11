@@ -4,7 +4,6 @@ import cn.hutool.core.collection.ListUtil;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
 /**
@@ -34,8 +33,9 @@ public class ServiceLoaderUtil {
 		while (iterator.hasNext()) {
 			try {
 				return iterator.next();
-			} catch (ServiceConfigurationError ignore) {
-				// ignore
+			} catch (Throwable ignore) {
+				// issue#ID0952 JDK 25+ 会直接抛出 NoClassDefFoundError https://bugs.openjdk.org/browse/JDK-8350481
+				// 这里安全忽略，并尝试下一个实现
 			}
 		}
 		return null;

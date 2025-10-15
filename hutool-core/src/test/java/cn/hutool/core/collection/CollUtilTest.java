@@ -1516,4 +1516,20 @@ public class CollUtilTest {
 
 		assertTrue(CollUtil.containsAll(coll1, coll2));
 	}
+
+	@Test
+	void finOneTest(){
+		Animal dog = new Animal("dog", 2);
+		Animal cat = new Animal("cat", 3);
+		Animal bear = new Animal("bear", 4);
+
+		List<Animal> list = new ArrayList<>();
+		list.add(dog);
+		list.add(cat);
+		list.add(bear);
+
+		final Animal cat1 = CollUtil.findOne(list, (t) -> t.getName().equals("cat"));
+		assertNotNull(cat1);
+		assertEquals("cat", cat1.getName());
+	}
 }

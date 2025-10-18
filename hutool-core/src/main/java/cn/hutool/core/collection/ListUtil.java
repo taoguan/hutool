@@ -11,6 +11,7 @@ import cn.hutool.core.util.PageUtil;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -720,5 +721,33 @@ public class ListUtil {
 			list.add(newPosition, element);
 		}
 		return list;
+	}
+
+
+	/**
+	 * 将两个列表的元素按照索引一一配对，通过指定的函数进行合并，返回一个新的结果列表。
+	 * 新列表的长度将以两个输入列表中较短的那个为准。
+	 *
+	 * @param <A>    第一个列表的元素类型
+	 * @param <B>    第二个列表的元素类型
+	 * @param <R>    结果列表的元素类型
+	 * @param listA  第一个列表
+	 * @param listB  第二个列表
+	 * @param zipper 合并函数，接收来自listA和listB的两个元素，返回一个结果元素
+	 * @return 合并后的新列表
+	 * @since 5.8.42
+	 */
+	public static <A, B, R> List<R> zip(List<A> listA, List<B> listB, BiFunction<A, B, R> zipper) {
+		if (CollUtil.isEmpty(listA) || CollUtil.isEmpty(listB)) {
+			return new ArrayList<>();
+		}
+		Assert.notNull(zipper, "Zipper function must not be null");
+
+		final int size = Math.min(listA.size(), listB.size());
+		final List<R> result = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			result.add(zipper.apply(listA.get(i), listB.get(i)));
+		}
+		return result;
 	}
 }

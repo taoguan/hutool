@@ -5,6 +5,7 @@
 
 ### 🐣新特性
 * 【core   】      `ListUtil`增加`zip`方法（pr#4052@Github）
+* 【http   】      增加`JakartaSoapClient`（issue#4103@Github）
 
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）

@@ -1,7 +1,7 @@
 package cn.hutool.jwt.signers;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ReUtil;
+import cn.hutool.jwt.JWTException;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -232,10 +232,12 @@ public class JWTSignerUtil {
 	 * @return 签名器
 	 */
 	public static JWTSigner createSigner(String algorithmId, byte[] key) {
-		Assert.notNull(key, "Signer key must be not null!");
-
-		if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
-			return none();
+		if (NoneJWTSigner.isNone(algorithmId)) {
+			if(null ==  key){
+				return none();
+			}else{
+				throw new JWTException("When key is not null, algorithmId must not be none.");
+			}
 		}
 		return new HMacJWTSigner(AlgorithmUtil.getAlgorithm(algorithmId), key);
 	}
@@ -248,10 +250,12 @@ public class JWTSignerUtil {
 	 * @return 签名器
 	 */
 	public static JWTSigner createSigner(String algorithmId, KeyPair keyPair) {
-		Assert.notNull(keyPair, "Signer key pair must be not null!");
-
-		if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
-			return none();
+		if (NoneJWTSigner.isNone(algorithmId)) {
+			if(null ==  keyPair){
+				return none();
+			}else{
+				throw new JWTException("When key is not null, algorithmId must not be none.");
+			}
 		}
 
 		// issue3205@Github
@@ -270,11 +274,14 @@ public class JWTSignerUtil {
 	 * @return 签名器
 	 */
 	public static JWTSigner createSigner(String algorithmId, Key key) {
-		Assert.notNull(key, "Signer key must be not null!");
-
-		if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
-			return NoneJWTSigner.NONE;
+		if (NoneJWTSigner.isNone(algorithmId)) {
+			if(null ==  key){
+				return none();
+			}else{
+				throw new JWTException("When key is not null, algorithmId must not be none.");
+			}
 		}
+
 		if (key instanceof PrivateKey || key instanceof PublicKey) {
 			// issue3205@Github
 			if(ReUtil.isMatch("ES\\d{3}", algorithmId)){

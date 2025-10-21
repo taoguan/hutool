@@ -410,6 +410,16 @@ public class JWT implements RegisteredPayload<JWT> {
 			signer = NoneJWTSigner.NONE;
 		}
 
+		// 用户定义alg为none但是签名器不是NoneJWTSigner
+		if(NoneJWTSigner.isNone(getAlgorithm()) && !(signer instanceof NoneJWTSigner)){
+			throw new JWTException("Alg is 'none' but use: {} !", signer.getClass());
+		}
+
+		// alg非none，但签名器是NoneJWTSigner
+		if(signer instanceof NoneJWTSigner && !NoneJWTSigner.isNone(getAlgorithm())){
+			throw new JWTException("Alg is not 'none' but use NoneJWTSigner!");
+		}
+
 		final List<String> tokens = this.tokens;
 		if (CollUtil.isEmpty(tokens)) {
 			throw new JWTException("No token to verify!");

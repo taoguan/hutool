@@ -20,7 +20,7 @@ public class IssueI6IS5BTest {
 		final JwtToken jwtToken = new JwtToken();
 		jwtToken.setIat(iat);
 		final String token = JWTUtil.createToken(JSONUtil.parseObj(jwtToken), "123".getBytes(StandardCharsets.UTF_8));
-		assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Nzc3NzI4MDB9.SXU_mm1wT5lNoK-Dq5Y8f3BItv_44zuAlyeWLqajpXg", token);
+		assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzc3NzI4MDB9.W88PB2ovAqCXV4QdbeKbdFW-P057xOTXEosD8hbOa9U", token);
 		final JSONObject payloads = JWTUtil.parseToken(token).getPayloads();
 		assertEquals("{\"iat\":1677772800}", payloads.toString());
 		final JwtToken o = payloads.toBean(JwtToken.class);
@@ -38,7 +38,7 @@ public class IssueI6IS5BTest {
 		final JwtToken2 jwtToken = new JwtToken2();
 		jwtToken.setIat(iat);
 		final String token = JWTUtil.createToken(JSONUtil.parseObj(jwtToken), "123".getBytes(StandardCharsets.UTF_8));
-		assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Nzc3NzI4MDB9.SXU_mm1wT5lNoK-Dq5Y8f3BItv_44zuAlyeWLqajpXg", token);
+		assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzc3NzI4MDB9.W88PB2ovAqCXV4QdbeKbdFW-P057xOTXEosD8hbOa9U", token);
 		final JSONObject payloads = JWTUtil.parseToken(token).getPayloads();
 		assertEquals("{\"iat\":1677772800}", payloads.toString());
 		final JwtToken2 o = payloads.toBean(JwtToken2.class);

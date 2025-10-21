@@ -19,9 +19,9 @@ public class JWTTest {
 			.setExpiresAt(DateUtil.parse("2022-01-01"))
 			.setKey(key);
 
-		final String rightToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9." +
+		final String rightToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 			"eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Imxvb2x5IiwiYWRtaW4iOnRydWUsImV4cCI6MTY0MDk2NjQwMH0." +
-			"bXlSnqVeJXWqUIt7HyEhgKNVlIPjkumHlAwFY-5YCtk";
+			"8siIwEMHf-DRyUjVElS_yipb6Mo3c1z0wFiheGXWGQw";
 
 		final String token = jwt.sign();
 		assertEquals(rightToken, token);
@@ -58,7 +58,7 @@ public class JWTTest {
 			.setPayload("admin", true)
 			.setSigner(JWTSignerUtil.none());
 
-		final String rightToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0." +
+		final String rightToken = "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0." +
 			"eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Imxvb2x5IiwiYWRtaW4iOnRydWV9.";
 
 		final String token = jwt.sign();

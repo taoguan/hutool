@@ -118,12 +118,7 @@ public class JWT implements RegisteredPayload<JWT> {
 	 * @return this
 	 */
 	public JWT setKey(byte[] key) {
-		// 检查头信息中是否有算法信息
-		final String claim = (String) this.header.getClaim(JWTHeader.ALGORITHM);
-		if (StrUtil.isNotBlank(claim)) {
-			return setSigner(JWTSignerUtil.createSigner(claim, key));
-		}
-		return setSigner(JWTSignerUtil.hs256(key));
+		return setSigner(StrUtil.nullToDefault(getAlgorithm(), "HS256"), key);
 	}
 
 	/**
@@ -169,6 +164,13 @@ public class JWT implements RegisteredPayload<JWT> {
 	 */
 	public JWT setSigner(JWTSigner signer) {
 		this.signer = signer;
+
+		// 检查头信息中是否有算法信息
+		final String algorithm = (String) this.header.getClaim(JWTHeader.ALGORITHM);
+		if (StrUtil.isBlank(algorithm)) {
+			this.header.setAlgorithm(AlgorithmUtil.getId(signer.getAlgorithm()));
+		}
+
 		return this;
 	}
 
@@ -346,7 +348,7 @@ public class JWT implements RegisteredPayload<JWT> {
 		}
 
 		// 检查头信息中是否有算法信息
-		final String algorithm = (String) this.header.getClaim(JWTHeader.ALGORITHM);
+		final String algorithm = getAlgorithm();
 		if (StrUtil.isBlank(algorithm)) {
 			this.header.setClaim(JWTHeader.ALGORITHM,
 				AlgorithmUtil.getId(signer.getAlgorithm()));

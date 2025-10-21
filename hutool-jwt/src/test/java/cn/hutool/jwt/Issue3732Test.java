@@ -19,6 +19,6 @@ public class Issue3732Test {
 
 		// 创建 JWT token
 		String token = JWTUtil.createToken(payload, SIGNER);
-		assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4iLCJuYW1lIjoidGVzdCJ9.pD3Xz41rtXvU3G1c_yS7ir01FXmDvtjjAOU2HYd8MdA", token);
+		assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJuYW1lIjoidGVzdCJ9.eS1hjkb2ympf7Gtnh_Xmzmb29bXt3J-1SyNTLMBipbY", token);
 	}
 }

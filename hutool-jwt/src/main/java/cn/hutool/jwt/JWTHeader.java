@@ -35,6 +35,42 @@ public class JWTHeader extends Claims {
 	public JWTHeader() {}
 
 	/**
+	 * 增加“alg”头信息
+	 *
+	 * @param algorithm 算法ID，如HS265
+	 * @return this
+	 * @since 5.8.42
+	 */
+	public JWTHeader setAlgorithm(final String algorithm) {
+		setClaim(ALGORITHM, algorithm);
+		return this;
+	}
+
+	/**
+	 * 增加“typ”头信息
+	 *
+	 * @param type 类型，如JWT
+	 * @return this
+	 * @since 5.8.42
+	 */
+	public JWTHeader setType(final String type) {
+		setClaim(TYPE, type);
+		return this;
+	}
+
+	/**
+	 * 增加“cty”头信息
+	 *
+	 * @param contentType 内容类型
+	 * @return this
+	 * @since 5.8.42
+	 */
+	public JWTHeader setContentType(final String contentType) {
+		setClaim(CONTENT_TYPE, contentType);
+		return this;
+	}
+
+	/**
 	 * 增加“kid”头信息
 	 *
 	 * @param keyId kid

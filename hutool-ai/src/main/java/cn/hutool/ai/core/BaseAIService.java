@@ -28,6 +28,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static cn.hutool.core.thread.GlobalThreadPool.execute;
+
 /**
  * 基础AIService，包含基公共参数和公共方法
  *
@@ -56,11 +58,14 @@ public class BaseAIService {
 		//链式构建请求
 		try {
 			//设置超时3分钟
-			return HttpRequest.get(config.getApiUrl() + endpoint)
+			HttpRequest httpRequest = HttpRequest.get(config.getApiUrl() + endpoint)
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
-				.timeout(config.getTimeout())
-				.execute();
+				.timeout(config.getTimeout());
+			if (config.getHasProxy()) {
+				httpRequest.setProxy(config.getProxy());
+			}
+			return httpRequest.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send GET request: " + e.getMessage(), e);
 		}
@@ -75,13 +80,16 @@ public class BaseAIService {
 	protected HttpResponse sendPost(final String endpoint, final String paramJson) {
 		//链式构建请求
 		try {
-			return HttpRequest.post(config.getApiUrl() + endpoint)
+			HttpRequest httpRequest = HttpRequest.post(config.getApiUrl() + endpoint)
 				.header(Header.CONTENT_TYPE, "application/json")
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
 				.body(paramJson)
-				.timeout(config.getTimeout())
-				.execute();
+				.timeout(config.getTimeout());
+			if (config.getHasProxy()) {
+				httpRequest.setProxy(config.getProxy());
+			}
+			return httpRequest.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send POST request：" + e.getMessage(), e);
 		}
@@ -98,13 +106,16 @@ public class BaseAIService {
 		//链式构建请求
 		try {
 			//设置超时3分钟
-			return HttpRequest.post(config.getApiUrl() + endpoint)
+			HttpRequest httpRequest = HttpRequest.post(config.getApiUrl() + endpoint)
 				.header(Header.CONTENT_TYPE, "multipart/form-data")
 				.header(Header.ACCEPT, "application/json")
 				.header(Header.AUTHORIZATION, "Bearer " + config.getApiKey())
 				.form(paramMap)
-				.timeout(config.getTimeout())
-				.execute();
+				.timeout(config.getTimeout());
+			if (config.getHasProxy()) {
+				httpRequest.setProxy(config.getProxy());
+			}
+			return httpRequest.execute();
 		} catch (final AIException e) {
 			throw new AIException("Failed to send POST request：" + e.getMessage(), e);
 		}
@@ -123,6 +134,9 @@ public class BaseAIService {
 				// 创建连接
 				URL apiUrl = new URL(config.getApiUrl() + endpoint);
 				connection = (HttpURLConnection) apiUrl.openConnection();
+				if (config.getHasProxy()) {
+					connection = (HttpURLConnection) apiUrl.openConnection(config.getProxy());
+				}
 				connection.setRequestMethod(Method.POST.name());
 				connection.setRequestProperty(Header.CONTENT_TYPE.getValue(), "application/json");
 				connection.setRequestProperty(Header.AUTHORIZATION.getValue(), "Bearer " + config.getApiKey());

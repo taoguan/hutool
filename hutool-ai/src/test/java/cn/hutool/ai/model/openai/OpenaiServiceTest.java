@@ -35,6 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -101,7 +102,7 @@ class OpenaiServiceTest {
 		final OpenaiService openaiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.OPENAI.getValue())
 			.setApiKey(key).setModel(Models.Openai.GPT_4O_MINI.getModel()).build(), OpenaiService.class);
 		String prompt = "图片上有些什么？";
-		List<String> images = Arrays.asList("https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544\",\"https://img2.baidu.com/it/u=1682510685,1244554634&fm=253&fmt=auto&app=138&f=JPEG?w=803&h=800");
+		List<String> images = Collections.singletonList("https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544\",\"https://img2.baidu.com/it/u=1682510685,1244554634&fm=253&fmt=auto&app=138&f=JPEG?w=803&h=800");
 
 		// 使用AtomicBoolean作为结束标志
 		AtomicBoolean isDone = new AtomicBoolean(false);
@@ -200,7 +201,7 @@ class OpenaiServiceTest {
 	void moderations() {
 		final OpenaiService openaiService = AIServiceFactory.getAIService(new AIConfigBuilder(ModelName.OPENAI.getValue())
 			.setApiKey(key).setModel(Models.Openai.OMNI_MODERATION_LATEST.getModel()).build(), OpenaiService.class);
-		final String moderations = openaiService.moderations("你要杀人", "https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544");
+		final String moderations = openaiService.moderations("你要玩游戏", "https://img2.baidu.com/it/u=862000265,4064861820&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1544");
 		assertNotNull(moderations);
 	}
 

@@ -28,6 +28,9 @@ import java.util.function.Predicate;
  */
 public class CharSequenceUtil {
 
+	/**
+	 * 索引值：{@code -1}
+	 */
 	public static final int INDEX_NOT_FOUND = Finder.INDEX_NOT_FOUND;
 
 	/**
@@ -707,7 +710,7 @@ public class CharSequenceUtil {
 		}
 
 		boolean isStartWith = str.toString()
-				.regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
+			.regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
 
 		if (isStartWith) {
 			return (false == ignoreEquals) || (false == equals(str, prefix, ignoreCase));
@@ -842,7 +845,7 @@ public class CharSequenceUtil {
 
 		final int strOffset = str.length() - suffix.length();
 		boolean isEndWith = str.toString()
-				.regionMatches(ignoreCase, strOffset, suffix.toString(), 0, suffix.length());
+			.regionMatches(ignoreCase, strOffset, suffix.toString(), 0, suffix.length());
 
 		if (isEndWith) {
 			return (false == ignoreEquals) || (false == equals(str, suffix, ignoreCase));
@@ -1280,7 +1283,7 @@ public class CharSequenceUtil {
 			}
 		}
 		return new StrFinder(searchStr, ignoreCase)
-				.setText(text).setNegative(true).start(from);
+			.setText(text).setNegative(true).start(from);
 	}
 
 	/**
@@ -1557,7 +1560,7 @@ public class CharSequenceUtil {
 
 		final String str2 = str.toString();
 		int toIndex = str2.length();
-		while (str2.startsWith(suffixStr, toIndex - suffixLength)){
+		while (str2.startsWith(suffixStr, toIndex - suffixLength)) {
 			toIndex -= suffixLength;
 		}
 		return subPre(str2, toIndex);
@@ -1689,9 +1692,9 @@ public class CharSequenceUtil {
 	 * }
 	 * </pre>
 	 *
-	 * @param str    被处理的字符串
-	 * @param prefix 前缀
-	 * @param suffix 后缀
+	 * @param str        被处理的字符串
+	 * @param prefix     前缀
+	 * @param suffix     后缀
 	 * @param ignoreCase 是否忽略大小写
 	 * @return 处理后的字符串
 	 * @since 3.1.2
@@ -1707,17 +1710,17 @@ public class CharSequenceUtil {
 
 		if (startWith(str2, prefix, ignoreCase)) {
 			from = prefix.length();
-			if(from == to){
+			if (from == to) {
 				// "a", "a", "a"  -> ""
 				return EMPTY;
 			}
 		}
 		if (endWith(str2, suffix, ignoreCase)) {
 			to -= suffix.length();
-			if(from == to){
+			if (from == to) {
 				// "a", "a", "a"  -> ""
 				return EMPTY;
-			} else if(to < from){
+			} else if (to < from) {
 				// pre去除后和suffix有重叠，如 ("aba", "ab", "ba") -> "a"
 				to += suffix.length();
 			}
@@ -1787,22 +1790,22 @@ public class CharSequenceUtil {
 		int from = 0;
 		int to = str2.length();
 
-		if(!prefixStr.isEmpty()){
+		if (!prefixStr.isEmpty()) {
 			while (str2.startsWith(prefixStr, from)) {
 				from += prefix.length();
-				if(from == to){
+				if (from == to) {
 					// "a", "a", "a"  -> ""
 					return EMPTY;
 				}
 			}
 		}
-		if(!suffixStr.isEmpty()){
+		if (!suffixStr.isEmpty()) {
 			while (str2.startsWith(suffixStr, to - suffixStr.length())) {
 				to -= suffixStr.length();
-				if(from == to){
+				if (from == to) {
 					// "a", "a", "a"  -> ""
 					return EMPTY;
-				}else if(to < from){
+				} else if (to < from) {
 					// pre去除后和suffix有重叠，如 ("aba", "ab", "ba") -> "a"
 					to += suffixStr.length();
 					break;
@@ -2573,8 +2576,8 @@ public class CharSequenceUtil {
 	 */
 	public static String[] subBetweenAll(CharSequence str, CharSequence prefix, CharSequence suffix) {
 		if (hasEmpty(str, prefix, suffix) ||
-				// 不包含起始字符串，则肯定没有子串
-				false == contains(str, prefix)) {
+			// 不包含起始字符串，则肯定没有子串
+			false == contains(str, prefix)) {
 			return new String[0];
 		}
 
@@ -4263,7 +4266,7 @@ public class CharSequenceUtil {
 		if (null == str) {
 			return null;
 		}
-		if(0 == str.length()){
+		if (0 == str.length()) {
 			return EMPTY;
 		}
 		return str.toString().toLowerCase();
@@ -4281,7 +4284,7 @@ public class CharSequenceUtil {
 		if (null == str) {
 			return null;
 		}
-		if(0 == str.length()){
+		if (0 == str.length()) {
 			return EMPTY;
 		}
 		return str.toString().toUpperCase();
@@ -4559,12 +4562,21 @@ public class CharSequenceUtil {
 	 * @return StringBuilder对象
 	 */
 	public static StringBuilder builder(CharSequence... strs) {
+		return builder(Function.identity(), strs);
+	}
+
+	/**
+	 * 创建StringBuilder对象
+	 *
+	 * @param strEditor 编辑器，用于对每个字符串进行编辑
+	 * @param strs      待处理的字符串列表
+	 * @return StringBuilder对象
+	 * @since 5.8.42
+	 */
+	public static StringBuilder builder(Function<CharSequence, CharSequence> strEditor, final CharSequence... strs) {
 		final StringBuilder sb = new StringBuilder();
-		for (CharSequence str : strs) {
-			if (null == str) {
-				str = StrUtil.EMPTY;
-			}
-			sb.append(str);
+		for (final CharSequence str : strs) {
+			sb.append(strEditor.apply(str));
 		}
 		return sb;
 	}
@@ -4689,8 +4701,8 @@ public class CharSequenceUtil {
 		final int preLength = suffixLength + (maxLength - 3) % 2; // suffixLength 或 suffixLength + 1
 		final String str2 = str.toString();
 		return format("{}...{}",
-				str2.substring(0, preLength),
-				str2.substring(strLength - suffixLength));
+			str2.substring(0, preLength),
+			str2.substring(strLength - suffixLength));
 	}
 
 	/**
@@ -4775,15 +4787,15 @@ public class CharSequenceUtil {
 		if (moveLength > 0) {
 			int endAfterMove = Math.min(endExclude + moveLength, str.length());
 			strBuilder.append(str.subSequence(0, startInclude))//
-					.append(str.subSequence(endExclude, endAfterMove))//
-					.append(str.subSequence(startInclude, endExclude))//
-					.append(str.subSequence(endAfterMove, str.length()));
+				.append(str.subSequence(endExclude, endAfterMove))//
+				.append(str.subSequence(startInclude, endExclude))//
+				.append(str.subSequence(endAfterMove, str.length()));
 		} else if (moveLength < 0) {
 			int startAfterMove = Math.max(startInclude + moveLength, 0);
 			strBuilder.append(str.subSequence(0, startAfterMove))//
-					.append(str.subSequence(startInclude, endExclude))//
-					.append(str.subSequence(startAfterMove, startInclude))//
-					.append(str.subSequence(endExclude, str.length()));
+				.append(str.subSequence(startInclude, endExclude))//
+				.append(str.subSequence(startAfterMove, startInclude))//
+				.append(str.subSequence(endExclude, str.length()));
 		} else {
 			return str(str);
 		}

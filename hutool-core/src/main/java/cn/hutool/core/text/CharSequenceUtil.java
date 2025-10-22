@@ -4561,6 +4561,9 @@ public class CharSequenceUtil {
 	public static StringBuilder builder(CharSequence... strs) {
 		final StringBuilder sb = new StringBuilder();
 		for (CharSequence str : strs) {
+			if (null == str) {
+				str = StrUtil.EMPTY;
+			}
 			sb.append(str);
 		}
 		return sb;

@@ -16,6 +16,7 @@
 
 package cn.hutool.ai.core;
 
+import java.net.Proxy;
 import java.util.Map;
 
 /**
@@ -141,5 +142,37 @@ public interface AIConfig {
 	 * @since 5.8.39
 	 */
 	int getReadTimeout();
+
+	/**
+	 * 获取是否使用代理
+	 *
+	 * @return hasProxy
+	 * @since 5.8.42
+	 */
+	boolean getHasProxy();
+
+	/**
+	 * 设置是否使用代理
+	 *
+	 * @param hasProxy 是否使用代理
+	 * @since 5.8.42
+	 */
+	void setHasProxy(boolean hasProxy);
+
+	/**
+	 * 获取代理配置
+	 *
+	 * @return proxy
+	 * @since 5.8.42
+	 */
+	Proxy getProxy();
+
+	/**
+	 * 设置代理配置
+	 *
+	 * @param proxy 连接超时时间
+	 * @since 5.8.42
+	 */
+	void setProxy(Proxy proxy);
 
 }

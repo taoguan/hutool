@@ -17,6 +17,7 @@
 package cn.hutool.ai.core;
 
 import java.lang.reflect.Constructor;
+import java.net.Proxy;
 
 /**
  * 用于AIConfig的创建，创建同时支持链式设置参数
@@ -156,6 +157,21 @@ public class AIConfigBuilder {
 	public synchronized AIConfigBuilder setReadTimeout(final int readTimeout) {
 		if (readTimeout > 0) {
 			config.setReadTimeout(readTimeout);
+		}
+		return this;
+	}
+
+	/**
+	 * 设置代理
+	 *
+	 * @param proxy 取超时时间
+	 * @return config
+	 * @since 5.8.42
+	 */
+	public synchronized AIConfigBuilder setProxy(final Proxy proxy) {
+		if (null != proxy) {
+			config.setHasProxy(true);
+			config.setProxy(proxy);
 		}
 		return this;
 	}

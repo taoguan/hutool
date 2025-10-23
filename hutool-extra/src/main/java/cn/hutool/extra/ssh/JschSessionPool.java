@@ -4,7 +4,7 @@ import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.StrUtil;
 import com.jcraft.jsch.Session;
 
-import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -110,14 +110,16 @@ public enum JschSessionPool {
 	 */
 	public void remove(Session session) {
 		if (null != session) {
-			final Iterator<Entry<String, Session>> iterator = this.cache.iterator();
-			Entry<String, Session> entry;
-			while (iterator.hasNext()) {
-				entry = iterator.next();
+			String key = null;
+			for (Map.Entry<String, Session> entry : cache) {
 				if (session.equals(entry.getValue())) {
-					iterator.remove();
+					key = entry.getKey();
 					break;
 				}
+			}
+
+			if(null != key){
+				cache.remove(key);
 			}
 		}
 	}

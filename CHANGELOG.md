@@ -12,6 +12,7 @@
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）
 * 【extra  】      修复`JschSessionPool.remove`逻辑错误问题。
+* 【db     】      修复`Dialect.psForCount`未传入Wrapper导致大小写问题（issue#ID39G9@Gitee）。
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

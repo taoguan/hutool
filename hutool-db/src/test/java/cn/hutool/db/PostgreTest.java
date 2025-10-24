@@ -1,12 +1,16 @@
 package cn.hutool.db;
 
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import cn.hutool.core.lang.Console;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.db.sql.NamedSql;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import cn.hutool.core.lang.Console;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * PostgreSQL 单元测试
@@ -45,5 +49,15 @@ public class PostgreTest {
 		db.upsert(Entity.create("ctest").set("id", 1).set("t1", "new111").set("t2", "new222").set("t3", "bew333"),"id");
 		Entity et=db.get(Entity.create("ctest").set("id", 1));
 		assertEquals("new111",et.getStr("t1"));
+	}
+
+	@Test
+	@Disabled
+	void namedSqlWithInTest() throws SQLException {
+		final HashMap<String, Object> paramMap = MapUtil.of("number", new int[]{1, 2, 3});
+		NamedSql namedSql = new NamedSql("select case when 2 = any(ARRAY[:number]) and 1 in (1) then 1 else 0 end", paramMap);
+		final Db db = Db.use("postgre");
+		final List<Entity> query = db.query(namedSql.getSql(), namedSql.getParams());
+		Console.log(query);
 	}
 }

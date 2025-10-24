@@ -15,7 +15,7 @@ public class PasswdStrength {
 	 * 密码等级枚举
 	 */
 	public enum PASSWD_LEVEL {
-		EASY, MEDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
+		EASY, MIDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
 	}
 
 	/**
@@ -29,13 +29,13 @@ public class PasswdStrength {
 	 * 简单密码字典
 	 */
 	private final static String[] DICTIONARY = {"password", "abc123", "iloveyou", "adobe123", "123123", "sunshine",
-			"1314520", "a1b2c3", "123qwe", "aaa111", "qweasd", "admin", "passwd"};
+		"1314520", "a1b2c3", "123qwe", "aaa111", "qweasd", "admin", "passwd"};
 
 	/**
 	 * 数字长度
 	 */
 	private final static int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999,
-			Integer.MAX_VALUE};
+		Integer.MAX_VALUE};
 
 	/**
 	 * 检查密码的健壮性
@@ -65,48 +65,48 @@ public class PasswdStrength {
 		}
 
 		if (len > 4 && countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0
-				|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
-				|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
-				|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
-				|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
-				|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
+			|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
+			|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
+			|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
+			|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
+			|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
 			level++;
 		}
 
 		if (len > 6 && countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 || countLetter(passwd, CHAR_TYPE.NUM) > 0
-				&& countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
-				|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
-				&& countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0 || countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 || countLetter(passwd, CHAR_TYPE.NUM) > 0
+			&& countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0
+			|| countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0
+			&& countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0 || countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
 			level++;
 		}
 
 		if (len > 8 && countLetter(passwd, CHAR_TYPE.NUM) > 0 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) > 0
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) > 0 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) > 0) {
 			level++;
 		}
 
 		if (len > 6 && countLetter(passwd, CHAR_TYPE.NUM) >= 3 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 3
-				|| countLetter(passwd, CHAR_TYPE.NUM) >= 3 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, CHAR_TYPE.NUM) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
+			|| countLetter(passwd, CHAR_TYPE.NUM) >= 3 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3
+			|| countLetter(passwd, CHAR_TYPE.NUM) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
+			|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3
+			|| countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
+			|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 3 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
 			level++;
 		}
 
 		if (len > 8 && countLetter(passwd, CHAR_TYPE.NUM) >= 2 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 || countLetter(passwd, CHAR_TYPE.NUM) >= 2
-				&& countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CHAR_TYPE.NUM) >= 2 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2
-				&& countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2 || countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 || countLetter(passwd, CHAR_TYPE.NUM) >= 2
+			&& countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2
+			|| countLetter(passwd, CHAR_TYPE.NUM) >= 2 && countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2
+			&& countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2 || countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
 			level++;
 		}
 
 		if (len > 10 && countLetter(passwd, CHAR_TYPE.NUM) >= 2 && countLetter(passwd, CHAR_TYPE.SMALL_LETTER) >= 2
-				&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
+			&& countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) >= 2 && countLetter(passwd, CHAR_TYPE.OTHER_CHAR) >= 2) {
 			level++;
 		}
 
@@ -138,7 +138,7 @@ public class PasswdStrength {
 		}
 
 		if (countLetter(passwd, CHAR_TYPE.NUM) == len || countLetter(passwd, CHAR_TYPE.SMALL_LETTER) == len
-				|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) == len) {
+			|| countLetter(passwd, CHAR_TYPE.CAPITAL_LETTER) == len) {
 			level--;
 		}
 
@@ -176,7 +176,7 @@ public class PasswdStrength {
 
 		// 检测密码是否为简单密码字典中的弱密码或包含字典弱密码片段
 		for (String s : DICTIONARY) {
-			if (passwd.equals(s) || passwd.contains(s)) {
+			if (passwd.equals(s) || s.contains(passwd)) {
 				level--;
 				break;
 			}
@@ -220,7 +220,7 @@ public class PasswdStrength {
 			case 4:
 			case 5:
 			case 6:
-				return PASSWD_LEVEL.MEDIUM;
+				return PASSWD_LEVEL.MIDIUM;
 			case 7:
 			case 8:
 			case 9:

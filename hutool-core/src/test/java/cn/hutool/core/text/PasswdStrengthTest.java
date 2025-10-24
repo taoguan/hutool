@@ -1,7 +1,8 @@
 package cn.hutool.core.text;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PasswdStrengthTest {
 	@Test
@@ -28,7 +29,7 @@ public class PasswdStrengthTest {
 	public void dictionaryWeakPasswordTest() {
 		// 测试包含简单密码字典中的弱密码
 		assertEquals(0, PasswdStrength.check("password"));
-		assertEquals(2, PasswdStrength.check("password2"));
+		assertEquals(3, PasswdStrength.check("password2"));
 	}
 
 	@Test

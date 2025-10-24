@@ -15,7 +15,7 @@ public class PasswdStrength {
 	 * 密码等级枚举
 	 */
 	public enum PASSWD_LEVEL {
-		EASY, MIDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
+		EASY, MEDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
 	}
 
 	/**
@@ -124,14 +124,16 @@ public class PasswdStrength {
 			}
 		}
 
-		// decrease points
-		if ("abcdefghijklmnopqrstuvwxyz".indexOf(passwd) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(passwd) > 0) {
+		// 判断passwd是否为连续字母（a-z/A-Z）的完整子串
+		if ("abcdefghijklmnopqrstuvwxyz".contains(passwd) || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".contains(passwd)) {
 			level--;
 		}
-		if ("qwertyuiop".indexOf(passwd) > 0 || "asdfghjkl".indexOf(passwd) > 0 || "zxcvbnm".indexOf(passwd) > 0) {
+		// 判断passwd是否为键盘连续序列的完整子串
+		if ("qwertyuiop".contains(passwd) || "asdfghjkl".contains(passwd) || "zxcvbnm".contains(passwd)) {
 			level--;
 		}
-		if (StrUtil.isNumeric(passwd) && ("01234567890".indexOf(passwd) > 0 || "09876543210".indexOf(passwd) > 0)) {
+		// 判断passwd是否为纯数字弱密码（升序或降序）的完整子串
+		if (StrUtil.isNumeric(passwd) && ("01234567890".contains(passwd) || "09876543210".contains(passwd))) {
 			level--;
 		}
 
@@ -172,8 +174,9 @@ public class PasswdStrength {
 			}
 		}
 
+		// 检测密码是否为简单密码字典中的弱密码或包含字典弱密码片段
 		for (String s : DICTIONARY) {
-			if (passwd.equals(s) || s.contains(passwd)) {
+			if (passwd.equals(s) || passwd.contains(s)) {
 				level--;
 				break;
 			}
@@ -201,7 +204,7 @@ public class PasswdStrength {
 	}
 
 	/**
-	 * Get password strength level, includes easy, midium, strong, very strong, extremely strong
+	 * 获取密码强度等级, 包括 easy, medium, strong, very strong, extremely strong
 	 *
 	 * @param passwd 密码
 	 * @return 密码等级枚举
@@ -217,7 +220,7 @@ public class PasswdStrength {
 			case 4:
 			case 5:
 			case 6:
-				return PASSWD_LEVEL.MIDIUM;
+				return PASSWD_LEVEL.MEDIUM;
 			case 7:
 			case 8:
 			case 9:
@@ -232,8 +235,7 @@ public class PasswdStrength {
 	}
 
 	/**
-	 * Check character's type, includes num, capital letter, small letter and other character.
-	 * 检查字符类型
+	 * 检查字符类型，包括数字、大写字母、小写字母及其他字符
 	 *
 	 * @param c 字符
 	 * @return 类型

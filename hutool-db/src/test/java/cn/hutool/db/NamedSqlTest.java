@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,5 +125,28 @@ public class NamedSqlTest {
 		// sql语句不包含IN子句，不会展开数组
 		assertEquals("select * from user where comment = 'include in text' and id = ?", namedSql.getSql());
 		assertArrayEquals(new int[]{5, 6}, (int[]) namedSql.getParams()[0]);
+	}
+
+	@Test
+	void selectCaseInTest() {
+		final HashMap<String, Object> paramMap = MapUtil.of("number", new int[]{1, 2, 3});
+
+		NamedSql namedSql = new NamedSql("select case when 2 = any(ARRAY[:number]) and 1 in (1) then 1 else 0 end", paramMap);
+		assertEquals("select case when 2 = any(ARRAY[?]) and 1 in (1) then 1 else 0 end", namedSql.getSql());
+		assertArrayEquals(new int[]{1, 2, 3}, (int[])namedSql.getParams()[0]);
+	}
+
+	@Test
+	public void parseInsertMultiRowTest() {
+		// 多行 INSERT 语句
+		final Map<String, Object> paramMap = new LinkedHashMap<>();
+		paramMap.put("user1", new Object[]{1, "looly"});
+		paramMap.put("user2", new Object[]{2, "xxxtea"});
+
+		String sql = "INSERT INTO users (id, name) VALUES (:user1), (:user2)";
+		NamedSql namedSql = new NamedSql(sql, paramMap);
+
+		assertEquals("INSERT INTO users (id, name) VALUES (?), (?)", namedSql.getSql());
+		assertArrayEquals(new Object[]{new Object[]{1, "looly"}, new Object[]{2, "xxxtea"}}, namedSql.getParams());
 	}
 }

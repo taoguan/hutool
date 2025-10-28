@@ -598,16 +598,21 @@ public class HttpConnection {
 	}
 
 	/**
-	 * 通过反射设置方法名，首先设置HttpURLConnection本身的方法名，再检查是否为代理类，如果是，设置带路对象的方法名。
+	 * 通过反射设置方法名，首先设置HttpURLConnection本身的方法名，再检查是否为代理类，如果是，设置代理对象的方法名。
 	 * @param method 方法名
 	 */
 	private void reflectSetMethod(Method method){
-		ReflectUtil.setFieldValue(this.conn, "method", method.name());
+		try {
+			ReflectUtil.setFieldValue(this.conn, "method", method.name());
 
-		// HttpsURLConnectionImpl实现中，使用了代理类，需要修改被代理类的method方法
-		final Object delegate = ReflectUtil.getFieldValue(this.conn, "delegate");
-		if(null != delegate){
-			ReflectUtil.setFieldValue(delegate, "method", method.name());
+			// HttpsURLConnectionImpl实现中，使用了代理类，需要修改被代理类的method方法
+			final Object delegate = ReflectUtil.getFieldValue(this.conn, "delegate");
+			if(null != delegate){
+				ReflectUtil.setFieldValue(delegate, "method", method.name());
+			}
+		} catch (Exception e){
+			// ignore
+			// https://github.com/chinabugotech/hutool/issues/4109
 		}
 	}
 	// --------------------------------------------------------------- Private Method end

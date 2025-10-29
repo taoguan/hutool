@@ -359,6 +359,8 @@ public class JSONUtil {
 		}
 		if (obj instanceof CharSequence) {
 			return StrUtil.str((CharSequence) obj);
+		}else if(obj instanceof Boolean || obj instanceof Number) {
+			return obj.toString();
 		}
 		return toJsonStr(parse(obj, jsonConfig));
 	}

@@ -290,7 +290,7 @@ public class JSONUtilTest {
 	public void issue3540Test() {
 		Long userId = 10101010L;
 		final String jsonStr = JSONUtil.toJsonStr(userId);
-		assertEquals("{}", jsonStr);
+		assertEquals("10101010", jsonStr);
 	}
 
 	/**

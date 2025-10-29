@@ -240,6 +240,7 @@ public class FileUtil extends PathUtil {
 		if (path == null) {
 			return new ArrayList<>(0);
 		}
+		path = getAbsolutePath(path);
 		int index = path.lastIndexOf(FileUtil.JAR_PATH_EXT);
 		if (index < 0) {
 			// 普通目录
@@ -253,8 +254,6 @@ public class FileUtil extends PathUtil {
 			return paths;
 		}
 
-		// jar文件
-		path = getAbsolutePath(path);
 		// jar文件中的路径
 		index = index + FileUtil.JAR_FILE_EXT.length();
 		JarFile jarFile = null;

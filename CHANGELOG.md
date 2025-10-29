@@ -11,11 +11,12 @@
 
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）
-* 【extra  】      修复`JschSessionPool.remove`逻辑错误问题。
-* 【db     】      修复`Dialect.psForCount`未传入Wrapper导致大小写问题（issue#ID39G9@Gitee）。
-* 【core   】      修复`PasswdStrength.check`indexOf逻辑问题（pr#4114@Github）。
-* 【http   】      修复`HttpConnection.reflectSetMethod`反射在JDK9+权限问题（issue#4109@Github）。
-* 【http   】      修复`JsonUtil.toJsonStr`对Boolean和Number返回错误问题（issue#4109@Github）。
+* 【extra  】      修复`JschSessionPool.remove`逻辑错误问题
+* 【db     】      修复`Dialect.psForCount`未传入Wrapper导致大小写问题（issue#ID39G9@Gitee）
+* 【core   】      修复`PasswdStrength.check`indexOf逻辑问题（pr#4114@Github）
+* 【http   】      修复`HttpConnection.reflectSetMethod`反射在JDK9+权限问题（issue#4109@Github）
+* 【http   】      修复`JsonUtil.toJsonStr`对Boolean和Number返回错误问题（issue#4109@Github）
+* 【core   】      修复`FileUtil.listFileNames`相对路径index混乱问题（issue#4121@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

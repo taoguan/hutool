@@ -1,7 +1,7 @@
 
 # 🚀Changelog
 -------------------------------------------------------------------------------------------------------------
-# 5.8.42(2025-10-29)
+# 5.8.42(2025-11-04)
 
 ### 🐣新特性
 * 【core   】      `ListUtil`增加`zip`方法（pr#4052@Github）
@@ -11,7 +11,7 @@
 
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）
-* 【extra  】      修复`JschSessionPool.remove`逻辑错误问题
+* 【extra  】      修复`JschSessionPool.remove`逻辑错误问题（issue#ID4XZ7@gitee）
 * 【db     】      修复`Dialect.psForCount`未传入Wrapper导致大小写问题（issue#ID39G9@Gitee）
 * 【core   】      修复`PasswdStrength.check`indexOf逻辑问题（pr#4114@Github）
 * 【http   】      修复`HttpConnection.reflectSetMethod`反射在JDK9+权限问题（issue#4109@Github）

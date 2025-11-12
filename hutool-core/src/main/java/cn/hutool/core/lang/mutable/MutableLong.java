@@ -168,7 +168,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
 	 * </ol>
 	 *
 	 * @param obj 比对的对象
-	 * @return 相同返回<code>true</code>，否则 {@code false}
+	 * @return 相同返回{@code true}，否则 {@code false}
 	 */
 	@Override
 	public boolean equals(final Object obj) {

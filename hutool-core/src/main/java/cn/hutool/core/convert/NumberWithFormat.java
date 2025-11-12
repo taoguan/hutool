@@ -13,7 +13,7 @@ import java.util.Date;
  * @author looly
  * @since 5.8.13
  */
-public class NumberWithFormat extends Number implements TypeConverter {
+public class NumberWithFormat extends Number implements TypeConverter, Comparable<NumberWithFormat> {
 	private static final long serialVersionUID = 1L;
 
 	private final Number number;
@@ -85,5 +85,14 @@ public class NumberWithFormat extends Number implements TypeConverter {
 	@Override
 	public String toString() {
 		return this.number.toString();
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public int compareTo(NumberWithFormat o) {
+		if(this.number instanceof Comparable && o.getNumber() instanceof Comparable) {
+			return ((Comparable) this.number).compareTo(o.getNumber());
+		}
+		return Double.compare(this.doubleValue(), o.doubleValue());
 	}
 }

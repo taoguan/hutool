@@ -72,14 +72,14 @@ public class ObjectUtil {
 	}
 
 	/**
-	 * 计算对象长度，如果是字符串调用其length函数，集合类调用其size函数，数组调用其length属性，其他可遍历对象遍历计算长度<br>
-	 * 支持的类型包括：
+	 * <p>计算对象长度，支持类型包括：
 	 * <ul>
-	 * <li>CharSequence</li>
-	 * <li>Map</li>
-	 * <li>Iterator</li>
-	 * <li>Enumeration</li>
-	 * <li>Array</li>
+	 *     <li>{@code null}：默认返回{@code 0}；</li>
+	 *     <li>数组：返回数组长度；</li>
+	 *     <li>{@link CharSequence}：返回{@link CharSequence#length()}；</li>
+	 *     <li>{@link Collection}：返回{@link Collection#size()}；</li>
+	 *     <li>{@link Iterator}或{@link Iterable}：可迭代的元素数量；副作用：{@link Iterator}只能被迭代一次</li>
+	 *     <li>{@link Enumeration}：返回可迭代的元素数量；副作用：{@link Enumeration}只能被迭代一次</li>
 	 * </ul>
 	 *
 	 * @param obj 被计算长度的对象

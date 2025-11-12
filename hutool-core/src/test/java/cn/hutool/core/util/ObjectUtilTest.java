@@ -4,13 +4,12 @@ import cn.hutool.core.clone.CloneSupport;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ObjectUtilTest {
 
@@ -107,5 +106,33 @@ public class ObjectUtilTest {
 	public void isNotNullTest() {
 		String a = null;
 		assertFalse(ObjectUtil.isNotNull(a));
+	}
+
+	@Test
+	public void testLengthConsumesIterator() {
+		List<String> list = Arrays.asList("a", "b", "c");
+		Iterator<String> iterator = list.iterator();
+		// 迭代器第一次调用length
+		int length1 = ObjectUtil.length(iterator);
+		assertEquals(3, length1);
+		// 迭代器第二次调用length - 迭代器已经被消耗，返回0
+		int length2 = ObjectUtil.length(iterator);
+		assertEquals(0, length2); // 但当前实现会重新遍历，但iterator已经没有元素了
+		// 尝试使用迭代器 - 已经无法使用
+		assertFalse(iterator.hasNext());
+	}
+
+	@Test
+	public void testLengthConsumesEnumeration() {
+		Vector<String> vector = new Vector<>(Arrays.asList("a", "b", "c"));
+		Enumeration<String> enumeration = vector.elements();
+		// 第一次调用length
+		int length1 = ObjectUtil.length(enumeration);
+		assertEquals(3, length1);
+		// 第二次调用length - 枚举已经被消耗
+		int length2 = ObjectUtil.length(enumeration);
+		assertEquals(0, length2);
+		// 枚举已经无法使用
+		assertFalse(enumeration.hasMoreElements());
 	}
 }

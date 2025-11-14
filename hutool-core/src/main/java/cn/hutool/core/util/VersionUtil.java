@@ -54,7 +54,7 @@ public class VersionUtil {
 	/**
 	 * 当前版本大于待比较版本
 	 *
-	 * @param currentVersion 当前本本
+	 * @param currentVersion 当前版本
 	 * @param compareVersion 待比较版本
 	 * @return true  当前版本大于待比较版本
 	 */
@@ -65,7 +65,7 @@ public class VersionUtil {
 	/**
 	 * 当前版本大于等于待比较版本
 	 *
-	 * @param currentVersion 当前本本
+	 * @param currentVersion 当前版本
 	 * @param compareVersion 待比较版本
 	 * @return true  当前版本大于等于待比较版本
 	 */
@@ -76,7 +76,7 @@ public class VersionUtil {
 	/**
 	 * 当前版本小于待比较版本
 	 *
-	 * @param currentVersion 当前本本
+	 * @param currentVersion 当前版本
 	 * @param compareVersion 待比较版本
 	 * @return true  当前版本小于待比较版本
 	 */
@@ -87,7 +87,7 @@ public class VersionUtil {
 	/**
 	 * 当前版本小于等于待比较版本
 	 *
-	 * @param currentVersion 当前本本
+	 * @param currentVersion 当前版本
 	 * @param compareVersion 待比较版本
 	 * @return true  当前版本小于等于待比较版本
 	 */
@@ -105,9 +105,9 @@ public class VersionUtil {
 	 *     matchEl("1.0.2", "1.0.0-1.1.1") == true
 	 * }</pre>
 	 *
-	 * @param currentVersion 当前本本
+	 * @param currentVersion 当前版本
 	 * @param versionEl      版本表达式
-	 * @return true  当前版本小于等于待比较版本
+	 * @return true  当前版本是否满足版本表达式
 	 */
 	public static boolean matchEl(String currentVersion, String versionEl) {
 		return matchEl(currentVersion, versionEl, defaultVersionsDelimiter);
@@ -123,7 +123,7 @@ public class VersionUtil {
 	 *     matchEl("1.0.2", "1.0.1,1.0.2-1.1.1", ",") == true
 	 * }</pre>
 	 *
-	 * @param currentVersion    当前本本
+	 * @param currentVersion    当前版本
 	 * @param versionEl         版本表达式（可以匹配多个条件，使用指定的分隔符（默认;）分隔）,
 	 *                          {@code '-'}表示范围包含左右版本,如果 {@code '-'}的左边没有，表示小于等于某个版本号， 右边表示大于等于某个版本号。
 	 *                          支持比较符号{@code '>'},{@code '<'}, {@code '>='},{@code '<='}，{@code '≤'}，{@code '≥'}
@@ -133,7 +133,7 @@ public class VersionUtil {
 	 *                          <li>{@code >=2.0.0, 1.9.8} 表示版本号 大于等于{@code 2.0.0}或 版本{@code 1.9.8}</li>
 	 *                          </ul>
 	 * @param versionsDelimiter 多表达式分隔符
-	 * @return true  当前版本小于等于待比较版本
+	 * @return true  当前版本是否满足版本表达式
 	 */
 	public static boolean matchEl(String currentVersion, String versionEl, String versionsDelimiter) {
 		if (StrUtil.isBlank(versionsDelimiter)
@@ -185,9 +185,9 @@ public class VersionUtil {
 						return false;
 				}
 			} else if (StrUtil.contains(el, "-")) {
-				String[] pair = el.split("-");
-				String left = StrUtil.blankToDefault(StrUtil.trim(pair[0]), "");
-				String right = StrUtil.blankToDefault(StrUtil.trim(pair[1]), "");
+				int index = el.indexOf('-');
+				String left = StrUtil.blankToDefault(StrUtil.trim(el.substring(0, index)), "");
+				String right = StrUtil.blankToDefault(StrUtil.trim(el.substring(index + 1)), "");
 
 				boolean leftMatch = StrUtil.isBlank(left) || StrUtil.compareVersion(left, trimmedVersion) <= 0;
 				boolean rightMatch = StrUtil.isBlank(right) || StrUtil.compareVersion(right, trimmedVersion) >= 0;

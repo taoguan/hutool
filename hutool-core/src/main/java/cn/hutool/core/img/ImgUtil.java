@@ -1901,6 +1901,8 @@ public class ImgUtil {
 			// issue#IAPZG7
 			// FileCacheImageOutputStream会产生临时文件，此处关闭清除
 			IoUtil.close(output);
+			// issue#ID6VNJ
+			flush(image);
 		}
 		return true;
 	}

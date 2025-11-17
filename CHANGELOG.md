@@ -19,6 +19,7 @@
 * 【core   】      修复`FileUtil.listFileNames`相对路径index混乱问题（issue#4121@Github）
 * 【core   】      修复`NumberWithFormat`没有实现Comparable接口导致的JSON排序报错问题（issue#ID61QR@Gitee）
 * 【core   】      修复`ImgUtil.write`没有释放BufferedImage可能导致内存泄露（issue#ID6VNJ@Gitee）
+* 【core   】      修复`VersionUtil.matchEl`如果输入的版本范围表达式右边界为空时，会抛出数组越界访问错误的问题（pr#4130@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

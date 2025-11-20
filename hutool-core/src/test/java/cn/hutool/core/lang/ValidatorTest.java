@@ -227,6 +227,19 @@ public class ValidatorTest {
 		assertTrue(Validator.isBetween(0.19, 0.1, 0.2));
 	}
 
+
+	@Test
+	public void isBetweenPrecisionLossTest() {
+		// 使用超过 double 精度的值
+		long base = 10000000000000000L;
+		long min = base + 1;
+		long max = base + 2;
+
+		// 在 double 转换下，base、min 和 max 是完全相等的，因为 double 精度不够
+		// 预期结果为false，但是因为double 精度不够，导致输出为true
+		assertFalse(Validator.isBetween(base, min, max));
+	}
+
 	@Test
 	public void isCarVinTest() {
 		assertTrue(Validator.isCarVin("LSJA24U62JG269225"));

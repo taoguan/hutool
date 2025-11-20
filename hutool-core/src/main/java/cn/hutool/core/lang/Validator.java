@@ -9,6 +9,7 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.IdcardUtil;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1123,8 +1124,11 @@ public class Validator {
 		Assert.notNull(value);
 		Assert.notNull(min);
 		Assert.notNull(max);
-		final double doubleValue = value.doubleValue();
-		return (doubleValue >= min.doubleValue()) && (doubleValue <= max.doubleValue());
+		// 通过 NumberUtil 转换为 BigDecimal，使用 BigDecimal 进行比较以保留精度
+		BigDecimal valBd = NumberUtil.toBigDecimal(value);
+		BigDecimal minBd = NumberUtil.toBigDecimal(min);
+		BigDecimal maxBd = NumberUtil.toBigDecimal(max);
+		return valBd.compareTo(minBd) >= 0 && valBd.compareTo(maxBd) <= 0;
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package cn.hutool.core.util;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -45,6 +47,37 @@ public class TypeUtilTest {
 		returnType = TypeUtil.getReturnType(method);
 		clazz = TypeUtil.getClass(returnType);
 		assertEquals(Object.class, clazz);
+	}
+
+	/**
+	 * 测试getClass方法对泛型数组类型T[]的处理
+	 * 验证未绑定泛型参数的数组类型会被正确解析为Object[]
+	 */
+	@Test
+	public void getClassForGenericArrayTypeTest() throws NoSuchFieldException {
+		// 获取T[]类型字段的泛型类型
+		Field levelField = GenericArray.class.getDeclaredField("level");
+		Type genericArrayType = levelField.getGenericType();
+		// 调用getClass方法处理GenericArrayType
+		Class<?> clazz = TypeUtil.getClass(genericArrayType);
+		// 验证返回Object[]类型
+		assertNotNull(clazz, "getClass方法返回null");
+		assertTrue(clazz.isArray(), "返回类型不是数组");
+		assertEquals(Object.class, clazz.getComponentType(), "数组组件类型应为Object");
+	}
+
+	/**
+	 * 测试getClass方法对参数化类型数组List<String>[]的处理
+	 * 验证数组组件类型能正确解析为原始类型
+	 */
+	@Test
+	public void getClassForParameterizedArrayTypeTest() {
+		// 创建List<String>[]类型引用
+		Type genericArrayType = new TypeReference<List<String>[]>() {}.getType();
+		// 调用getClass方法处理GenericArrayType
+		Class<?> clazz = TypeUtil.getClass(genericArrayType);
+		// 验证返回List[]类型
+		assertEquals(Array.newInstance(List.class, 0).getClass(), clazz);
 	}
 
 	public static class TestClass {

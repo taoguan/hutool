@@ -34,6 +34,12 @@ public class TypeUtil {
 				return (Class<?>) type;
 			} else if (type instanceof ParameterizedType) {
 				return (Class<?>) ((ParameterizedType) type).getRawType();
+			} else if (type instanceof GenericArrayType) {
+				final Type componentType = ((GenericArrayType) type).getGenericComponentType();
+				final Class<?> componentClass = getClass(componentType);
+				if (componentClass != null) {
+					return Array.newInstance(componentClass, 0).getClass();
+				}
 			} else if (type instanceof TypeVariable) {
 				Type[] bounds = ((TypeVariable<?>) type).getBounds();
 				if (bounds.length == 1) {

@@ -270,7 +270,7 @@ public class URLUtil extends URLEncodeUtil {
 		try {
 			return file.toURI().toURL();
 		} catch (MalformedURLException e) {
-			throw new UtilException(e, "Error occured when get URL!");
+			throw new UtilException(e, "Error occurred when get URL!");
 		}
 	}
 
@@ -288,7 +288,7 @@ public class URLUtil extends URLEncodeUtil {
 				urls[i] = files[i].toURI().toURL();
 			}
 		} catch (MalformedURLException e) {
-			throw new UtilException(e, "Error occured when get URL!");
+			throw new UtilException(e, "Error occurred when get URL!");
 		}
 
 		return urls;

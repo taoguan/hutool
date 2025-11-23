@@ -19,4 +19,12 @@ public class FileNameUtilTest {
 		final String s = FileNameUtil.mainName("abc.tar.gz");
 		assertEquals("abc", s);
 	}
+
+	@Test
+	public void extNameAndMainNameBugTest() {
+		// 正确，输出前缀为 "app-v2.3.1-star"
+		assertEquals("app-v2.3.1-star",FileNameUtil.mainName("app-v2.3.1-star.gz"));
+		// 当前代码会失败，预期后缀结果 "gz"，但是输出 "star.gz"
+		assertEquals("gz", FileNameUtil.extName("app-v2.3.1-star.gz"));
+	}
 }

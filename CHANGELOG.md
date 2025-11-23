@@ -22,6 +22,7 @@
 * 【core   】      修复`VersionUtil.matchEl`如果输入的版本范围表达式右边界为空时，会抛出数组越界访问错误的问题（pr#4130@Github）
 * 【core   】      修复`Validator.isBetween`在高精度Number类型下存在精度丢失问题（pr#4136@Github）
 * 【core   】      修复`FileNameUtil.extName`在特殊后缀判断逻辑过于宽松导致误判问题（pr#4142@Github）
+* 【core   】      修复`TypeUtil.getClass`无法识别`GenericArrayType`问题（pr#4138@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

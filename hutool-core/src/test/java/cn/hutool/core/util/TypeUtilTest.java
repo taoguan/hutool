@@ -40,7 +40,7 @@ public class TypeUtilTest {
 	public void getClasses() {
 		Method method = ReflectUtil.getMethod(Parent.class, "getLevel");
 		Type returnType = TypeUtil.getReturnType(method);
-		Class clazz = TypeUtil.getClass(returnType);
+		Class<?> clazz = TypeUtil.getClass(returnType);
 		assertEquals(Level1.class, clazz);
 
 		method = ReflectUtil.getMethod(Level1.class, "getId");
@@ -67,7 +67,7 @@ public class TypeUtilTest {
 	}
 
 	/**
-	 * 测试getClass方法对参数化类型数组List<String>[]的处理
+	 * 测试getClass方法对参数化类型数组{@code List<String>[]}的处理
 	 * 验证数组组件类型能正确解析为原始类型
 	 */
 	@Test

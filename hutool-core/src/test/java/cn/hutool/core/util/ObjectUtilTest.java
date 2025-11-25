@@ -135,4 +135,46 @@ public class ObjectUtilTest {
 		// 枚举已经无法使用
 		assertFalse(enumeration.hasMoreElements());
 	}
+
+	@Test
+	public void testContainsElementToStringReturnsNull() {
+		Object problematicElement = new Object() {
+			@Override
+			public String toString() {
+				return null; // 返回 null 的 toString
+			}
+		};
+		assertFalse(ObjectUtil.contains("test", problematicElement)); //不会抛异常
+	}
+
+	@Test
+	public void testContainsElementToStringInvalidSyntax() {
+		//字符串包含自定义User对象不符合语义
+		assertFalse(ObjectUtil.contains("User[id=123]", new User(123)));
+	}
+
+
+	static class User{
+		private int id;
+		public User(int id) {
+			this.id = id;
+		}
+		@Override
+		public String toString() {
+			return "User[" +
+					"id=" + id +
+					']';
+		}
+	}
+
+	@Test
+	public void testContainsCharSequenceSupported() {
+		//contains方法支持String、StringBuilder、StringBuffer
+		StringBuilder stringBuilder = new StringBuilder("hello world");
+		StringBuffer stringBuffer = new StringBuffer("hello world");
+		String str = "hello world";
+		assertTrue((ObjectUtil.contains(stringBuilder, "world")));
+		assertTrue(ObjectUtil.contains(stringBuffer, "hello"));
+		assertTrue(ObjectUtil.contains(str, "hello"));
+	}
 }

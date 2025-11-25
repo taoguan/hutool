@@ -29,7 +29,7 @@
 * 【core   】      修复`CacheableAnnotationAttribute`可能并发问题（pr#4149@Github）
 * 【core   】      修复`URLUtil.url`未断开连接问题（pr#4149@Github）
 * 【core   】      修复`Bimap.put`重复put问题（pr#4150@Github）
-* 【core   】      修复`StrUtil.str`使用ByteBuffer时会修改参数问题（pr#4153@Github）
+* 【core   】      修复`StrUtil.str(ByteBuffer, Charset)` 方法修改入参 `ByteBuffer` 的 `position`，导致入参变化 （pr#4153@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

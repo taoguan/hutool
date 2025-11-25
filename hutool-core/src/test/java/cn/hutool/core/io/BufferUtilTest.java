@@ -1,6 +1,7 @@
 package cn.hutool.core.io;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -62,5 +63,22 @@ public class BufferUtilTest {
 
 		// 读取剩余部分
 		assertEquals("cc", StrUtil.utf8Str(BufferUtil.readBytes(buffer)));
+	}
+
+	@Test
+	public void testByteBufferSideEffect() {
+		String originalText = "Hello";
+		ByteBuffer buffer = ByteBuffer.wrap(originalText.getBytes(StandardCharsets.UTF_8));
+		// 此时 buffer.remaining() == 5
+		assertEquals(5, buffer.remaining());
+
+		// 调用工具类转换，打印buffer内容
+		String result = StrUtil.str(buffer, StandardCharsets.UTF_8);
+		assertEquals(originalText, result);
+
+		// 预期：
+		// 工具类不应该修改原 buffer 的指针，remaining 应该依然为 5
+		// 再次调用工具类转换，输出结果应该不变
+		assertEquals(originalText, StrUtil.str(buffer, StandardCharsets.UTF_8));
 	}
 }

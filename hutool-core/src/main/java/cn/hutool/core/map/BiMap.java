@@ -39,7 +39,7 @@ public class BiMap<K, V> extends MapWrapper<K, V> {
 			}
 			this.inverse.put(value, key);
 		}
-		return super.put(key, value);
+		return oldValue;
 	}
 
 	@Override
@@ -94,10 +94,12 @@ public class BiMap<K, V> extends MapWrapper<K, V> {
 
 	@Override
 	public V putIfAbsent(K key, V value) {
-		if (null != this.inverse) {
-			this.inverse.putIfAbsent(value, key);
+		final V oldValue = super.putIfAbsent(key, value);
+		// 只有当oldValue为null时(即key之前不存在),才更新反向Map
+		if (null == oldValue && null != this.inverse) {
+			this.inverse.put(value, key);
 		}
-		return super.putIfAbsent(key, value);
+		return oldValue;
 	}
 
 	@Override

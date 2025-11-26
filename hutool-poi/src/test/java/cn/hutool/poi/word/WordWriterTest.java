@@ -8,7 +8,7 @@ import cn.hutool.core.lang.Console;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,6 +23,7 @@ public class WordWriterTest {
 		Word07Writer writer = new Word07Writer();
 		writer.addText(new Font("方正小标宋简体", Font.PLAIN, 22), "我是第一部分", "我是第二部分");
 		writer.addText(new Font("宋体", Font.PLAIN, 22), "我是正文第一部分", "我是正文第二部分");
+		writer.addText(new Font("宋体", Font.PLAIN, 22), Color.RED, "我是正文第三部分", "我是正文第四部分");
 		writer.flush(FileUtil.file("e:/wordWrite.docx"));
 		writer.close();
 		Console.log("OK");

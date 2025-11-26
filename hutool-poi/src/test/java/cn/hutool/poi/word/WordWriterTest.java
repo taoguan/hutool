@@ -5,6 +5,8 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Console;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordWriterTest {
 
@@ -95,5 +99,18 @@ public class WordWriterTest {
 		list2.add(list);
 		word07Writer.addTable(list);
 		word07Writer.close();
+	}
+
+	@Test
+	public void addTextShouldStripAlphaAndUseRgbHex() {
+		final Word07Writer writer = new Word07Writer();
+		final Color colorWithAlpha = new Color(0x12, 0x34, 0x56, 0x7F);
+
+		writer.addText(new Font("宋体", Font.PLAIN, 12), colorWithAlpha, "带颜色的段落");
+
+		final XWPFParagraph paragraph = writer.getDoc().getParagraphArray(0);
+		final XWPFRun run = paragraph.getRuns().get(0);
+		assertEquals("123456", run.getColor());
+		writer.close();
 	}
 }

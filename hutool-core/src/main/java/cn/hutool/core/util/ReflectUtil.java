@@ -888,13 +888,19 @@ public class ReflectUtil {
 			return (T) ClassUtil.getPrimitiveDefaultValue(type);
 		}
 
-		// 某些特殊接口的实例化按照默认实现进行
-		if (type.isAssignableFrom(AbstractMap.class)) {
-			type = (Class<T>) HashMap.class;
-		} else if (type.isAssignableFrom(List.class)) {
-			type = (Class<T>) ArrayList.class;
-		} else if (type.isAssignableFrom(Set.class)) {
-			type = (Class<T>) HashSet.class;
+		if (Object.class != type) {
+			// 某些特殊接口的实例化按照默认实现进行
+			if (type.isAssignableFrom(AbstractMap.class)) {
+				type = (Class<T>) HashMap.class;
+			} else if (type.isAssignableFrom(List.class)) {
+				type = (Class<T>) ArrayList.class;
+			} else if (type.isAssignableFrom(Set.class)) {
+				type = (Class<T>) HashSet.class;
+			} else if (type.isAssignableFrom(Queue.class)) {
+				type = (Class<T>) LinkedList.class;
+			} else if (type.isAssignableFrom(Deque.class)) {
+				type = (Class<T>) LinkedList.class;
+			}
 		}
 
 		try {

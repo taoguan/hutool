@@ -151,7 +151,7 @@ public class ReflectUtilTest {
 		final TestClass testClass = new TestClass();
 		final Method method = ReflectUtil.getMethod(TestClass.class, "setA", int.class);
 		assertThrows(IllegalArgumentException.class,
-				() -> ReflectUtil.invoke(testClass, method, "NaN"));
+			() -> ReflectUtil.invoke(testClass, method, "NaN"));
 	}
 
 	@Test
@@ -210,6 +210,7 @@ public class ReflectUtilTest {
 		private String n;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public static Method getMethodWithReturnTypeCheck(final Class<?> clazz, final boolean ignoreCase, final String methodName, final Class<?>... paramTypes) throws SecurityException {
 		if (null == clazz || StrUtil.isBlank(methodName)) {
 			return null;
@@ -220,9 +221,9 @@ public class ReflectUtilTest {
 		if (ArrayUtil.isNotEmpty(methods)) {
 			for (final Method method : methods) {
 				if (StrUtil.equals(methodName, method.getName(), ignoreCase)
-						&& ClassUtil.isAllAssignableFrom(method.getParameterTypes(), paramTypes)
-						&& (res == null
-						|| res.getReturnType().isAssignableFrom(method.getReturnType()))) {
+					&& ClassUtil.isAllAssignableFrom(method.getParameterTypes(), paramTypes)
+					&& (res == null
+					|| res.getReturnType().isAssignableFrom(method.getReturnType()))) {
 					res = method;
 				}
 			}
@@ -300,6 +301,7 @@ public class ReflectUtilTest {
 	}
 
 	class C2 extends C1 {
+		@SuppressWarnings("RedundantMethodOverride")
 		@Override
 		public void getA() {
 
@@ -307,7 +309,7 @@ public class ReflectUtilTest {
 	}
 
 	@Test
-	public void newInstanceIfPossibleTest(){
+	public void newInstanceIfPossibleTest() {
 		//noinspection ConstantConditions
 		final int intValue = ReflectUtil.newInstanceIfPossible(int.class);
 		assertEquals(0, intValue);
@@ -330,19 +332,19 @@ public class ReflectUtilTest {
 
 	public static class JdbcDialects {
 		private static final List<Number> DIALECTS =
-				Arrays.asList(1L, 2L, 3L);
+			Arrays.asList(1L, 2L, 3L);
 	}
 
 	@Test
 	public void setFieldValueWithFinalTest() {
 		final String fieldName = "DIALECTS";
 		final List<Number> dialects =
-				Arrays.asList(
-						1,
-						2,
-						3,
-						99
-				);
+			Arrays.asList(
+				1,
+				2,
+				3,
+				99
+			);
 		final Field field = ReflectUtil.getField(JdbcDialects.class, fieldName);
 		ReflectUtil.removeFinalModify(field);
 		ReflectUtil.setFieldValue(JdbcDialects.class, fieldName, dialects);
@@ -351,24 +353,63 @@ public class ReflectUtilTest {
 	}
 
 	@Test
-	public void issue2625Test(){
+	public void issue2625Test() {
 		// 内部类继承的情况下父类方法会被定义为桥接方法，因此按照pr#1965@Github判断返回值的继承关系来代替判断桥接。
 		final Method getThis = ReflectUtil.getMethod(A.C.class, "getThis");
 		assertTrue(getThis.isBridge());
 	}
 
 	@SuppressWarnings("InnerClassMayBeStatic")
-	public class A{
+	public class A {
 
-		public class C extends B{
+		public class C extends B {
 
 		}
 
-		protected class B{
-			public B getThis(){
+		protected class B {
+			public B getThis() {
 				return this;
 			}
 		}
+	}
+
+	@Test
+	public void newInstanceIfPossibleTest2() {
+		// 测试Object.class不应该被错误地实例化为HashMap，应该返回Object实例
+		Object objectInstance = ReflectUtil.newInstanceIfPossible(Object.class);
+		assertNotNull(objectInstance);
+		assertEquals(Object.class, objectInstance.getClass());
+
+		// 测试Map.class能够正确实例化为HashMap
+		Map<?, ?> mapInstance = ReflectUtil.newInstanceIfPossible(Map.class);
+		assertNotNull(mapInstance);
+		assertInstanceOf(HashMap.class, mapInstance);
+
+		// 测试Collection.class能够正确实例化为ArrayList
+		Collection<?> collectionInstance = ReflectUtil.newInstanceIfPossible(Collection.class);
+		assertNotNull(collectionInstance);
+		assertInstanceOf(ArrayList.class, collectionInstance);
+
+
+		// 测试List.class能够正确实例化为ArrayList
+		List<?> listInstance = ReflectUtil.newInstanceIfPossible(List.class);
+		assertNotNull(listInstance);
+		assertInstanceOf(ArrayList.class, listInstance);
+
+		// 测试Set.class能够正确实例化为HashSet
+		Set<?> setInstance = ReflectUtil.newInstanceIfPossible(Set.class);
+		assertNotNull(setInstance);
+		assertInstanceOf(HashSet.class, setInstance);
+
+		// 测试Queue接口能够正确实例化为LinkedList
+		Queue<?> queueInstance = ReflectUtil.newInstanceIfPossible(Queue.class);
+		assertNotNull(queueInstance);
+		assertInstanceOf(LinkedList.class, queueInstance);
+
+		// 测试Deque接口能够正确实例化为LinkedList
+		Deque<?> dequeInstance = ReflectUtil.newInstanceIfPossible(Deque.class);
+		assertNotNull(dequeInstance);
+		assertInstanceOf(LinkedList.class, dequeInstance);
 	}
 
 }

@@ -14,11 +14,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.awt.*;
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Word docx生成器
@@ -156,7 +152,8 @@ public class Word07Writer implements Closeable {
 					run.setItalic(font.isItalic());
 				}
 				if (null != color) {
-					String hexColor = String.format("%02X", color.getRGB());
+					// setColor expects a pure RGB hex string (no alpha channel)
+					String hexColor = String.format("%06X", color.getRGB() & 0xFFFFFF);
 					run.setColor(hexColor);
 				}
 			}

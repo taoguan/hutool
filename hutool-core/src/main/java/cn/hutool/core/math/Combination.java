@@ -59,7 +59,7 @@ public class Combination implements Serializable {
 	 *
 	 * @param n 总数 n（必须 大于等于 0）
 	 * @param m 取出 m（必须 大于等于 0）
-	 * @return C(n, m) 的 BigInteger 精确值；当 m > n 时返回 BigInteger.ZERO
+	 * @return C(n, m) 的 BigInteger 精确值；当 m 大于 n 时返回 BigInteger.ZERO
 	 */
 	public static BigInteger countBig(int n, int m) {
 		if (n < 0 || m < 0) {

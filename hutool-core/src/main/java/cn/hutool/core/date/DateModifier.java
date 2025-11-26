@@ -73,13 +73,13 @@ public class DateModifier {
 				case ROUND:
 					int min = isAM ? 0 : 12;
 					int max = isAM ? 11 : 23;
-					int href = (max - min) / 2 + 1;
+					int href = min + (max - min) / 2 + 1;
 					int value = calendar.get(Calendar.HOUR_OF_DAY);
 					calendar.set(Calendar.HOUR_OF_DAY, (value < href) ? min : max);
 					break;
 			}
 			// 处理下一级别字段
-			return modify(calendar, dateField + 1, modifyType);
+			return modify(calendar, dateField + 1, modifyType, truncateMillisecond);
 		}
 
 		final int endField = truncateMillisecond ? Calendar.SECOND : Calendar.MILLISECOND;

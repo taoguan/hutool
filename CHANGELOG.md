@@ -35,6 +35,7 @@
 * 【core   】      修复`StrUtil.str(ByteBuffer, Charset)` 方法修改入参 `ByteBuffer` 的 `position`，导致入参变化 （pr#4153@Github）
 * 【core   】      修复`ReflectUtil.newInstanceIfPossible`传入Object逻辑错误（pr#4160@Github）
 * 【core   】      修复`DateModifier`处理AM和PM的ceiling和round问题（pr#4161@Github）
+* 【poi    】      修复`Word07Writer`run.setColor()的颜色十六进制转换逻辑（pr#4164@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

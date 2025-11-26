@@ -11,6 +11,7 @@
 * 【core   】      `Combination`和`Arrangement `重构避免数组频繁拷贝，并避免溢出（pr#4144@Github）
 * 【core   】      优化`EscapeUtil`，兼容不规范的转义（pr#4150@Github）
 * 【core   】      优化`ObjectUtil.contains`String改为CharSequence（pr#4154@Github）
+* 【poi    】      `Word07Writer`增加addText重载，支持字体颜色（pr#1388@Gitee）
 
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）

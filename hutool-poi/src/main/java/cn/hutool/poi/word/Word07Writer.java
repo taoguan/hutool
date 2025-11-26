@@ -122,9 +122,22 @@ public class Word07Writer implements Closeable {
 	 *
 	 * @param align 段落对齐方式{@link ParagraphAlignment}
 	 * @param font  字体信息{@link Font}
+	 * @param texts 段落中的文本，支持多个文本作为一个段落
+	 * @return this
+	 */
+	public Word07Writer addText(ParagraphAlignment align, Font font, String... texts) {
+		return addText(align, font, null, texts);
+	}
+
+	/**
+	 * 增加一个段落
+	 *
+	 * @param align 段落对齐方式{@link ParagraphAlignment}
+	 * @param font  字体信息{@link Font}
 	 * @param color 字体颜色{@link Color}
 	 * @param texts 段落中的文本，支持多个文本作为一个段落
 	 * @return this
+	 * @since 5.8.42
 	 */
 	public Word07Writer addText(ParagraphAlignment align, Font font, Color color, String... texts) {
 		final XWPFParagraph p = this.doc.createParagraph();

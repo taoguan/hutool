@@ -57,8 +57,8 @@ public class Combination implements Serializable {
 	 * 1. 利用对称性 m = min(m, n-m)
 	 * 2. 每一步先乘 BigInteger，再除以当前 i，保证数值不暴涨
 	 *
-	 * @param n 总数 n（必须 >= 0）
-	 * @param m 取出 m（必须 >= 0）
+	 * @param n 总数 n（必须 大于等于 0）
+	 * @param m 取出 m（必须 大于等于 0）
 	 * @return C(n, m) 的 BigInteger 精确值；当 m > n 时返回 BigInteger.ZERO
 	 */
 	public static BigInteger countBig(int n, int m) {
@@ -87,9 +87,10 @@ public class Combination implements Serializable {
 	/**
 	 * 安全组合数 long 版本。
 	 *
-	 * @param n 总数 n（必须 >= 0）
-	 * @param m 取出 m（必须 >= 0）
+	 * @param n 总数 n（必须 大于等于 0）
+	 * @param m 取出 m（必须 大于等于 0）
 	 *          <p>若结果超出 long 范围，会抛 ArithmeticException，而非溢出。</p>
+	 * @return C(n, m) 的 long 精确值；当 m 大于 n 时返回 0L
 	 */
 	public static long countSafe(int n, int m) {
 		BigInteger big = countBig(n, m);

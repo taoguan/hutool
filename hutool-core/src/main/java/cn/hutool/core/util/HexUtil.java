@@ -27,7 +27,7 @@ public class HexUtil {
 	 * @return 是否为16进制
 	 */
 	public static boolean isHexNumber(String value) {
-		if(StrUtil.startWith(value, '-')){
+		if (StrUtil.startWith(value, '-')) {
 			// issue#2875
 			return false;
 		}
@@ -35,7 +35,7 @@ public class HexUtil {
 		if (value.startsWith("0x", index) || value.startsWith("0X", index)) {
 			index += 2;
 		} else if (value.startsWith("#", index)) {
-			index ++;
+			index++;
 		}
 		try {
 			new BigInteger(value.substring(index), 16);
@@ -297,20 +297,6 @@ public class HexUtil {
 	}
 
 	/**
-	 * 去除十六进制字符串的常见前缀 0x、0X、#
-	 *
-	 * @param s 十六进制字符串
-	 * @return 去除前缀后的字符串
-	 */
-	private static String stripHexPrefix(String s) {
-		if (s == null) return null;
-		s = s.trim();
-		if (s.startsWith("0x") || s.startsWith("0X")) return s.substring(2);
-		if (s.startsWith("#")) return s.substring(1);
-		return s;
-	}
-
-	/**
 	 * 16进制字符串转为int
 	 *
 	 * @param value 16进制字符串
@@ -318,7 +304,7 @@ public class HexUtil {
 	 * @since 5.7.4
 	 */
 	public static int hexToInt(String value) {
-		return Integer.parseInt(stripHexPrefix(value), 16);
+		return Integer.parseInt(removeHexPrefix(value), 16);
 	}
 
 	/**
@@ -340,7 +326,7 @@ public class HexUtil {
 	 * @since 5.7.4
 	 */
 	public static long hexToLong(String value) {
-		return Long.parseLong(stripHexPrefix(value), 16);
+		return Long.parseLong(removeHexPrefix(value), 16);
 	}
 
 	/**
@@ -366,7 +352,7 @@ public class HexUtil {
 		if (null == hexStr) {
 			return null;
 		}
-		return new BigInteger(stripHexPrefix(hexStr), 16);
+		return new BigInteger(removeHexPrefix(hexStr), 16);
 	}
 
 	/**
@@ -406,4 +392,24 @@ public class HexUtil {
 		return builder.toString();
 	}
 
+	/**
+	 * 去除十六进制字符串的常见前缀 0x、0X、#
+	 *
+	 * @param hexStr 十六进制字符串
+	 * @return 去除前缀后的字符串
+	 */
+	private static String removeHexPrefix(String hexStr) {
+		if (StrUtil.length(hexStr) > 1) {
+			final char c0 = hexStr.charAt(0);
+			switch (c0) {
+				case '0':
+					if (hexStr.charAt(1) == 'x' || hexStr.charAt(1) == 'X') {
+						return hexStr.substring(2);
+					}
+				case '#':
+					return hexStr.substring(1);
+			}
+		}
+		return hexStr;
+	}
 }

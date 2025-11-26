@@ -12,6 +12,7 @@
 * 【core   】      优化`EscapeUtil`，兼容不规范的转义（pr#4150@Github）
 * 【core   】      优化`ObjectUtil.contains`String改为CharSequence（pr#4154@Github）
 * 【poi    】      `Word07Writer`增加addText重载，支持字体颜色（pr#1388@Gitee）
+* 【core   】      增强`HexUtil`自动去除`0x`和`#`前缀（pr#4163@Github）
 
 ### 🐞Bug修复
 * 【jwt    】      修复verify方法在定义alg为`none`时验证失效问题（issue#4105@Github）

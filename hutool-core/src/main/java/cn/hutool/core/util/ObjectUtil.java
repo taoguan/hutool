@@ -128,7 +128,7 @@ public class ObjectUtil {
 	 * 对象中是否包含元素<br>
 	 * 支持的对象类型包括：
 	 * <ul>
-	 * <li>String</li>
+	 * <li>CharSequence</li>
 	 * <li>Collection</li>
 	 * <li>Map</li>
 	 * <li>Iterator</li>
@@ -144,11 +144,22 @@ public class ObjectUtil {
 		if (obj == null) {
 			return false;
 		}
-		if (obj instanceof String) {
-			if (element == null) {
+		if (obj instanceof CharSequence) {
+			if (!(element instanceof CharSequence)) {
 				return false;
 			}
-			return ((String) obj).contains(element.toString());
+			String elementStr;
+			try {
+				elementStr = element.toString();
+				// 检查 toString() 返回 null 的情况
+				if (elementStr == null) {
+					return false;
+				}
+			} catch (Exception e) {
+				// 如果toString抛异常，认为不包含
+				return false;
+			}
+			return obj.toString().contains(elementStr);
 		}
 		if (obj instanceof Collection) {
 			return ((Collection<?>) obj).contains(element);

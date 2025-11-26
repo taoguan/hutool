@@ -3,6 +3,7 @@ package cn.hutool.core.util;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -84,5 +85,35 @@ public class HexUtilTest {
 		final String s = HexUtil.encodeHexStr("6");
 		final String s1 = HexUtil.decodeHexStr(s);
 		assertEquals("6", s1);
+	}
+
+	@Test
+	public void hexToIntTest() {
+		final String hex1 = "FF";
+		assertEquals(255, HexUtil.hexToInt(hex1));
+		final String hex2 = "0xFF";
+		assertEquals(255, HexUtil.hexToInt(hex2));
+		final String hex3 = "#FF";
+		assertEquals(255, HexUtil.hexToInt(hex3));
+	}
+
+	@Test
+	public void hexToLongTest() {
+		final String hex1 = "FF";
+		assertEquals(255L, HexUtil.hexToLong(hex1));
+		final String hex2 = "0xFF";
+		assertEquals(255L, HexUtil.hexToLong(hex2));
+		final String hex3 = "#FF";
+		assertEquals(255L, HexUtil.hexToLong(hex3));
+	}
+
+	@Test
+	public void toBigIntegerTest() {
+		final String hex1 = "FF";
+		assertEquals(new BigInteger("FF", 16), HexUtil.toBigInteger(hex1));
+		final String hex2 = "0xFF";
+		assertEquals(new BigInteger("FF", 16), HexUtil.toBigInteger(hex2));
+		final String hex3 = "#FF";
+		assertEquals(new BigInteger("FF", 16), HexUtil.toBigInteger(hex3));
 	}
 }

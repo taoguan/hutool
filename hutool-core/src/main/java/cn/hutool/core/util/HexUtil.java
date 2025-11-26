@@ -297,6 +297,20 @@ public class HexUtil {
 	}
 
 	/**
+	 * 去除十六进制字符串的常见前缀 0x、0X、#
+	 *
+	 * @param s 十六进制字符串
+	 * @return 去除前缀后的字符串
+	 */
+	private static String stripHexPrefix(String s) {
+		if (s == null) return null;
+		s = s.trim();
+		if (s.startsWith("0x") || s.startsWith("0X")) return s.substring(2);
+		if (s.startsWith("#")) return s.substring(1);
+		return s;
+	}
+
+	/**
 	 * 16进制字符串转为int
 	 *
 	 * @param value 16进制字符串
@@ -304,7 +318,7 @@ public class HexUtil {
 	 * @since 5.7.4
 	 */
 	public static int hexToInt(String value) {
-		return Integer.parseInt(value, 16);
+		return Integer.parseInt(stripHexPrefix(value), 16);
 	}
 
 	/**
@@ -326,7 +340,7 @@ public class HexUtil {
 	 * @since 5.7.4
 	 */
 	public static long hexToLong(String value) {
-		return Long.parseLong(value, 16);
+		return Long.parseLong(stripHexPrefix(value), 16);
 	}
 
 	/**
@@ -352,7 +366,7 @@ public class HexUtil {
 		if (null == hexStr) {
 			return null;
 		}
-		return new BigInteger(hexStr, 16);
+		return new BigInteger(stripHexPrefix(hexStr), 16);
 	}
 
 	/**

@@ -13,7 +13,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +102,19 @@ public class Word07Writer implements Closeable {
 	 * @return this
 	 */
 	public Word07Writer addText(Font font, String... texts) {
-		return addText(null, font, texts);
+		return addText(null, font, null, texts);
+	}
+
+	/**
+	 * 增加一个段落
+	 *
+	 * @param font  字体信息{@link Font}
+     * @param color 字体颜色{@link Color}
+	 * @param texts 段落中的文本，支持多个文本作为一个段落
+	 * @return this
+	 */
+	public Word07Writer addText(Font font, Color color, String... texts) {
+		return addText(null, font, color, texts);
 	}
 
 	/**
@@ -110,10 +122,11 @@ public class Word07Writer implements Closeable {
 	 *
 	 * @param align 段落对齐方式{@link ParagraphAlignment}
 	 * @param font  字体信息{@link Font}
+	 * @param color 字体颜色{@link Color}
 	 * @param texts 段落中的文本，支持多个文本作为一个段落
 	 * @return this
 	 */
-	public Word07Writer addText(ParagraphAlignment align, Font font, String... texts) {
+	public Word07Writer addText(ParagraphAlignment align, Font font, Color color, String... texts) {
 		final XWPFParagraph p = this.doc.createParagraph();
 		if (null != align) {
 			p.setAlignment(align);
@@ -128,6 +141,10 @@ public class Word07Writer implements Closeable {
 					run.setFontSize(font.getSize());
 					run.setBold(font.isBold());
 					run.setItalic(font.isItalic());
+				}
+				if (null != color) {
+					String hexColor = String.format("%02X", color.getRGB());
+					run.setColor(hexColor);
 				}
 			}
 		}

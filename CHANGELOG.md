@@ -37,6 +37,8 @@
 * 【core   】      修复`DateModifier`处理AM和PM的ceiling和round问题（pr#4161@Github）
 * 【poi    】      修复`Word07Writer`run.setColor()的颜色十六进制转换逻辑（pr#4164@Github）
 * 【core   】      修复`Arrangement.iterate(int m)`方法的排列迭代器实现逻辑问题（pr#4166@Github）
+* 【core   】      修复`HexUtil.format`在处理长度小于2的字符串会抛异常，在处理长度为奇数的字符串时最后一个字符会被忽略的问题（pr#4168@Github）
+* 【core   】      修复`SplitIter.computeNext`递归调用可能导致栈溢出风险（pr#4168@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.41(2025-10-12)

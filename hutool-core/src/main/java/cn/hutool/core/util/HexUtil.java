@@ -379,15 +379,24 @@ public class HexUtil {
 	 * @return 格式化后的字符串
 	 */
 	public static String format(final String hexStr, String prefix) {
+		if (StrUtil.isEmpty(hexStr)) {
+			return StrUtil.EMPTY;
+		}
 		if (null == prefix) {
 			prefix = StrUtil.EMPTY;
 		}
 
 		final int length = hexStr.length();
 		final StringBuilder builder = StrUtil.builder(length + length / 2 + (length / 2 * prefix.length()));
-		builder.append(prefix).append(hexStr.charAt(0)).append(hexStr.charAt(1));
-		for (int i = 2; i < length - 1; i += 2) {
-			builder.append(CharUtil.SPACE).append(prefix).append(hexStr.charAt(i)).append(hexStr.charAt(i + 1));
+
+		for (int i = 0; i < length; i++) {
+			if (i % 2 == 0) {
+				if (i != 0) {
+					builder.append(CharUtil.SPACE);
+				}
+				builder.append(prefix);
+			}
+			builder.append(hexStr.charAt(i));
 		}
 		return builder.toString();
 	}

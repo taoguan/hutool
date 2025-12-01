@@ -99,10 +99,10 @@ public class ColorUtil {
 			return Color.CYAN;
 		} else if ("BLUE".equals(colorName)) {
 			return Color.BLUE;
-		} else if ("DARKGOLD".equals(colorName)) {
+		} else if ("DARKGOLD".equals(colorName) || "DARK_GOLD".equals(colorName)) {
 			// 暗金色
 			return hexToColor("#9e7e67");
-		} else if ("LIGHTGOLD".equals(colorName)) {
+		} else if ("LIGHTGOLD".equals(colorName) || "LIGHT_GOLD".equals(colorName)) {
 			// 亮金色
 			return hexToColor("#ac9c85");
 		} else if (StrUtil.startWith(colorName, '#')) {

@@ -187,7 +187,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 	/**
 	 * 解码字节码
 	 *
-	 * @param data    字符串
+	 * @param data    byte数组
 	 * @param charset 字符集，如果此字段为空，则解码的结果取决于平台
 	 * @return 解码后的字符串
 	 */
@@ -216,7 +216,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 	/**
 	 * 解码字节码
 	 *
-	 * @param data    字符串
+	 * @param data    Byte数组
 	 * @param charset 字符集，如果此字段为空，则解码的结果取决于平台
 	 * @return 解码后的字符串
 	 */

@@ -621,7 +621,7 @@ public class NumberUtilTest {
 		assertTrue(NumberUtil.isPrimes(2147483647));
 		assertFalse(NumberUtil.isPrimes(2147483646));
 	}
-	
+
 	@Test
 	public void range(){
 		assertFalse(NumberUtil.isIn(new BigDecimal("1"),new BigDecimal("2"),new BigDecimal("12")));
@@ -703,5 +703,17 @@ public class NumberUtilTest {
 	void issueIC1MXETest(){
 		final boolean equals = NumberUtil.equals(104557543L, 104557544);
 		assertFalse(equals);
+	}
+
+	@Test
+	public void testMultipleOverflow() {
+		int a = 500000;
+		int b = 600000;
+
+		// 原方法使用 a * b / gcd(a, b) 计算，a * b 会先溢出，得到最小公倍数为负数
+		// 使用修改后的multiple方法，测试它是否能正确处理这种情况
+		int result = NumberUtil.multiple(a, b);
+		// 验证结果必须是正数（两个正数的最小公倍数必须为正）
+		assertTrue(result > 0);
 	}
 }

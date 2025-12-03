@@ -1692,7 +1692,15 @@ public class NumberUtil {
 	 * @return 最小公倍数
 	 */
 	public static int multiple(int m, int n) {
-		return m * n / divisor(m, n);
+		// 先计算最大公约数
+		int gcd = divisor(m, n);
+		// 使用长整型避免溢出，再转换回整型
+		long result = (long) m / gcd * (long) n;
+		// 检查结果是否在int范围内
+		if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
+			throw new ArithmeticException("Integer overflow: " + m + " * " + n + " / " + gcd);
+		}
+		return (int) result;
 	}
 
 	/**

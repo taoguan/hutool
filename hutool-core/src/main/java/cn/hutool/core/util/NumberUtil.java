@@ -1702,12 +1702,25 @@ public class NumberUtil {
 	 * @return 二进制字符串
 	 */
 	public static String getBinaryStr(Number number) {
+
+		if (number instanceof Double) {
+			// 处理double类型
+			long bits = Double.doubleToLongBits((Double) number);
+			return String.format("%64s", Long.toBinaryString(bits)).replace(' ', '0');
+		} else if (number instanceof Float) {
+			// 处理float类型
+			int bits = Float.floatToIntBits((Float) number);
+			return String.format("%32s", Integer.toBinaryString(bits)).replace(' ', '0');
+		}
+
 		if (number instanceof Long) {
 			return Long.toBinaryString((Long) number);
 		} else if (number instanceof Integer) {
 			return Integer.toBinaryString((Integer) number);
 		} else {
+			System.out.println(number.getClass().getName());
 			return Long.toBinaryString(number.longValue());
+
 		}
 	}
 

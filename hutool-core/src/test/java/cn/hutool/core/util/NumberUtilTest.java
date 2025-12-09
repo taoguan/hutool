@@ -621,7 +621,7 @@ public class NumberUtilTest {
 		assertTrue(NumberUtil.isPrimes(2147483647));
 		assertFalse(NumberUtil.isPrimes(2147483646));
 	}
-	
+
 	@Test
 	public void range(){
 		assertFalse(NumberUtil.isIn(new BigDecimal("1"),new BigDecimal("2"),new BigDecimal("12")));
@@ -703,5 +703,12 @@ public class NumberUtilTest {
 	void issueIC1MXETest(){
 		final boolean equals = NumberUtil.equals(104557543L, 104557544);
 		assertFalse(equals);
+	}
+
+	@Test
+	public void testGetFloatBinaryStr() {
+		// 获取浮点数的 IEEE 754 原始比特位字符串
+		final String result = NumberUtil.getBinaryStr(3.5);
+		assertEquals("0100000000001100000000000000000000000000000000000000000000000000", result);
 	}
 }

@@ -1697,11 +1697,17 @@ public class NumberUtil {
 
 	/**
 	 * 获得数字对应的二进制字符串
+	 * <ul>
+	 *     <li>Integer/Long：直接使用 JDK 内置方法转换</li>
+	 *     <li>Byte/Short：转换为无符号整数后补充前导零至对应位数（Byte=8位，Short=16位）</li>
+	 *     <li>Float/Double：使用 IEEE 754 标准格式转换，Float=32位，Double=64位</li>
+	 * </ul>
 	 *
 	 * @param number 数字
 	 * @return 二进制字符串
 	 */
 	public static String getBinaryStr(Number number) {
+		Assert.notNull(number, "Number must be not null!");
 
 		if (number instanceof Double) {
 			// 处理double类型
@@ -1711,16 +1717,21 @@ public class NumberUtil {
 			// 处理float类型
 			int bits = Float.floatToIntBits((Float) number);
 			return String.format("%32s", Integer.toBinaryString(bits)).replace(' ', '0');
-		}
-
-		if (number instanceof Long) {
+		}else if (number instanceof Long) {
 			return Long.toBinaryString((Long) number);
 		} else if (number instanceof Integer) {
 			return Integer.toBinaryString((Integer) number);
+		} else if (number instanceof Byte) {
+			// Byte是8位，补前导0至8位
+			return String.format("%8s", Integer.toBinaryString(number.byteValue() & 0xFF)).replace(' ', '0');
+		} else if (number instanceof Short) {
+			// Short是16位，补前导0至16位
+			return String.format("%16s", Integer.toBinaryString(number.shortValue() & 0xFFFF)).replace(' ', '0');
+		} else if (number instanceof BigInteger) {
+			// 大数整数类型
+			return ((BigInteger) number).toString(2);
 		} else {
-			System.out.println(number.getClass().getName());
 			return Long.toBinaryString(number.longValue());
-
 		}
 	}
 

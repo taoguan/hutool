@@ -715,5 +715,12 @@ public class NumberUtilTest {
 		int result = NumberUtil.multiple(a, b);
 		// 验证结果必须是正数（两个正数的最小公倍数必须为正）
 		assertTrue(result > 0);
+  }
+  
+  @Test
+	public void testGetFloatBinaryStr() {
+		// 获取浮点数的 IEEE 754 原始比特位字符串
+		final String result = NumberUtil.getBinaryStr(3.5);
+		assertEquals("0100000000001100000000000000000000000000000000000000000000000000", result);
 	}
 }

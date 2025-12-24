@@ -60,6 +60,12 @@ public class HexUtilTest {
 	}
 
 	@Test
+	public void isHexNumberTest2() {
+		assertFalse(HexUtil.isHexNumber(""));
+		assertFalse(HexUtil.isHexNumber(null));
+	}
+
+	@Test
 	public void decodeTest(){
 		final String str = "e8c670380cb220095268f40221fc748fa6ac39d6e930e63c30da68bad97f885d";
 		assertArrayEquals(HexUtil.decodeHex(str),

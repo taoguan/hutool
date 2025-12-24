@@ -314,6 +314,32 @@ public class StrUtilTest {
 		assertEquals(a, pre);
 	}
 
+	/**
+	 * 测试字符串反转功能，特别是对特殊字符的处理
+	 * 验证普通字符、中文字符以及Unicode代理对字符的反转行为
+	 */
+	@Test
+	public void reverseSpecialCharactersTest() {
+		//普通情况-英文字符
+		assertEquals("dcba", StrUtil.reverse("abcd"));
+
+		//普通情况-中文字符
+		assertEquals("界世好你", StrUtil.reverse("你好世界"));
+
+		//保证Unicode字符语义正确，类似emoji、组合字符
+		//A😊B
+		String emojiStr = "A\uD83D\uDE0AB";
+		String reversedEmoji = StrUtil.reverse(emojiStr);
+		//B😊A
+		assertEquals("B\uD83D\uDE0AA", reversedEmoji);
+
+		//A🇨🇳B
+		String surrogate = "A\uD83C\uDDE8\uD83C\uDDF3B";
+		String reversedSurrogate = StrUtil.reverse(surrogate);
+		//B🇨🇳A
+		assertNotEquals("B\uD83C\uDDE8\uD83C\uDDF3A", reversedSurrogate);
+	}
+
 	@Test
 	public void subAfterTest() {
 		final String a = "abcderghigh";

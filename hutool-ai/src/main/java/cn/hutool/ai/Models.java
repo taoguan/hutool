@@ -142,7 +142,7 @@ public class Models {
 		DOUBAO_EMBEDDING_VISION("doubao-embedding-vision-241215"),
 		DOUBAO_SEEDREAM_3_0_T2I("doubao-seedream-3-0-t2i-250415"),
 		DOUBAO_SEEDDANCE_1_0_LITE_T2V("doubao-seedance-1-0-lite-t2v-250428"),
-		DOUBAO_SEEDDANCE_1_0_lite_i2v("doubao-seedance-1-0-lite-i2v-250428"),
+		DOUBAO_SEEDDANCE_1_0_lite_I2V("doubao-seedance-1-0-lite-i2v-250428"),
 		WAN2_1_14B_T2V("wan2-1-14b-t2v-250225"),
 		WAN2_1_14B_I2V("wan2-1-14b-i2v-250225");
 

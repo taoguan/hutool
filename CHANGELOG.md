@@ -15,6 +15,7 @@
 * 【core   】      修复`CharSequenceUtil.move`方法在局部循环位移中输出不符合预期问题（issue#IDD181@Gitee）
 * 【bloomFilter】  修复`AbstractFilter`的`init`方法在`maxValue`小于`machineNum`时导致数组越界异常（pr#4189@Github）
 * 【ai     】      修复`Models`枚举命名大小写混用问题（pr#4185@Github）
+* 【core   】      修复 `ThreadUtil.getMainThread`在JDK25中返回null的问题（pr#1416@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.42(2025-11-28)

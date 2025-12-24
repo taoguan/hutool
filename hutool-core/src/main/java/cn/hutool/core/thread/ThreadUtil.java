@@ -553,7 +553,7 @@ public class ThreadUtil {
 	 */
 	public static Thread getMainThread() {
 		for (Thread thread : getThreads()) {
-			if (MAIN_THREAD_NAME.equals(thread.getName())) {
+			if (1 == thread.getId() || MAIN_THREAD_NAME.equals(thread.getName())) {
 				return thread;
 			}
 		}

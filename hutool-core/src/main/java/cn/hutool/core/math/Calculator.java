@@ -101,7 +101,8 @@ public class Calculator {
 				count++;
 			}
 		}
-		if (count > 1 || (count == 1 && !isOperator(arr[currentIndex]))) {// 最后一个字符不是括号或者其他运算符的则加入后缀式栈中
+		//新增防止数组越界
+		if (count > 1 || (count == 1 && currentIndex < arr.length && !isOperator(arr[currentIndex]))) {// 最后一个字符不是括号或者其他运算符的则加入后缀式栈中
 			postfixStack.push(new String(arr, currentIndex, count));
 		}
 
@@ -150,6 +151,14 @@ public class Calculator {
 	 * @return 结果
 	 */
 	private BigDecimal calculate(String firstValue, String secondValue, char currentOp) {
+		final BigDecimal first = NumberUtil.toBigDecimal(firstValue);
+		final BigDecimal second = NumberUtil.toBigDecimal(secondValue);
+
+		//添加除零检查并提供明确错误信息
+		if ((currentOp == '/' || currentOp == '%') && second.compareTo(BigDecimal.ZERO) == 0) {
+			throw new ArithmeticException("Division by zero: cannot divide " + firstValue + " by zero");
+		}
+
 		final BigDecimal result;
 		switch (currentOp) {
 			case '+':
@@ -258,6 +267,6 @@ public class Calculator {
 	 * 判断给定位置前一个非空字符是否为运算符或左括号（用于判定是否为一元上下文）
 	 */
 	private static boolean isPrevCharOperatorOrLeftParen(char c) {
-		return c == '+' || c == '-' || c == '*' || c == '/' || c == '(';
+		return c == '%' || c == '+' || c == '-' || c == '*' || c == '/' || c == '(';
 	}
 }

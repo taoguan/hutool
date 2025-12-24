@@ -1,5 +1,7 @@
 package cn.hutool.core.util;
 
+import cn.hutool.core.text.*;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
@@ -9,12 +11,6 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.text.StrBuilder;
-import cn.hutool.core.text.StrFormatter;
-import cn.hutool.core.text.StrPool;
-import cn.hutool.core.text.TextSimilarity;
 
 /**
  * 字符串工具类
@@ -364,15 +360,30 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 	/**
 	 * 反转字符串<br>
 	 * 例如：abcd =》dcba
+	 *
+	 * @param str 被反转的字符串
+	 * @return 反转后的字符串
+	 * @since 3.0.9
+	 */
+	public static String reverse(final String str) {
+		if (isBlank(str)) {
+			return str;
+		}
+		return new String(ArrayUtil.reverse(str.toCharArray()));
+	}
+
+	/**
+	 * 反转字符串<br>
+	 * 例如：abcd =》dcba
 	 * <p>
 	 * 该方法按Unicode code point进行反转，支持Unicode字符的正确反转
 	 * 确保复杂字符不会被拆分，如表情符号等多字节字符
 	 * </p>
 	 * @param str 被反转的字符串
 	 * @return 反转后的字符串，如果输入为null则返回null
-	 * @since 3.0.9
+	 * @since 5.8.43
 	 */
-	public static String reverse(String str) {
+	public static String reverseByCodePoint(String str) {
 		if (null == str) {
 			return null;
 		}

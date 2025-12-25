@@ -11,6 +11,7 @@
 * 【core   】      `HexUtil.toHex`添加对float和double的支持，并提供反向方法（pr#4193@Github）
 * 【core   】      增强`BitSetBloomFilter`构造器的参数有效性校验逻辑（pr#4194@Github）
 * 【core   】      `HexUtil.isHexNumber`增加空检查（pr#1420@Gitee）
+* 【core   】      `BooleanUtil`增加中文、英文及符号布尔值的识别能力（pr#1429@Gitee）
 
 ### 🐞Bug修复
 * 【core       】  修复`Calculator.conversion`方法计算包含科学计数法表达式的值时逻辑有误，结果不符合预期（pr#4172@Github）

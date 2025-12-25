@@ -1,5 +1,6 @@
 package cn.hutool.core.util;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.math.Calculator;
@@ -2778,6 +2779,9 @@ public class NumberUtil {
 			// issue#I79VS7
 			numberStr = StrUtil.subSuf(numberStr, 1);
 		}
+
+		// issue@4197@Github 转为半角
+		numberStr = Convert.toDBC(numberStr);
 
 		try {
 			final NumberFormat format = NumberFormat.getInstance();

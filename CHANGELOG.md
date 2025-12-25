@@ -23,6 +23,7 @@
 * 【core       】  修复 `NumberUtil.parseNumber`使用中文逗号导致识别问题（issue#4197@Github）
 * 【crypto     】  修复 `SecureUtil.hmacSha1`和`hmacSha256`生成随机密钥时存在逻辑问题（pr#4199@Github）
 * 【core       】  修复 `StopWatch.stop`时间回拨时计算结果为负的问题（pr#1417@Gitee）
+* 【core       】  修复 `SplitIter.reset`后无法重新迭代的问题（pr#1418@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.42(2025-11-28)

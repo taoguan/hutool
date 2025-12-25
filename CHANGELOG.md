@@ -12,14 +12,15 @@
 * 【core   】      增强`BitSetBloomFilter`构造器的参数有效性校验逻辑（pr#4194@Github）
 
 ### 🐞Bug修复
-* 【core   】      修复`Calculator.conversion`方法计算包含科学计数法表达式的值时逻辑有误，结果不符合预期（pr#4172@Github）
-* 【core   】      修复`NumberUtil.getBinaryStr`方法计算Double等丢失小数问题（pr#1411@Gitee）
-* 【core   】      修复`MathUtil.multiple`方法在大整数乘法运算中整数溢出风险（pr#4174@Github）
-* 【core   】      修复`CharSequenceUtil.move`方法在局部循环位移中输出不符合预期问题（issue#IDD181@Gitee）
+* 【core       】  修复`Calculator.conversion`方法计算包含科学计数法表达式的值时逻辑有误，结果不符合预期（pr#4172@Github）
+* 【core       】  修复`NumberUtil.getBinaryStr`方法计算Double等丢失小数问题（pr#1411@Gitee）
+* 【core       】  修复`MathUtil.multiple`方法在大整数乘法运算中整数溢出风险（pr#4174@Github）
+* 【core       】  修复`CharSequenceUtil.move`方法在局部循环位移中输出不符合预期问题（issue#IDD181@Gitee）
 * 【bloomFilter】  修复`AbstractFilter`的`init`方法在`maxValue`小于`machineNum`时导致数组越界异常（pr#4189@Github）
-* 【ai     】      修复`Models`枚举命名大小写混用问题（pr#4185@Github）
-* 【core   】      修复 `ThreadUtil.getMainThread`在JDK25中返回null的问题（pr#1416@Gitee）
-* 【core   】      修复 `NumberUtil.parseNumber`使用中文逗号导致识别问题（issue#4197@Github）
+* 【ai         】  修复`Models`枚举命名大小写混用问题（pr#4185@Github）
+* 【core       】  修复 `ThreadUtil.getMainThread`在JDK25中返回null的问题（pr#1416@Gitee）
+* 【core       】  修复 `NumberUtil.parseNumber`使用中文逗号导致识别问题（issue#4197@Github）
+* 【crypto     】  修复 `SecureUtil.hmacSha1`和`hmacSha256`生成随机密钥时存在逻辑问题（pr#4199@Github）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.42(2025-11-28)

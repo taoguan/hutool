@@ -4784,18 +4784,22 @@ public class CharSequenceUtil {
 			throw new IndexOutOfBoundsException("Invalid range: [" + startInclude + ", " + endExclude + ")");
 		}
 
+		if (Math.abs(moveLength) > len) {
+			// 循环位移，当越界时循环
+			moveLength = moveLength % len;
+		}
 		// 分离“移动块”和“剩余轨道”
-		String block = str.subSequence(startInclude, endExclude).toString();
-		String rest = new StringBuilder(str).delete(startInclude, endExclude).toString();
+		final String block = str.subSequence(startInclude, endExclude).toString();
+		final String rest = new StringBuilder(str).delete(startInclude, endExclude).toString();
 
-		int restLen = rest.length();
+		final int restLen = rest.length();
 		if (restLen == 0) {
 			return str.toString(); // 全选时位移无意义
 		}
 		// 计算循环周期：剩余字符数 + 1（代表块可以存在的不同位置点）
-		int totalPositions = restLen + 1;
+		final int totalPositions = restLen + 1;
 		// 计算移动后的新位置 (处理正负数)
-		int newPos = (startInclude + moveLength % totalPositions + totalPositions) % totalPositions;
+		final int newPos = (startInclude + moveLength % totalPositions + totalPositions) % totalPositions;
 		// 重新组装
 		return rest.substring(0, newPos) + // 放入新位置前的剩余字符
 			block +                     // 放入整体块

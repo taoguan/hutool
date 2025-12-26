@@ -1,7 +1,7 @@
 
 # 🚀Changelog
 -------------------------------------------------------------------------------------------------------------
-# 5.8.43(2025-12-25)
+# 5.8.43(2025-12-26)
 
 ### 🐣新特性
 * 【core   】      `ColorUtil`颜色名称DARKGOLD、LIGHTGOLD新增蛇形命名匹配（pr#1400@Github）
@@ -13,6 +13,7 @@
 * 【core   】      `HexUtil.isHexNumber`增加空检查（pr#1420@Gitee）
 * 【core   】      `BooleanUtil`增加中文、英文及符号布尔值的识别能力（pr#1429@Gitee）
 * 【core   】      `DataBetween`类的构造函数中做 defensive copy（pr#1426@Gitee）
+* 【core   】      `RadixUtil.decode`添加校验（pr#1422@Gitee）
 
 ### 🐞Bug修复
 * 【core       】  修复`Calculator.conversion`方法计算包含科学计数法表达式的值时逻辑有误，结果不符合预期（pr#4172@Github）

@@ -719,4 +719,11 @@ public class StrUtilTest {
 		final String ret = StrUtil.truncateByByteLength(str, StandardCharsets.ISO_8859_1, 10, 1, false);
 		assertEquals("This is En", ret);
 	}
+
+	@Test
+	public void issueTest() {
+		final String s = "abc";
+		final String r = StrUtil.truncateByByteLength(s, CharsetUtil.CHARSET_UTF_8, 2, 4, true);
+		assertEquals("ab", r);
+	}
 }

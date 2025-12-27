@@ -30,6 +30,7 @@
 * 【core       】  修复`SplitIter.reset`后无法重新迭代的问题（pr#1418@Gitee）
 * 【core       】  修复`StrMatcher`连续变量解析导致的歧义问题（pr#1419@Gitee）
 * 【ai         】  修复`BaseAIService`发送请求方法中try/catch块捕获的应该是Exception而不是自定义的AIException（pr#1430@Gitee）
+* 【core       】  修复`StrUtil.truncateByByteLength`在限制长度小于...时报错问题（issue#IDFTJS@Gitee）
 
 -------------------------------------------------------------------------------------------------------------
 # 5.8.42(2025-11-28)
